@@ -84,11 +84,11 @@ public class CrawlerService {
     }
 
     public void crawler(String url) throws IOException {
-        int startPage = ngaMapper.selectMaxFloor(no) / 20 - 1;
+        int startPage = ngaMapper.selectMaxFloor(no) / 20 - 5;
 //        int startPage = 1;
         startPage = startPage > 0 ? startPage : 1;
         System.out.println("=====================================");
-        crawByPage(url,startPage,startPage+20);
+        crawByPage(url,startPage,startPage+15);
     }
 
     public void crawByPage(String url,int startPage, int endPage) throws FailingHttpStatusCodeException, IOException {

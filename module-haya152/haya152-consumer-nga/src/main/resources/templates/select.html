@@ -8,11 +8,11 @@
 <b>NGA专楼自助查询</b>
 <form name="input" action="/select" method="post">
     楼号:
-    <input type="radio" name="no" value="1" disabled>1号楼
-    <input type="radio" name="no" value="2" disabled>2号楼
-    <input type="radio" name="no" value="3" disabled>3号楼
-    <input type="radio" name="no" value="4" disabled>4号楼
-    <input type="radio" name="no" value="5" disabled>5号楼
+    <input type="radio" name="no" value="1" >1号楼
+    <input type="radio" name="no" value="2" >2号楼
+    <input type="radio" name="no" value="3" >3号楼
+    <input type="radio" name="no" value="4" >4号楼
+    <input type="radio" name="no" value="5" >5号楼
     <input type="radio" name="no" value="6" checked>6号楼
     <br>
     uid:<input type="text" name="uid" >  不需要就空着别填！<br>
@@ -37,7 +37,7 @@
     <input type="radio" name="order" value="1" checked>升序
     <input type="radio" name="order" value="2">降序
     <br>
-    最大显示条目数:<input type="text" name="limit" οninput=“value=value.replace(/[^\d]/g,’’)”>   只能输入数字!<br>
+    最大显示条目数:<input type="text" name="limit" οninput=“value=value.replace(/[^\d]/g,’’)”>   只能输入数字! (默认100)<br>
     数据显示方式：
     <input type="radio" name="type" value="1" checked>页面
     <input type="radio" name="type" value="2">json
