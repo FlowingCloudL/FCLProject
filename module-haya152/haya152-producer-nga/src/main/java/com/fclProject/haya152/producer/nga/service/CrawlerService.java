@@ -92,8 +92,6 @@ public class CrawlerService {
     }
 
     public void crawByPage(String url,int startPage, int endPage) throws FailingHttpStatusCodeException, IOException {
-        startPage = 1573;
-        endPage = 1593;
         for (int i = startPage; i <= endPage; i++){
             System.out.println("爬取: "+url+"&page="+i+"    |    "+i+"P");
             HtmlPage page = webClient.getPage(url+"&page="+i);

@@ -79,8 +79,7 @@ public class ParseUtils {
     }
     public static StringBuilder parseComments_dp(StringBuilder str, Node root) {
         if (root instanceof TextNode){
-            String cur = ((TextNode) root).text().trim();
-            if (!cur.equals("Reply to") && !cur.equals("by")) str.append(cur);
+            str.append(((TextNode) root).text().trim());
         }
         else if (root.nodeName().equals("br") && str.length() != 0) str.append("\r\n");
         else if (root.attr("class").equals("quote")) {
@@ -94,13 +93,16 @@ public class ParseUtils {
             String src = root.attr("src").trim();
             if (!src.equals("about:blank")) str.append(root);
         }
-        else if (root.attr("class").equals("collapse_content ubbcode")) {
-            str.append("\r\n【折叠】");
-            for (Node child : root.childNodes()) {
-                str = parseComments_dp(str, child);
-            }
-            str.append("\r\n【/折叠】\r\n");
+        else if (root.attr("class").equals("collapse_btn")) {
+            str.append("\r\n【折叠】为保护隐私，内容不予显示【/折叠】\r\n");
         }
+//        else if (root.attr("class").equals("collapse_content ubbcode")) {
+//            str.append("\r\n【折叠】");
+//            for (Node child : root.childNodes()) {
+//                str = parseComments_dp(str, child);
+//            }
+//            str.append("\r\n【/折叠】\r\n");
+//        }
         else {
             for (Node child : root.childNodes()) {
                 str = parseComments_dp(str, child);
