@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>NGA专楼自助查询</title>
+</head>
+<body>
+<b>NGA专楼自助查询</b>
+<form name="input" action="/select" method="post">
+    楼号:
+    <input type="radio" name="no" value="1" disabled>1号楼
+    <input type="radio" name="no" value="2" disabled>2号楼
+    <input type="radio" name="no" value="3" disabled>3号楼
+    <input type="radio" name="no" value="4" disabled>4号楼
+    <input type="radio" name="no" value="5" disabled>5号楼
+    <input type="radio" name="no" value="6" checked>6号楼
+    <br>
+    uid:<input type="text" name="uid" >  不需要就空着别填！<br>
+    用户名:<input type="text" name="name">  不需要就空着别填！<br>
+    楼层:<input type="text" name="floor">  不需要就空着别填！<br>
+    评论类型:
+    <input type="radio" name="tag" value="" checked>全部
+    <input type="radio" name="tag" value="0">普通评论
+    <input type="radio" name="tag" value="1">回复
+    <input type="radio" name="tag" value="2">同传
+    <br>
+    开始日期:<input type="date" name="startDate" value="2022-01-01"><br>
+    结束日期:<input type="date" name="endDate" value="2022-02-01"><br>
+    排序标准:
+    <input type="radio" name="orderBy" value="`uid`" >uid
+    <input type="radio" name="orderBy" value="`name`">用户名
+    <input type="radio" name="orderBy" value="`floor`" checked>楼层
+    <input type="radio" name="orderBy" value="`like`">赞数
+    <input type="radio" name="orderBy" value="`date`">日期
+    <br>
+    排序:
+    <input type="radio" name="order" value="1" checked>升序
+    <input type="radio" name="order" value="2">降序
+    <br>
+    最大显示条目数:<input type="text" name="limit" οninput=“value=value.replace(/[^\d]/g,’’)”>   只能输入数字!<br>
+    数据显示方式：
+    <input type="radio" name="type" value="1" checked>页面
+    <input type="radio" name="type" value="2">json
+    <input type="submit" value="查询">
+</form>
+</body>
+</html>

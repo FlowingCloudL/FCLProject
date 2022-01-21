@@ -1,0 +1,35 @@
+# Gateway端口
+server:
+  port: 9000
+
+spring:
+  application:
+    name: service-gateway
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 120.24.54.76:8848
+        username: nacos
+        password: liudong43997k7k
+    sentinel:
+      transport:
+        port: 8719
+        dashboard: localhost:8089
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      routes:
+        - id: service-blog
+          uri: lb://service-blog
+          predicates:
+            - Method=GET,POST
+        - id: service-user
+          uri: lb://service-user
+          predicates:
+            - Method=GET,POST
+
+# 配置日志级别，方别调试
+logging:
+  level:
+    org.springframework.cloud.gateway: debug

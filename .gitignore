@@ -1,0 +1,7 @@
+# 项目排除路径
+/module-blog/target/
+/module-gateway/target/
+/module-haya152/haya152-consumer-nga/target/
+/module-haya152/haya152-producer-nga/target/
+/module-infrastructure/target/
+/module-user/target/

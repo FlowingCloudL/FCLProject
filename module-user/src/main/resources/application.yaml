@@ -1,0 +1,12 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: service-user
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 120.24.54.76:8848
+        username: nacos
+        password: liudong43997k7k

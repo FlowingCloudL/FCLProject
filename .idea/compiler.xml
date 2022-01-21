@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="module-gateway" />
+        <module name="haya152-producer-nga" />
+        <module name="haya152-consumer-nga" />
+        <module name="module-user" />
+        <module name="module-blog" />
+        <module name="module-infrastructure" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="haya152-consumer" target="8" />
+      <module name="producer-nga" target="8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

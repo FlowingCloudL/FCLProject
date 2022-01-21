@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace = 绑定一个对应的Dao/Mapper接口 -->
+<mapper namespace="com.fclProject.haya152.consumer.nga.dao.NgaMapper">
+
+    <resultMap id="ngaMap" type="NgaDto">
+        <result column="uid" property="uid"/>
+        <result column="name" property="name"/>
+        <result column="floor" property="floor"/>
+        <result column="date" property="date"/>
+        <result column="like" property="like"/>
+        <result column="comments" property="comments"/>
+        <result column="tag" property="tag"/>
+    </resultMap>
+    
+    <select id="selectByTagAndDatetime" resultMap="ngaMap">
+        select * from `haya152-nga`.nga06 where tag = #{tag}
+        and date >= STR_TO_DATE(#{start}, '%Y-%m-%d %H:%i:%s')
+        and date &lt;= STR_TO_DATE(#{end}, '%Y-%m-%d %H:%i:%s')
+    </select>
+
+    <select id="selectByDynamicCriteria" parameterType="map" resultMap="ngaMap">
+        select * from `haya152-nga`.${no}
+        <where>
+            <if test="uid != null">
+                and `uid` = #{uid}
+            </if>
+            <if test="name != null">
+                and `name` = #{name}
+            </if>
+            <if test="floor != null">
+                and `floor` = #{floor}
+            </if>
+            <if test="tag != null">
+                and `tag` = #{tag}
+            </if>
+            <if test="startDate != null">
+                and `date` >= STR_TO_DATE(#{startDate}, '%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="endDate != null">
+                and `date` &lt;= STR_TO_DATE(#{endDate}, '%Y-%m-%d %H:%i:%s')
+            </if>
+        </where>
+        <if test="orderBy != null">
+            ORDER BY ${orderBy}
+            <if test="order == 2">DESC</if>
+        </if>
+        <if test="limit != null">
+            LIMIT #{limit}
+        </if>
+    </select>
+
+</mapper>
