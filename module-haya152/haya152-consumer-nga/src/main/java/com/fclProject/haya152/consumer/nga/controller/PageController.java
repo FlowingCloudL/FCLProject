@@ -10,7 +10,7 @@ import java.util.List;
 @Controller
 public class PageController {
 
-    @RequestMapping("/s")
+    @RequestMapping("/default")
     public String selectPage() {
         return "select";
     }

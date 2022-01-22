@@ -17,24 +17,19 @@ public class SelectController {
     @Autowired
     private NgaMapper ngaMapper;
 
-//    @RequestMapping("/l")
-//    public List<NgaDto> list() {
-//        return ngaMapper.selectByTagAndDatetime(2,"2022-01-19 6:00:00","2022-01-20 6:00:00");
-//    }
-
-    @PostMapping("/select")
+    @PostMapping("/select/default")
     public String select(Integer no, Integer uid, String name, Integer floor, Integer tag,
                                String startDate, String endDate, String orderBy, Integer order, Integer limit,
                                Integer type, Model model) {
-        if (type == 2) return "forward:/select/json";
+        if (type == 2) return "forward:/select";
         Map<String,Object> map = new HashMap<>();
         map.put("no","nga0"+no);
         if (uid != null) map.put("uid",uid);
         if (!name.equals("")) map.put("name",name);
         if (floor != null) map.put("floor",floor);
         if (tag != null) map.put("tag",tag);
-        if (!startDate.equals("")) map.put("startDate",startDate+" 6:00:00");
-        if (!endDate.equals("")) map.put("endDate",endDate+" 6:00:00");
+        if (!startDate.equals("")) map.put("startDate",startDate);
+        if (!endDate.equals("")) map.put("endDate",endDate);
         if (!orderBy.equals("")) map.put("orderBy",orderBy);
         if (order != null) map.put("order",order);
         if (limit != null) map.put("limit",limit);
@@ -44,7 +39,7 @@ public class SelectController {
         return "show";
     }
 
-    @RequestMapping("/select/json")
+    @PostMapping ("/select")
     @ResponseBody
     public List<NgaDto> select(Integer no, Integer uid, String name, Integer floor, Integer tag,
                          String startDate, String endDate, String orderBy, Integer order, Integer limit) {
@@ -54,8 +49,8 @@ public class SelectController {
         if (!name.equals("")) map.put("name",name);
         if (floor != null) map.put("floor",floor);
         if (tag != null) map.put("tag",tag);
-        if (!startDate.equals("")) map.put("startDate",startDate+" 6:00:00");
-        if (!endDate.equals("")) map.put("endDate",endDate+" 6:00:00");
+        if (!startDate.equals("")) map.put("startDate",startDate);
+        if (!endDate.equals("")) map.put("endDate",endDate);
         if (!orderBy.equals("")) map.put("orderBy",orderBy);
         if (order != null) map.put("order",order);
         if (limit != null) map.put("limit",limit);
