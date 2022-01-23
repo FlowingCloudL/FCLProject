@@ -8,14 +8,16 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class SelectDto {
-    private Integer no = 6;
+    private Integer no;
     private Integer uid;
     private String name;
     private Integer floor;
+    private String fuzzy_key;
     private Integer tag;
     private String startDate;
     private String endDate;
     private String orderBy;
     private Integer order;
     private Integer limit;
+    private Integer type;
 }

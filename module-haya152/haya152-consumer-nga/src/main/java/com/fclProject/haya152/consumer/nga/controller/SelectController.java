@@ -18,7 +18,7 @@ public class SelectController {
     private NgaMapper ngaMapper;
 
     @PostMapping("/select/default")
-    public String select(Integer no, Integer uid, String name, Integer floor, Integer tag,
+    public String select(Integer no, Integer uid, String name, Integer floor, String fuzzy_key, Integer tag,
                                String startDate, String endDate, String orderBy, Integer order, Integer limit,
                                Integer type, Model model) {
         if (type == 2) return "forward:/select";
@@ -27,6 +27,7 @@ public class SelectController {
         if (uid != null) map.put("uid",uid);
         if (!name.equals("")) map.put("name",name);
         if (floor != null) map.put("floor",floor);
+        if (fuzzy_key != null) map.put("fuzzy_key",fuzzy_key);
         if (tag != null) map.put("tag",tag);
         if (!startDate.equals("")) map.put("startDate",startDate);
         if (!endDate.equals("")) map.put("endDate",endDate);
@@ -41,13 +42,14 @@ public class SelectController {
 
     @PostMapping ("/select")
     @ResponseBody
-    public List<NgaDto> select(Integer no, Integer uid, String name, Integer floor, Integer tag,
+    public List<NgaDto> select(Integer no, Integer uid, String name, Integer floor, String fuzzy_key, Integer tag,
                          String startDate, String endDate, String orderBy, Integer order, Integer limit) {
         Map<String,Object> map = new HashMap<>();
         map.put("no","nga0"+no);
         if (uid != null) map.put("uid",uid);
         if (!name.equals("")) map.put("name",name);
         if (floor != null) map.put("floor",floor);
+        if (fuzzy_key != null) map.put("fuzzy_key",fuzzy_key);
         if (tag != null) map.put("tag",tag);
         if (!startDate.equals("")) map.put("startDate",startDate);
         if (!endDate.equals("")) map.put("endDate",endDate);

@@ -96,6 +96,11 @@ public class ParseUtils {
         else if (root.attr("class").equals("collapse_btn")) {
             str.append("\r\n【折叠】为保护隐私，内容不予显示【/折叠】\r\n");
         }
+//        else if (root.nodeName().equals("a") && !root.hasAttr("class") && root.hasAttr("href")) {
+//            str.append("<a href=\"").append(root.attr("href")).append("\">");
+//            for (Node child : root.childNodes()) if (child instanceof TextNode) str.append(((TextNode)child).text().trim());
+//            str.append("</a>");
+//        }
 //        else if (root.attr("class").equals("collapse_content ubbcode")) {
 //            str.append("\r\n【折叠】");
 //            for (Node child : root.childNodes()) {
@@ -104,6 +109,8 @@ public class ParseUtils {
 //            str.append("\r\n【/折叠】\r\n");
 //        }
         else {
+//            String class_ = root.attr("class");
+//            if (class_.equals("apd") || class_.equals("block_txt white nobr") || class_.equals("urltip")) return str;
             for (Node child : root.childNodes()) {
                 str = parseComments_dp(str, child);
             }

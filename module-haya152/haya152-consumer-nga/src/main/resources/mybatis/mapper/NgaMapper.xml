@@ -13,12 +13,6 @@
         <result column="comments" property="comments"/>
         <result column="tag" property="tag"/>
     </resultMap>
-    
-    <select id="selectByTagAndDatetime" resultMap="ngaMap">
-        select * from `haya152-nga`.nga06 where tag = #{tag}
-        and date >= STR_TO_DATE(#{start}, '%Y-%m-%d %H:%i:%s')
-        and date &lt;= STR_TO_DATE(#{end}, '%Y-%m-%d %H:%i:%s')
-    </select>
 
     <select id="selectByDynamicCriteria" parameterType="map" resultMap="ngaMap">
         select * from `haya152-nga`.${no}
@@ -41,10 +35,13 @@
             <if test="endDate != null">
                 and `date` &lt;= STR_TO_DATE(#{endDate}, '%Y-%m-%d %H:%i:%s')
             </if>
+            <if test="fuzzy_key != null">
+                and `comments` like concat('%',#{fuzzy_key},'%')
+            </if>
         </where>
         <if test="orderBy != null">
             ORDER BY ${orderBy}
-            <if test="order == 2">DESC</if>
+            <if test="order == 2"> DESC </if>
         </if>
         <if test="limit != null">
             LIMIT #{limit}

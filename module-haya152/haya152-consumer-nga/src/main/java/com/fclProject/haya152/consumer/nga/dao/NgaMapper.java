@@ -11,6 +11,5 @@ import java.util.Map;
 @Mapper
 @Repository
 public interface NgaMapper {
-    List<NgaDto> selectByTagAndDatetime(@Param("tag") Integer tag, @Param("start") String start, @Param("end") String end);
     List<NgaDto> selectByDynamicCriteria(Map<String,Object> criteria);
 }
