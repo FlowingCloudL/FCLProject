@@ -1,0 +1,12 @@
+version: "3.7"
+
+services:
+    master:
+        image: nginx
+        container_name: haya152-nginx
+        ports:
+            - 80:80
+        volumes:
+            - /home/nginx/haya152:/usr/share/nginx/html
+            - /home/nginx/conf.d:/etc/nginx/conf.d
+        tty: true
