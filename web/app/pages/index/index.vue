@@ -9,11 +9,11 @@
 
 		<u-loading-page style="z-index: 999999;" :loading="loading"></u-loading-page>
 		<!-- 展示部分 -->
-		<view v-show="!showSearch" class="u-page">
-			<u-empty style="margin-top: 50px;" v-show="list.length === 0" mode="list"
+		<view v-show="!showSearch" style="margin-top: 50px;" class="u-page">
+			<u-empty v-show="list.length === 0" mode="list"
 				icon="http://cdn.uviewui.com/uview/empty/list.png">
 			</u-empty>
-			<view style="margin-top: 50px;" class="u-demo-block">
+			<view class="u-demo-block">
 				<view class="u-page u-demo-block__content">
 					<!-- 内容组件 -->
 					<haya-connents-item v-for="(item,index) in list" :item="item"

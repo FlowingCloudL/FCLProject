@@ -9,13 +9,19 @@
 					</u--input>
 				</u-form-item>
 				<u-form-item label="关键词" name="fuzzy_key">
-					<u--input @confirm="submit" v-model="form.fuzzy_key" placeholder="请输入关键词" />
+					<u--input @confirm="submit" v-model="form.fuzzy_key" placeholder="请输入关键词" >
+						<u-button slot="suffix" size="mini" :color="color.theme" @click="handleOpenHistory('fuzzy_key')" text="历史"></u-button>
+					</u--input>
 				</u-form-item>
 				<u-form-item label="用户uid" name="uid">
-					<u--input @confirm="submit" v-model="form.uid" placeholder="请输入用户uid" />
+					<u--input @confirm="submit" v-model="form.uid" placeholder="请输入用户uid" >
+						<u-button slot="suffix" size="mini" :color="color.theme" @click="handleOpenHistory('uid')" text="历史"></u-button>
+					</u--input>
 				</u-form-item>
 				<u-form-item label="用户名" name="name">
-					<u--input @confirm="submit" v-model="form.name" placeholder="请输入用户名" />
+					<u--input @confirm="submit" v-model="form.name" placeholder="请输入用户名" >
+						<u-button slot="suffix" size="mini" :color="color.theme" @click="handleOpenHistory('name')" text="历史"></u-button>
+					</u--input>
 				</u-form-item>
 				<u-form-item label="楼层" name="floor">
 					<u--input @confirm="submit" v-model="form.floor" placeholder="请输入楼层" />
@@ -58,7 +64,7 @@
 			</u--form>
 			<u-row style="margin-top: 10px;">
 				<u-button type="error" text="关闭" @click="handleClose"></u-button>
-				<u-button style="margin-left: 10px;" type="primary" text="搜索" @click="submit"></u-button>
+				<u-button style="margin-left: 10px; " type="primary" text="搜索" @click="submit"></u-button>
 			</u-row>
 		</view>
 		<u-datetime-picker :show="showDatetime" :value="getDatetimeValue()" mode="date" @cancel="showDatetime = false"
@@ -66,6 +72,16 @@
 		<u-action-sheet :show="showSheet" :actions="actions" title="请选择" @close="showSheet = false"
 			@select="sheetSelect">
 		</u-action-sheet>
+		<u-popup :show="showHistory" :customStyle="{width: '80%', padding: '10px 10px 10px 10px'}" mode="center" @close="showHistory = false">
+			<view>
+				<u-tag 
+					:style="{width: text.length * 18 + 'px', float: 'left', marginLeft: index > 0 ? '10px' : '0px'}" 
+					v-for="(text, index) in history" 
+					:text="text" 
+					size="mini" 
+					@click="handleClickHistory(text)"></u-tag>
+			</view>
+		</u-popup>
 	</view>
 </template>
 
@@ -123,6 +139,10 @@
 						}]
 					},
 				},
+				// 显示历史
+				showHistory: false,
+				historyKey: '',
+				history: [],
 				// 日期选择器
 				showDatetime: false,
 				datetimeKey: 'startDate',
@@ -222,22 +242,44 @@
 			submit() {
 				this.$refs.form.validate().then(e => {
 					this.$emit('submit', this.form)
-					/* this.loading = true
-					list(this.form).then(res => {
-						this.loading = false
-						this.$emit('success', res)
-						// this.list = res
-						// this.showSearch = false
-					}).catch(e => {
-						this.loading = false
-						this.list = []
-						this.$emit('error', res)
-						console.log(e)
-					}) */
+					let form = uni.getStorageSync('form')
+					if(!form){
+						form = {
+							fuzzy_key: [],
+							uid: [],
+							name: []
+						}
+					}
+					for(let key in form){
+						let val = this.form[key]
+						if(val && form[key].indexOf(val) === -1){
+							form[key].push(val)
+						}
+					}
+					uni.setStorageSync('form', form)
 				}).catch(err => {
 					console.log('err', err);
-					this.$emit('validate-error', res)
+					this.$emit('validate-error', err)
 				})
+			},
+			handleOpenHistory(key){
+				let form = uni.getStorageSync('form')
+				console.log(form)
+				if(form[key] && form[key].length > 0){
+					this.history = form[key]
+					this.historyKey = key
+					this.showHistory = true
+				}else {
+					this.history = []
+					uni.showToast({
+						icon: 'none',
+						title: '没有相关历史'
+					})
+				}
+			},
+			handleClickHistory(text){
+				this.form[this.historyKey] = text
+				this.showHistory = false
 			},
 			handleOpenSheet(key) {
 				this.actionsKey = key;
