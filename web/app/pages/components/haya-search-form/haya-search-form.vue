@@ -72,13 +72,14 @@
 		<u-action-sheet :show="showSheet" :actions="actions" title="请选择" @close="showSheet = false"
 			@select="sheetSelect">
 		</u-action-sheet>
-		<u-popup :show="showHistory" :customStyle="{width: '80%', padding: '10px 10px 10px 10px'}" mode="center" @close="showHistory = false">
+		<u-popup :show="showHistory" :customStyle="{width: '90%', padding: '0px 10px 10px 0px'}" mode="center" @close="showHistory = false">
 			<view>
 				<u-tag 
-					:style="{width: text.length * 18 + 'px', float: 'left', marginLeft: index > 0 ? '10px' : '0px'}" 
+					:style="{float: 'left', marginLeft: '10px', marginTop: '10px'}" 
 					v-for="(text, index) in history" 
 					:text="text" 
-					size="mini" 
+					closable 
+					@close="handleDelHistory(text)"
 					@click="handleClickHistory(text)"></u-tag>
 			</view>
 		</u-popup>
@@ -253,7 +254,7 @@
 					for(let key in form){
 						let val = this.form[key]
 						if(val && form[key].indexOf(val) === -1){
-							form[key].push(val)
+							form[key] = [val].concat(form[key])
 						}
 					}
 					uni.setStorageSync('form', form)
@@ -264,7 +265,6 @@
 			},
 			handleOpenHistory(key){
 				let form = uni.getStorageSync('form')
-				console.log(form)
 				if(form[key] && form[key].length > 0){
 					this.history = form[key]
 					this.historyKey = key
@@ -280,6 +280,18 @@
 			handleClickHistory(text){
 				this.form[this.historyKey] = text
 				this.showHistory = false
+			},
+			handleDelHistory(text){
+				let list = uni.$u.deepClone(this.history)
+				for(let i = 0; i < list.length; i++){
+					if(list[i] === text){
+						list.splice(i, 1)
+					}
+				}
+				let form = uni.getStorageSync('form')
+				form[this.historyKey] = list
+				uni.setStorageSync('form', form)
+				this.history = list
 			},
 			handleOpenSheet(key) {
 				this.actionsKey = key;
