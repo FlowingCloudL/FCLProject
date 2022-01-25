@@ -39,7 +39,7 @@ public class DruidConfig {
         initParameters.put("loginUsername","root");
         initParameters.put("loginPassword","123456");
         //允许访问 为"" 代表所有人都可以访问
-        initParameters.put("allow","localhost");
+        initParameters.put("allow","");
         //禁止访问
         //initParameters.put("kuangshen","192.168.11.123");
 

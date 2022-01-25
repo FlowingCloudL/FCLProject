@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class NgaDto {
+public class NgaCommentsDto {
 
     private Integer uid;
     private String name;
