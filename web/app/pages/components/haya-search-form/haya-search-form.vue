@@ -42,9 +42,9 @@
 						<u-icon slot="suffix" name="arrow-right"></u-icon>
 					</u--input>
 				</u-form-item>
-				<u-form-item label="最大条数" name="limit">
+				<!-- <u-form-item label="最大条数" name="limit">
 					<u--input @confirm="submit" v-model="form.limit" placeholder="请输入最大显示条数" />
-				</u-form-item>
+				</u-form-item> -->
 				<u-form-item label="排序标准" name="orderBy" required @click="handleOpenSheet('orderBy')">
 					<u--input :value="getSheetLabel('orderBy', form.orderBy)" disabled :disabledColor="color.bgColor"
 						placeholder="请选择楼号">
@@ -87,6 +87,7 @@
 </template>
 
 <script>
+	import {buildingList} from '../../../api/common.js'
 	import color from '../../../lib/color.js'
 	export default {
 		name: 'haya-search-form',
@@ -115,8 +116,6 @@
 					order: 2,
 					// 仅获取json类型
 					type: 2,
-					// 最大显示条数
-					limit: 100,
 					fuzzy_key: ''
 				},
 				// 校验规则
@@ -128,12 +127,6 @@
 						}]
 					},
 					floor: {
-						rules: [{
-							format: 'number',
-							errorMessage: '楼层只能输入数字'
-						}]
-					},
-					limit: {
 						rules: [{
 							format: 'number',
 							errorMessage: '楼层只能输入数字'
@@ -153,30 +146,7 @@
 				actionsKey: 'no',
 				actionsMap: {
 					// 楼号集合
-					no: [{
-							name: '六号楼',
-							value: 6
-						},
-						{
-							name: '五号楼',
-							value: 5
-						},
-						{
-							name: '四号楼',
-							value: 4
-						},
-						{
-							name: '三号楼',
-							value: 3
-						},
-						{
-							name: '二号楼',
-							value: 2
-						},
-						{
-							name: '一号楼',
-							value: 1
-						},
+					no: [
 					],
 					// 评论类型集合
 					tag: [{
@@ -235,6 +205,33 @@
 			actions() {
 				return this.actionsMap[this.actionsKey]
 			}
+		},
+		mounted() {
+			buildingList().then(res=>{
+				let list = []
+				
+				for(let i = res.length - 1; i >= 0; i--){
+					let item = res[i]
+					item['value'] = item['building_no']
+					item['name'] = item['building_name'] + '号专楼'
+					list.push(item)
+				}
+				
+				this.actionsMap.no = list
+				if(!res || res.length === 0){
+					uni.showToast({
+						icon: 'none',
+						title: '未获取到专楼列表'
+					})
+				}
+				
+			}).catch(e=>{
+				console.log(e)
+				uni.showToast({
+					icon: 'none',
+					title: '未获取到专楼列表'
+				})
+			})
 		},
 		methods: {
 			handleClose() {
@@ -301,6 +298,10 @@
 			},
 			sheetSelect(e) {
 				this.form[this.actionsKey] = e.value
+				if(this.actionsKey == 'no'){
+					this.form.startDate = e.startDatetime
+					this.form.endDate = e.endDatetime
+				}
 			},
 			getSheetLabel(key, value) {
 				let list = this.actionsMap[key]
