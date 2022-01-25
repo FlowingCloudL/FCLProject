@@ -1,15 +1,16 @@
 package com.fclProject.haya152.consumer.nga.controller;
 
-import com.fclProject.haya152.consumer.nga.dao.NgaMapper;
 import com.fclProject.haya152.consumer.nga.dto.NgaBuildingDto;
 import com.fclProject.haya152.consumer.nga.dto.NgaCommentsDto;
+import com.fclProject.haya152.consumer.nga.service.NgaServiceImpl;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.ApiResponse;
+import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,15 +19,26 @@ import java.util.Map;
 public class SelectController {
 
     @Autowired
-    private NgaMapper ngaMapper;
+    private NgaServiceImpl ngaService;
 
-    @RequestMapping("/select/comments")
-    public String selectComments(Integer no, Integer uid, String name, Integer floor, String fuzzy_key, Integer tag,
-                         String startDate, String endDate, String orderBy, Integer order, Integer limit,
-                         Integer type, HttpServletRequest request) {
+    @ApiOperation("查询指定评论")
+    @PostMapping("/select/comments")
+    @ResponseBody
+    public List<NgaCommentsDto> selectComments(@ApiParam(value = "楼号", example = "6", required = true) Integer no,
+                                               @ApiParam(value = "用户uid", example = "61692441") Integer uid,
+                                               @ApiParam(value = "用户名", example = "FlowingCloudL") String name,
+                                               @ApiParam(value = "层号", example = "777") Integer floor,
+                                               @ApiParam(value = "模糊搜索关键词", example = "花瓶") String fuzzy_key,
+                                               @ApiParam(value = "评论类型（标签）", example = "2 (表示同传)") Integer tag,
+                                               @ApiParam(value = "开始日期", example = "2022-01-01 12:00:00") String startDate,
+                                               @ApiParam(value = "结束日期", example = "2022-01-02 12:00:00") String endDate,
+                                               @ApiParam(value = "排序标准", example = "`like` (表示按点赞数排序)") String orderBy,
+                                               @ApiParam(value = "排序顺序", example = "2 (表示降序)") Integer order,
+                                               @ApiParam(value = "页码", example = "7 (注意：从1开始)") Integer pageNum,
+                                               @ApiParam(value = "单页条数", example = "100") Integer pageSize) {
+
         Map<String,Object> map = new HashMap<>();
-        map.put("no",ngaMapper.selectBuildingTableName(no));
-        System.out.println(map.get("no"));
+        map.put("no",ngaService.selectBuildingTableName(no));
         if (uid != null) map.put("uid",uid);
         if (!name.equals("")) map.put("name",name);
         if (floor != null) map.put("floor",floor);
@@ -36,30 +48,23 @@ public class SelectController {
         if (!endDate.equals("")) map.put("endDatetime",endDate);
         if (!orderBy.equals("")) map.put("orderBy",orderBy);
         if (order != null) map.put("order",order);
-        if (limit != null) map.put("limit",limit);
-        else map.put("limit",100);
-        List<NgaCommentsDto> list = ngaMapper.selectCommentsByDynamicCriteria(map);
-        request.setAttribute("list",list);
-        if (type == 2) return "forward:/select/comments/json";
-        else return "show";
+        if (pageNum == null) pageNum = 0;
+        if (pageSize == null) pageSize = 100;
+        return ngaService.selectCommentsByDynamicCriteria(map, new RowBounds(pageNum,pageSize));
     }
 
-    @PostMapping ("/select/comments/json")
+    @ApiOperation("查询指定楼信息")
+    @PostMapping("/select/building/{no}")
     @ResponseBody
-    public List<NgaCommentsDto> selectComments(HttpServletRequest request) {
-        return (List<NgaCommentsDto>) request.getAttribute("list");
+    public NgaBuildingDto selectBuilding(@ApiParam("楼号") @PathVariable("no") Integer no) {
+        return ngaService.selectBuildingByNo(no);
     }
 
-    @RequestMapping("/select/building/{no}")
-    @ResponseBody
-    public NgaBuildingDto selectBuilding(@PathVariable("no") Integer no) {
-        return ngaMapper.selectBuildingByNo(no);
-    }
-
-    @RequestMapping("/select/building/list")
+    @ApiOperation("列出所有楼信息")
+    @GetMapping ("/select/building/list")
     @ResponseBody
     public List<NgaBuildingDto> selectBuilding() {
-        return ngaMapper.selectBuildingList();
+        return ngaService.selectBuildingList();
     }
 
 }

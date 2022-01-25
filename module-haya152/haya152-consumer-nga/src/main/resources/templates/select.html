@@ -38,10 +38,8 @@
     <input type="radio" name="order" value="1" checked>升序
     <input type="radio" name="order" value="2">降序
     <br>
-    最大显示条目数:<input type="text" name="limit" οninput=“value=value.replace(/[^\d]/g,’’)”>   只能输入数字! (默认100)<br>
-    数据显示方式：
-    <input type="radio" name="type" value="1" checked>页面
-    <input type="radio" name="type" value="2">json
+    页码:<input type="text" name="pageNum" οninput=“value=value.replace(/[^\d]/g,’’)”><br>
+    单页条目数:<input type="text" name="pageSize" οninput=“value=value.replace(/[^\d]/g,’’)”>   只能输入数字! (默认100)<br>
     <input type="submit" value="查询">
 </form>
 </body>

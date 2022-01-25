@@ -1,5 +1,5 @@
 server:
-  port: 8080
+  port: 8082
 
 spring:
   datasource:
@@ -36,3 +36,11 @@ mybatis:
   type-aliases-package: com.fclProject.haya152.consumer.nga.dto
   # 配置mapper.xml路径
   mapper-locations: classpath:mybatis/mapper/NgaMapper.xml
+
+pagehelper:
+  helperDialect: mysql
+  reasonable: true
+  offsetAsPageNum: true
+  rowBoundsWithCount: true
+  supportMethodsArguments: true
+  params: count=countSql

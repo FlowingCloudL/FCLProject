@@ -52,9 +52,6 @@
             ORDER BY ${orderBy}
             <if test="order == 2"> DESC </if>
         </if>
-        <if test="limit != null">
-            LIMIT #{limit}
-        </if>
     </select>
 
     <select id="selectBuildingByNo" parameterType="int" resultMap="ngaBuildingMap">
