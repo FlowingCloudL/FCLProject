@@ -1,24 +1,18 @@
 package com.fclProject.haya152.consumer.nga.service;
 
 
-import com.fclProject.haya152.consumer.nga.dto.NgaBuildingDto;
-import com.fclProject.haya152.consumer.nga.dto.NgaCommentsDto;
-import com.fclProject.haya152.consumer.nga.dto.PageRequest;
-import com.fclProject.haya152.consumer.nga.dto.PageResult;
-import org.apache.ibatis.session.RowBounds;
-
-import java.util.List;
-import java.util.Map;
+import com.fclProject.haya152.consumer.nga.dto.ResponseDTO;
+import com.fclProject.haya152.consumer.nga.service.domain.CommentsQueryDTO;
 
 public interface NgaService {
 
-    List<NgaCommentsDto> selectCommentsByDynamicCriteria(Map<String,Object> criteria, RowBounds rowBounds);
+    ResponseDTO queryComments(CommentsQueryDTO queryDto);
 
-    NgaBuildingDto selectBuildingByNo(Integer building_no);
+    ResponseDTO queryBuildingByNo(Integer buildingNo);
 
-    String selectBuildingTableName(Integer building_no);
+    String queryBuildingTableName(Integer buildingNo);
 
-    List<NgaBuildingDto> selectBuildingList();
+    ResponseDTO queryBuildingList();
 
 //    PageResult getPages(PageRequest pageRequest);
 }

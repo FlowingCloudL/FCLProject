@@ -4,7 +4,7 @@
 <!-- namespace = 绑定一个对应的Dao/Mapper接口 -->
 <mapper namespace="com.fclProject.haya152.consumer.nga.dao.NgaMapper">
 
-    <resultMap id="ngaCommentsMap" type="NgaCommentsDto">
+    <resultMap id="ngaCommentsMap" type="NgaCommentsEntity">
         <result column="uid" property="uid"/>
         <result column="name" property="name"/>
         <result column="floor" property="floor"/>
@@ -14,7 +14,7 @@
         <result column="tag" property="tag"/>
     </resultMap>
 
-    <resultMap id="ngaBuildingMap" type="NgaBuildingDto">
+    <resultMap id="ngaBuildingMap" type="NgaBuildingEntity">
         <result column="building_name" property="building_name"/>
         <result column="building_no" property="building_no"/>
         <result column="tableName" property="tableName"/>
@@ -44,8 +44,8 @@
             <if test="endDatetime != null">
                 and `date` &lt;= STR_TO_DATE(#{endDatetime}, '%Y-%m-%d %H:%i:%s')
             </if>
-            <if test="fuzzy_key != null">
-                and `comments` like concat('%',#{fuzzy_key},'%')
+            <if test="fuzzyKey != null">
+                and `comments` like concat('%',#{fuzzyKey},'%')
             </if>
         </where>
         <if test="orderBy != null">
