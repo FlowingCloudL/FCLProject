@@ -67,7 +67,7 @@
 				<u-button style="margin-left: 10px; " type="primary" text="搜索" @click="submit"></u-button>
 			</u-row>
 		</view>
-		<u-datetime-picker :show="showDatetime" :value="getDatetimeValue()" mode="date" @cancel="showDatetime = false"
+		<u-datetime-picker :show="showDatetime" :value="getDatetimeValue()" mode="datetime" @cancel="showDatetime = false"
 			@confirm="datetimeSelect">{{form.endDate}}</u-datetime-picker>
 		<u-action-sheet :show="showSheet" :actions="actions" title="请选择" @close="showSheet = false"
 			@select="sheetSelect">
@@ -107,9 +107,9 @@
 					// 评论类型
 					tag: '',
 					// 开始日期
-					startDate: new Date(new Date().getTime() - 24 * 60 * 60 * 1000).format('yyyy-MM-dd HH:mm:ss'),
+					startDate: '',
 					// 结束日期
-					endDate: new Date().format('yyyy-MM-dd HH:mm:ss'),
+					endDate: '',
 					// 排序标准
 					orderBy: "`floor`",
 					// 排序
@@ -218,7 +218,11 @@
 				}
 				
 				this.actionsMap.no = list
-				if(!res || res.length === 0){
+				if(res && res.length > 0){
+					this.actionsKey = 'no'
+					console.log(list[0]);
+					this.sheetSelect(list[0])
+				}else {
 					uni.showToast({
 						icon: 'none',
 						title: '未获取到专楼列表'
@@ -298,10 +302,10 @@
 			},
 			sheetSelect(e) {
 				this.form[this.actionsKey] = e.value
-				if(this.actionsKey == 'no'){
+				/* if(this.actionsKey == 'no'){
 					this.form.startDate = e.startDatetime
 					this.form.endDate = e.endDatetime
-				}
+				} */
 			},
 			getSheetLabel(key, value) {
 				let list = this.actionsMap[key]

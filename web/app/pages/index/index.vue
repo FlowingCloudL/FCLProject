@@ -6,14 +6,12 @@
 		</u-navbar>
 		<!-- 搜索表单 -->
 		<haya-search-form style="margin-top: 50px;" v-show="showSearch" @submit="submit"></haya-search-form>
-
-		<!-- <u-loading-page style="z-index: 999999;" :loading="loading"></u-loading-page> -->
 		<!-- 展示部分 -->
 		<view v-show="!showSearch" style="margin-top: 50px; padding-bottom: 10px;" class="u-page">
-			<u-empty v-show="list.length === 0 && !loading" mode="list"
+			<u-empty v-if="list.length === 0 && !loading" mode="list"
 				icon="http://cdn.uviewui.com/uview/empty/list.png">
 			</u-empty>
-			<view class="u-demo-block">
+			<view v-else class="u-demo-block">
 				<view>
 					<!-- 内容组件 -->
 					<haya-connents-item v-for="(item,index) in list" :item="item"
