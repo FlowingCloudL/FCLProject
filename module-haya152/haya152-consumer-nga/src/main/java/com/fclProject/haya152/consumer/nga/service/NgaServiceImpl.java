@@ -52,12 +52,9 @@ public class NgaServiceImpl implements NgaService {
     @Override
     public ResponseDTO queryBuildingByNo(Integer buildingNo) {
         ResponseDTO response = new ResponseDTO();
-        NgaBuildingEntity ngaBuildingEntity = ngaMapper.selectBuildingByNo(buildingNo);
         response.setCode(200);
         response.setMessage("目标楼信息");
-        Map<String, Object> resultMap = new HashMap<>();
-        resultMap.put("BuildingInfo", ngaBuildingEntity);
-        response.setData(resultMap);
+        response.setData(ngaMapper.selectBuildingByNo(buildingNo));
         return response;
     }
 
@@ -69,12 +66,9 @@ public class NgaServiceImpl implements NgaService {
     @Override
     public ResponseDTO queryBuildingList() {
         ResponseDTO response = new ResponseDTO();
-        List<NgaBuildingEntity> result = ngaMapper.selectBuildingList();
         response.setCode(200);
         response.setMessage("楼信息列表");
-        Map<String, Object> resultMap = new HashMap<>();
-        resultMap.put("BuildingInfoList", result);
-        response.setData(resultMap);
+        response.setData(ngaMapper.selectBuildingList());
         return response;
     }
 
