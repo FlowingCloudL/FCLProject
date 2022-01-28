@@ -5,15 +5,31 @@
 <mapper namespace="com.fclProject.haya152.producer.nga.dao.NgaMapper">
 
     <insert id="insertNga" >
-        insert into `haya152-nga`.${no} (`uid`, `name`, `floor`, `date`, `like`, `comments`, `tag`)
+        insert into `haya152-nga`.${tableName} (`uid`, `name`, `floor`, `date`, `like`, `comments`, `tag`)
         values (#{dto.uid}, #{dto.name}, #{dto.floor}, #{dto.date}, #{dto.like}, #{dto.comments}, #{dto.tag})
     </insert>
 
     <update id="updateNga" parameterType="NgaDto">
-        update `haya152-nga`.${no}
+        update `haya152-nga`.${tableName}
         set `like` = #{dto.like}, `comments` = #{dto.comments}, `tag` = #{dto.tag}
         where floor = #{dto.floor}
     </update>
+    
+    <update id="updateDatetime">
+        update `haya152-nga`.nga_building
+        set `endDatetime` = #{datetime}
+        where tableName = #{tableName}
+    </update>
+
+    <select id="selectBuildingTableName" resultType="String">
+        select `tableName` from `haya152-nga`.nga_building
+        where building_no = #{no}
+    </select>
+
+    <select id="selectBuildingUrl" resultType="String">
+        select `url` from `haya152-nga`.nga_building
+        where building_no = #{no}
+    </select>
     
     <resultMap id="ngaMap" type="NgaDto">
         <result column="uid" property="uid"/>
@@ -26,7 +42,7 @@
     </resultMap>
 
     <select id="selectMaxFloor" resultType="Integer">
-        select max(floor) from `haya152-nga`.${no}
+        select max(floor) from `haya152-nga`.${tableName}
     </select>
 
 </mapper>

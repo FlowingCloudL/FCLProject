@@ -11,45 +11,39 @@ import com.gargoylesoftware.htmlunit.util.Cookie;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 
 @Service
 public class CrawlerService {
 
-    @Autowired
-    private NgaMapper ngaMapper;
+    private final NgaMapper ngaMapper;
+    private final SaveService saveService;
+    private final WebClient webClient;
+    private final String url;
+    private final String buildingTableName;
 
     @Autowired
-    private SaveService saveService;
+    public  CrawlerService(@Value("${nga.buildingNo}") Integer buildingNo,
+                           @Value("${nga.cookieValue}") String cookieName,
+                           @Value("${nga.cookieName}") String cookieValue,
+                           NgaMapper ngaMapper,
+                           SaveService saveService) {
 
-    @Value("${nga.url}")
-    private String url;
+        System.out.printf("\n===========================================================================================\n");
+        System.out.printf("\n爬虫服务初始化中。。。。。\n\n");
 
-    @Value("${nga.cookieName}")
-    private String cookieName;
+        this.ngaMapper = ngaMapper;
+        this.saveService = saveService;
+        this.url = ngaMapper.selectBuildingUrl(buildingNo);
+        this.buildingTableName = ngaMapper.selectBuildingTableName(buildingNo);
 
-    @Value("${nga.cookieValue}")
-    private String cookieValue;
-
-    @Value("${nga.building}")
-    private String no;
-
-    private WebClient webClient;
-
-
-    public void startCrawler() {
-
-        System.out.printf("\n爬虫服务初始化中。。。。。\n");
-        System.out.println("url:"+url);
-        System.out.println("cookieName:"+cookieName);
-        System.out.println("cookieValue:"+cookieValue);
+        System.out.println("[cookieName] :  "+cookieName);
+        System.out.println("[cookieValue] :  "+cookieValue);
 
         // 屏蔽HtmlUnit等系统 log
         LogFactory.getFactory().setAttribute("org.apache.commons.logging.Log","org.apache.commons.logging.impl.NoOpLog");
@@ -67,38 +61,33 @@ public class CrawlerService {
         webClient.getOptions().setTimeout(10 * 1000);                   // 设置连接超时时间
 
         System.out.printf("\n爬虫服务初始化完成!\n");
-        System.out.println("=====================================");
-        System.out.println("             爬虫开始运行              ");
-        System.out.println("=====================================");
-
-        Runnable task = () -> {
-            try {
-                crawler(url);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        };
-        ScheduledExecutorService service = Executors.newSingleThreadScheduledExecutor();
-        System.out.println("定时任务： "+url+"   目标："+no+"   开始执行！");
-        service.scheduleAtFixedRate(task,10,10, TimeUnit.SECONDS);
+        System.out.printf("\n===========================================================================================\n\n");
     }
 
-    public void crawler(String url) throws IOException {
-        int startPage = ngaMapper.selectMaxFloor(no) / 20 - 5;
-//        int startPage = 1;
+    @Scheduled(cron = "0 0/1 * * * ?")
+    public void crawlerLatest() throws IOException {
+        int startPage = ngaMapper.selectMaxFloor(buildingTableName) / 20 - 1;
         startPage = startPage > 0 ? startPage : 1;
-        System.out.println("=====================================");
-        crawByPage(url,startPage,startPage+15);
+        crawByPage(startPage, startPage+10);
     }
 
-    public void crawByPage(String url,int startPage, int endPage) throws FailingHttpStatusCodeException, IOException {
+    @Scheduled(cron = "0 0/5 * * * ?")
+    public void crawlerBack() throws IOException {
+        int backOffset = 50;
+        int endPage = ngaMapper.selectMaxFloor(buildingTableName) / 20 - 1;
+        int startPage = endPage - backOffset;
+        startPage = startPage > 0 ? startPage : 1;
+        crawByPage(startPage, endPage);
+    }
+
+    public void crawByPage(int startPage, int endPage) throws FailingHttpStatusCodeException, IOException {
         for (int i = startPage; i <= endPage; i++){
-            System.out.println("爬取: "+url+"&page="+i+"    |    "+i+"P");
+            System.out.println("["+Thread.currentThread().getName()+"]    |    url: "+url+"&page="+i+"    |    "+i+"P");
             HtmlPage page = webClient.getPage(url+"&page="+i);
             webClient.waitForBackgroundJavaScript(1 * 1000);    // 等待js后台执行1秒
             try {
                 List<NgaDto> list = ParseUtils.parseNGAByPage(page.asXml());
-                saveService.saveToMysqlByInsert(list,no);
+                saveService.saveToMysql(buildingTableName, list);
             } catch (NullPointerException e) {
                 System.out.println("【NullPointerException】重试。。。");
                 i--;

@@ -13,13 +13,14 @@ public class SaveService {
     @Autowired
     private NgaMapper ngaMapper;
 
-    public void saveToMysqlByInsert(List<NgaDto> list, String no) {
+    public void saveToMysql(String buildingName, List<NgaDto> list) {
         for (NgaDto ngaDto : list) {
             try { //尝试insert
-                ngaMapper.insertNga(ngaDto,no);
+                ngaMapper.insertNga(buildingName,ngaDto);
+                ngaMapper.updateDatetime(buildingName,ngaDto.getDate());
             } catch (Exception e1) {
                 try { // 尝试update
-                    ngaMapper.updateNga(ngaDto,no);
+                    ngaMapper.updateNga(buildingName,ngaDto);
                 } catch (Exception e2) {
                     System.out.println("insert/update 失败!!!!!");
                 }

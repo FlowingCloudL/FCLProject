@@ -34,7 +34,6 @@ logging:
     com: off
 
 nga:
-  building: nga06
-  url: https://bbs.nga.cn/read.php?tid=30226559
+  buildingNo: ${BNO:6}
   cookieName: "bbsmisccookies"
   cookieValue: "%7B%22uisetting%22%3A%7B0%3A1%2C1%3A1642593567%7D%2C%22pv_count_for_insad%22%3A%7B0%3A-110%2C1%3A1642525230%7D%2C%22insad_views%22%3A%7B0%3A2%2C1%3A1642525230%7D%7D; taihe=c657c4764193245afe9a430f73f93e78; lastvisit=1642490788; ngaPassportUid=61692441; lastpath=/read.php?tid=30226559&page=1131; ngacn0comUserInfo=FlowingCloudL%09FlowingCloudL%0939%0939%09%0910%09100%094%090%090%09130_10%2C61_1; ngacn0comUserInfoCheck=54c59300b7577ce46ec0132d4131d98d; ngacn0comInfoCheckTime=1642487646; ngaPassportUrlencodedUname=FlowingCloudL; ngaPassportCid=X8u0sts3vbo49j5qit38cbrerte6af3cf2136scg"
