@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>FCLProject</artifactId>
-        <groupId>org.example</groupId>
+        <groupId>com.github</groupId>
         <version>1.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
@@ -12,8 +12,8 @@
     <artifactId>module-haya152</artifactId>
     <packaging>pom</packaging>
     <modules>
-        <module>haya152-producer-nga</module>
-        <module>haya152-consumer-nga</module>
+        <module>haya152-nga-crawler</module>
+        <module>haya152-nga-app</module>
     </modules>
 
     <properties>

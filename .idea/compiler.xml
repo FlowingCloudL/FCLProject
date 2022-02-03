@@ -8,8 +8,8 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="module-gateway" />
-        <module name="haya152-producer-nga" />
-        <module name="haya152-consumer-nga" />
+        <module name="haya152-nga-app" />
+        <module name="haya152-nga-crawler" />
         <module name="module-user" />
         <module name="module-blog" />
         <module name="module-infrastructure" />
