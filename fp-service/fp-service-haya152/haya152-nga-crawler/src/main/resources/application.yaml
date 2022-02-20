@@ -1,0 +1,50 @@
+######################### server #########################
+server:
+  port: 8090
+######################### spring #########################
+spring:
+  ######################### database #########################
+  datasource:
+    url: jdbc:mysql://localhost:3306/haya152-nga?serverTimezone=UTC&useUnicode=true&characterEncoding=utf-8&useSSL=true
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: 123456
+    type: com.alibaba.druid.pool.DruidDataSource
+    #druid数据源专有配置
+    initialSize: 5
+    minIdle: 5
+    maxActive: 20
+    maxWait: 60000
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: SELECT 1 FROM DUAL
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    poolPreparedStatements: true
+    #配置监控统计拦截的filters | stat:监控统计; slf4j:日志记录; wall:防御sql注入
+    #如果允许报错，java.lang.ClassNotFoundException: org.apache.Log4j.Properity
+    #则导入log4j 依赖就行
+    filters: stat,wall,slf4j
+    maxPoolPreparedStatementPerConnectionSize: 20
+    useGlobalDataSourceStat: true
+    connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=500
+######################### mybatis #########################
+mybatis:
+  # 扫描包, 自动配置别名
+  type-aliases-package: com.github.FlowingCloudL.haya152.nga.crawler.entity
+  # 配置mapper.xml路径
+  mapper-locations: classpath:mybatis/mapper/NgaMapper.xml
+  # 禁用缓存
+  configuration:
+    cache-enabled: false
+    local-cache-scope: statement
+######################### log #########################
+logging:
+  level:
+    com.gargoylesoftware: off
+######################### nga #########################
+nga:
+  buildingNo: ${BNO:8}
+  cookieName: ${COOKIE_NAME:bbsmisccookies}
+  cookieValue: ${COOKIE_VALUE:%7B%22uisetting%22%3A%7B0%3A1%2C1%3A1643806450%7D%2C%22pv_count_for_insad%22%3A%7B0%3A-43%2C1%3A1643475653%7D%2C%22insad_views%22%3A%7B0%3A1%2C1%3A1643475653%7D%7D; taihe=c657c4764193245afe9a430f73f93e78; lastvisit=1643423717; ngaPassportUid=61692441; guestJs=1643423716; lastpath=/read.php?tid=30226559&page=3060&rand=84; ngaPassportOid=e911f9f0ee36628a4aecd75d11d995dc; ngacn0comUserInfo=FlowingCloudL%09FlowingCloudL%0939%0939%09%0910%09100%094%090%090%09130_10%2C61_1; ngacn0comUserInfoCheck=c1d70b8a67af847f5d620dda4b8eeced; ngacn0comInfoCheckTime=1643423733; ngaPassportUrlencodedUname=FlowingCloudL; ngaPassportCid=X8u0sts3vbo49j5qit38cbrerte6af3cf2136scg}
