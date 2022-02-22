@@ -18,12 +18,12 @@ public class UserInfoServiceImpl implements UserInfoService {
     private UserInfoMapper userInfoMapper;
 
     @Override
-    public List<UserInfoEntity> queryUserInfoList() {
+    public List<UserInfoEntity> queryList() {
         return userInfoMapper.selectList(null);
     }
 
     @Override
-    public PageVO<UserInfoEntity> queryUserInfoListByPage(Integer pageNum, Integer pageSize) {
+    public PageVO<UserInfoEntity> queryListByPage(Integer pageNum, Integer pageSize) {
 
         Page<UserInfoEntity> page = userInfoMapper.selectPage(new Page<>(pageNum, pageSize), null);
         PageVO<UserInfoEntity> vo = new PageVO<>();
@@ -35,17 +35,27 @@ public class UserInfoServiceImpl implements UserInfoService {
     }
 
     @Override
-    public UserInfoEntity queryUserInfoByUid(Integer uid) {
+    public UserInfoEntity queryByUid(Integer uid) {
         return userInfoMapper.selectById(uid);
     }
 
     @Override
-    public UserInfoEntity queryUserInfoByNickname(String nickname) {
+    public UserInfoEntity queryByNickname(String nickname) {
         return userInfoMapper.selectOne(new QueryWrapper<UserInfoEntity>().eq("nickname",nickname));
     }
 
     @Override
-    public boolean updateUserInfo(UserInfoEntity userInfo) {
-        return userInfoMapper.updateById(userInfo) == 1;
+    public Integer update(UserInfoEntity userInfo) {
+        return userInfoMapper.updateById(userInfo);
+    }
+
+    @Override
+    public Integer add(UserInfoEntity userInfo) {
+        return userInfoMapper.insert(userInfo);
+    }
+
+    @Override
+    public Integer delete(Integer uid) {
+        return userInfoMapper.delete(new QueryWrapper<UserInfoEntity>().eq("uid", uid));
     }
 }

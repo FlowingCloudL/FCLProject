@@ -13,56 +13,56 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@RestController
+@RestController("/info")
 public class UserInfoController {
 
     @Autowired
     UserInfoService userInfoService;
 
-    @RequestMapping("/userInfo/query/list")
+    @RequestMapping("/query/list")
     public ResponseDTO queryUserInfoList() {
         try {
-            List<UserInfoEntity> result = userInfoService.queryUserInfoList();
+            List<UserInfoEntity> result = userInfoService.queryList();
             return ResponseDTO.getSuccess("查询成功", result);
         } catch (Exception e) {
             return ResponseDTO.getError("查询失败");
         }
     }
 
-    @RequestMapping("/userInfo/query/list/{pageNum}/{pageSize}")
+    @RequestMapping("/query/list/{pageNum}/{pageSize}")
     public ResponseDTO queryUserInfoList(@PathVariable("pageNum") Integer pageNum, @PathVariable("pageSize") Integer pageSize) {
         try {
-            PageVO<UserInfoEntity> result = userInfoService.queryUserInfoListByPage(pageNum, pageSize);
+            PageVO<UserInfoEntity> result = userInfoService.queryListByPage(pageNum, pageSize);
             return ResponseDTO.getSuccess("查询成功", result);
         } catch (Exception e) {
             return ResponseDTO.getError("查询失败");
         }
     }
 
-    @RequestMapping("/userInfo/query/uid/{uid}")
+    @RequestMapping("/query/uid/{uid}")
     public ResponseDTO queryUserInfoByUid(@PathVariable Integer uid) {
         try {
-            UserInfoEntity result = userInfoService.queryUserInfoByUid(uid);
+            UserInfoEntity result = userInfoService.queryByUid(uid);
             return ResponseDTO.getSuccess("查询成功", result);
         } catch (Exception e) {
             return ResponseDTO.getError("查询失败");
         }
     }
 
-    @RequestMapping("/userInfo/query/name/{name}")
+    @RequestMapping("/query/name/{name}")
     public ResponseDTO queryUserInfoByNickname(@PathVariable String name) {
         try {
-            UserInfoEntity result = userInfoService.queryUserInfoByNickname(name);
+            UserInfoEntity result = userInfoService.queryByNickname(name);
             return ResponseDTO.getSuccess("查询成功", result);
         } catch (Exception e) {
             return ResponseDTO.getError("查询失败");
         }
     }
 
-    @RequestMapping("/userInfo/update/")
+    @RequestMapping("/update/")
     public ResponseDTO updateUserInfo(@RequestBody UserInfoEntity userInfo) {
         try {
-            if (userInfoService.updateUserInfo(userInfo)) {
+            if (userInfoService.update(userInfo) > 0) {
                 return ResponseDTO.getSuccess("更新成功");
             }
             return ResponseDTO.getError("更新失败");

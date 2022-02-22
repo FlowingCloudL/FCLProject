@@ -11,6 +11,7 @@
       <set>
         <option value="$PROJECT_DIR$/fp-auth/pom.xml" />
         <option value="$PROJECT_DIR$/fp-infrastructure/fp-auth/pom.xml" />
+        <option value="$PROJECT_DIR$/fp-service/fp-service-haya152/pom.xml" />
         <option value="$PROJECT_DIR$/haya152-consumer/pom.xml" />
         <option value="$PROJECT_DIR$/producer-nga/pom.xml" />
       </set>

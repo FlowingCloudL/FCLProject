@@ -7,17 +7,18 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="haya152-nga-crawler" />
         <module name="fp-common-nacos" />
         <module name="fp-gateway" />
         <module name="fp-service-user" />
         <module name="fp-service-blog" />
-        <module name="haya152-nga-app" />
         <module name="fp-auth" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="fp-service-haya152" target="1.8" />
       <module name="haya152-consumer" target="8" />
+      <module name="haya152-nga-app" target="1.8" />
+      <module name="haya152-nga-crawler" target="1.8" />
       <module name="producer-nga" target="8" />
     </bytecodeTargetLevel>
   </component>

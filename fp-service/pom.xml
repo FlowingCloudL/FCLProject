@@ -17,7 +17,6 @@
     <modules>
         <module>fp-service-user</module>
         <module>fp-service-blog</module>
-        <module>fp-service-haya152</module>
     </modules>
 
 </project>
