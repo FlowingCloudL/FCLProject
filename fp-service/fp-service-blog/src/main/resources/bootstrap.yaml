@@ -1,5 +1,0 @@
-spring:
-  application:
-    name: ${SEVER_NAME:fp-blog}
-  profiles:
-    active: dev

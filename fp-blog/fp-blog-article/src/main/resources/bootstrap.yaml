@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: ${SEVER_NAME:fp-blog-article}
+  profiles:
+    active: dev

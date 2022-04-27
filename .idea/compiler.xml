@@ -7,15 +7,24 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="fp-api-mall-product" />
         <module name="fp-common-nacos" />
         <module name="fp-gateway" />
-        <module name="fp-service-user" />
-        <module name="fp-service-blog" />
+        <module name="fp-mall-order" />
+        <module name="fp-common-core" />
+        <module name="fp-blog-article" />
         <module name="fp-auth" />
+        <module name="fp-mall-pay" />
+        <module name="fp-blog-user" />
+        <module name="fp-mall-product" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="fp-mall-stock" target="1.8" />
+      <module name="fp-operation" target="1.8" />
+      <module name="fp-service" target="1.8" />
       <module name="fp-service-haya152" target="1.8" />
+      <module name="fp-service-user" target="1.8" />
       <module name="haya152-consumer" target="8" />
       <module name="haya152-nga-app" target="1.8" />
       <module name="haya152-nga-crawler" target="1.8" />

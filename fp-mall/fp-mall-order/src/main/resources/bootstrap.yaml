@@ -1,0 +1,40 @@
+server:
+  port: 9000
+
+spring:
+  application:
+    name: fp-mall-order
+  profiles:
+    active: dev
+
+
+seata:
+  enabled: true
+  application-id: ${spring.application.name}
+  enable-auto-data-source-proxy: false
+  tx-service-group: fp-mall-order-group
+
+  registry:
+    type: nacos
+    nacos:
+      application: seata-server
+      server-addr: 49.234.36.26:8848
+      group: SEATA_GROUP
+      namespace: f3b480fc-6ed4-41ea-b243-c0d8c104dc36
+      username: nacos
+      password: 43997k7k
+
+  config:
+    type: nacos
+    nacos:
+      server-addr: 49.234.36.26:8848
+      group: SEATA_GROUP
+      namespace: f3b480fc-6ed4-41ea-b243-c0d8c104dc36
+      username: nacos
+      password: 43997k7k
+
+  service:
+    vgroup-mapping:
+      fp-mall-order-group: default
+    disable-global-transaction: false
+

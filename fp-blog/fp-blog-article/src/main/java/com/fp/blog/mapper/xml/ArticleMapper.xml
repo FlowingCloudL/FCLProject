@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.fp.blog.mapper.ArticleMapper">
+
+    <resultMap id="articleList" type="com.fp.blog.dto.ArticleListVO">
+        <result property="articleId" column="article_id"/>
+        <result property="uid" column="uid"/>
+        <result property="title" column="title"/>
+        <result property="publishTime" column="publish_time"/>
+        <result property="modifyTime" column="modify_time"/>
+        <result property="views" column="views"/>
+        <association property="category" column="article_id" select="getArticleCategoryId"/>
+        <collection property="tag" column="article_id" javaType="ArrayList" ofType="Integer" select="getArticleTagId"/>
+    </resultMap>
+
+    <select id="getArticleList" resultMap="articleList">
+        select * from blog_article
+    </select>
+
+    <select id="getArticleCategoryId" resultType="Integer">
+        select category_id from blog_article_category where article_id = #{id}
+    </select>
+
+    <select id="getArticleTagId" resultType="Integer">
+        select tag_id from blog_article_tag where article_id = #{id} order by tag_id
+    </select>
+
+    <select id="getCategoryList" resultType="CategoryEntity">
+        select * from blog_category
+    </select>
+
+    <select id="getCategoryNameById" resultType="String">
+        select `name` from blog_category where id = #{id}
+    </select>
+
+    <select id="getTagList" resultType="TagEntity">
+        select * from blog_tag
+    </select>
+
+    <select id="getTagNameById" resultType="String">
+        select `name` from blog_tag where id = #{id}
+    </select>
+
+
+</mapper>
