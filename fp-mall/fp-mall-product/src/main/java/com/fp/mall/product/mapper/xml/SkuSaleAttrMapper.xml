@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.fp.mall.product.mapper.SkuSaleAttrMapper">
+
+    <insert id="save" parameterType="SkuSaleAttrEntity">
+        insert into `sku_sale_attr`
+        (`spu_id`, `sku_id`, `attr_id`, `attr_name`, `attr_value_id`, `attr_value`, `status`)
+        value (#{skuSaleAttr.spuId}, #{skuSaleAttr.skuId}, #{skuSaleAttr.attrId}, #{skuSaleAttr.attrName},
+               #{skuSaleAttr.attrValueId}, #{skuSaleAttr.attrValue}, #{skuSaleAttr.status})
+    </insert>
+
+    <insert id="saveBatch" parameterType="SkuSaleAttrEntity">
+        insert into `sku_sale_attr`
+        (`spu_id`, `sku_id`, `attr_id`, `attr_name`, `attr_value_id`, `attr_value`, `status`)
+        values
+        <foreach collection="skuSaleAttrList" item="skuSaleAttr" separator=",">
+            (#{skuSaleAttr.spuId}, #{skuSaleAttr.skuId}, #{skuSaleAttr.attrId}, #{skuSaleAttr.attrName},
+            #{skuSaleAttr.attrValueId}, #{skuSaleAttr.attrValue}, #{skuSaleAttr.status})
+        </foreach>
+    </insert>
+
+    <sql id="updateSql">
+        update `sku_sale_attr`
+        <set>
+            <if test="skuSaleAttr.attrName != null">`attr_name` = #{skuSaleAttr.attrName}</if>
+            <if test="skuSaleAttr.attrValue != null">`attr_value` = #{skuSaleAttr.attrValue}</if>
+        </set>
+        where `sku_id` = #{skuSaleAttr.skuId} and `attr_value_id` = #{skuSaleAttr.attrValueId}
+    </sql>
+
+    <update id="update" parameterType="SkuSaleAttrEntity">
+        <include refid="updateSql"/>
+    </update>
+
+    <update id="updateBatch">
+        <foreach collection="skuSaleAttrList" item="skuSaleAttr" separator=";">
+            <include refid="updateSql"/>
+        </foreach>
+    </update>
+
+    <update id="changeStatusBySpuId">
+        update `sku_sale_attr` set `status` = #{status} where `spu_id` = #{spuId}
+    </update>
+
+    <update id="changeStatusBySkuIds">
+        update `sku_sale_attr` set `status` = #{status} where `sku_id` in
+        <foreach collection="skuIds" item="skuId" open="(" separator="," close=")">
+            #{skuId}
+        </foreach>
+    </update>
+
+    <delete id="deleteById" parameterType="Long">
+        delete from `sku_sale_attr` where `id` = #{id}
+    </delete>
+
+</mapper>

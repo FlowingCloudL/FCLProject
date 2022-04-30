@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.fp.mall.product.mapper.CategoryMapper">
+
+    <resultMap id="categoryVO" type="CategoryVO">
+        <id column="id" property="id"/>
+        <result column="level" property="level"/>
+        <result column="parent_id" property="parentId"/>
+        <result column="name" property="name"/>
+        <result column="desc" property="desc"/>
+        <result column="icon_url" property="iconUrl"/>
+        <result column="status" property="status"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+        <collection notNullColumn="id" property="categories" javaType="List" select="listCategoryVOByParentIdAndStatus"/>
+    </resultMap>
+
+    <!-- ========================================================================================= -->
+
+    <select id="getCategoryVOByCategoryId" parameterType="Long" resultType="CategoryVO">
+        select * from `category` where `id` = #{categoryId}
+    </select>
+
+    <select id="listCategoryVOByParentIdAndStatus" resultType="CategoryVO">
+        select * from `category`
+        <where>
+            <if test="parentId != null">`parent_id` = #{parentId}</if>
+            <if test="status != null">`status` = #{status}</if>
+        </where>
+    </select>
+
+    <select id="listCategoryVOAndChild" resultMap="categoryVO">
+        select * from `category` where `level` = 0
+    </select>
+
+    <select id="listCategoryEntityByParentId" parameterType="Long" resultType="CategoryEntity">
+        select * from `category` where `parent_id` = #{parentId}
+    </select>
+
+    <select id="listCategoryEntityByCategoryIds" resultType="CategoryEntity">
+        select * from `category` where `id` in
+        <foreach collection="categoryIds" item="categoryId" open="(" separator="," close=")">
+            #{categoryId}
+        </foreach>
+    </select>
+
+    <select id="listCategoryIdByParentId" parameterType="Long" resultType="Long">
+        select `id` from `category` where `parent_id` = #{parentId}
+    </select>
+
+    <insert id="save" parameterType="CategoryEntity">
+        insert into `category` (`level`, `parent_id`, `name`, `desc`, `icon_url`, `status`)
+        value (#{category.level}, #{category.parentId}, #{category.name}, #{category.desc}, #{category.iconUrl}, #{category.status})
+    </insert>
+
+    <update id="update" parameterType="CategoryEntity">
+        update `category`
+        <set>
+            <if test="category.level != null">`level` = #{category.level}</if>
+            <if test="category.parentId != null">`parent_id` = #{category.parentId}</if>
+            <if test="category.name != null">`name` = #{category.name}</if>
+            <if test="category.desc != null">`desc` = #{category.desc}</if>
+            <if test="category.iconUrl != null">`icon_url` = #{category.iconUrl}</if>
+            <if test="category.status != null">`status` = #{category.status}</if>
+        </set>
+        where `id` = #{category.id}
+    </update>
+
+    <update id="changeBatchOfStatus">
+        update `category` set `status` = #{status} where `id` in
+        <foreach collection="categoryIds" item="categoryId" open="(" separator="," close=")">
+            #{categoryId}
+        </foreach>
+    </update>
+
+    <delete id="deleteById" parameterType="Long">
+        delete from `category` where `id` = #{categoryId}
+    </delete>
+
+</mapper>

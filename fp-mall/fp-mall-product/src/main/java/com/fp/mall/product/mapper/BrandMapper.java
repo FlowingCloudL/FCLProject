@@ -31,6 +31,13 @@ public interface BrandMapper {
     List<BrandVO> listByCategoryId(@Param("categoryId") Long categoryId);
 
     /**
+     * 获取品牌在商品中使用的数量
+     * @param brandId 品牌id
+     * @return 使用该品牌的商品数量
+     */
+    Long countUseInSpu(@Param("brandId") Long brandId);
+
+    /**
      * 保存品牌信息
      * @param brandEntity 品牌实体类
      */
@@ -47,12 +54,5 @@ public interface BrandMapper {
      * @param brandId 品牌id
      */
     void deleteById(@Param("brandId") Long brandId);
-
-    /**
-     * 获取品牌在商品中使用的数量
-     * @param brandId 品牌id
-     * @return 使用该品牌的商品数量
-     */
-    int countUseInSpu(@Param("brandId") Long brandId);
 
 }

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.fp.mall.product.mapper.BrandCategoryMapper">
+
+    <select id="listCategoryIdsByBrandId" parameterType="Long" resultType="Long">
+        select `category_id` from `brand_category` where `brand_id` = #{brandId}
+    </select>
+
+    <insert id="saveBatch">
+        insert into `brand_category` (`category_id`, `brand_id`) values
+        <foreach collection="brandCategoryEntityList" item="entity" separator=",">
+            (#{entity.categoryId}, #{entity.brandId})
+        </foreach>
+    </insert>
+
+    <delete id="deleteByBrandId" parameterType="Long">
+        delete from `brand_category` where `brand_id` = #{brandId}
+    </delete>
+
+    <delete id="deleteByBrandIdAndCategoryIds">
+        delete from `brand_category` where `brand_id` = #{brandId} and `category_id` in
+        <foreach collection="categoryIds" item="categoryId" open="(" separator="," close=")">
+            #{categoryId}
+        </foreach>
+    </delete>
+
+</mapper>

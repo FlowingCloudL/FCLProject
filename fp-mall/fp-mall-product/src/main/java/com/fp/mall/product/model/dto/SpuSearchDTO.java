@@ -20,11 +20,8 @@ public class SpuSearchDTO {
 	@ApiModelProperty("spu名称")
 	private String name;
 
-	@ApiModelProperty("spuId列表(商品上下架：批量操作时，用此参数)(批量处理参数)")
-	private List<Long> spuIds;
-
 	@ApiModelProperty("商品状态： 0.全部  1.销售中  2.已售罄  3.已下架 ")
-	private Integer spuStatus;
+	private Integer status;
 
 	@ApiModelProperty("最低价")
 	private Long minPrice;

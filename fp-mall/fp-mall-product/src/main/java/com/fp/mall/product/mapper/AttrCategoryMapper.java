@@ -7,12 +7,6 @@ import java.util.List;
 
 public interface AttrCategoryMapper {
 
-    /**
-     * 通过属性Id，获取关联的分类VO列表
-     * @param attrId 属性id
-     * @return 分类VO列表
-     */
-    List<CategoryVO> listCategoryByAttrId(@Param("attrId") Long attrId);
 
     /**
      * 通过属性id，获取关联的分类id列表

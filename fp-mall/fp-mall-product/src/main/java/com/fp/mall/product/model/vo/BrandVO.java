@@ -27,7 +27,7 @@ public class BrandVO extends BaseVO {
     @ApiModelProperty("状态 1:enable, 0:disable, -1:deleted")
     private Byte status;
 
-    //============================== 额外需求 ==============================
+    //======================================== 附加 ========================================
 
     @ApiModelProperty("分类")
     private List<CategoryVO> categories;

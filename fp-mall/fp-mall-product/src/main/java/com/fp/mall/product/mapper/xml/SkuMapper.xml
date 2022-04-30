@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.fp.mall.product.mapper.SkuMapper">
+
+    <resultMap id="skuVO" type="SkuVO">
+        <collection column="id" property="skuSaleAttrs" javaType="List" ofType="SkuSaleAttrVO" select="getSkuSaleAttr"/>
+    </resultMap>
+
+    <select id="getSkuSaleAttr" parameterType="Long" resultType="SkuSaleAttrVO">
+        select * from `sku_sale_attr` where `sku_id` = #{id}
+    </select>
+
+    <!-- ============================================================================ -->
+
+    <select id="getBySkuId" parameterType="Long" resultMap="skuVO">
+        select * from `sku` where `id` = #{skuId}
+    </select>
+
+    <select id="listBySpuId" parameterType="Long" resultMap="skuVO">
+        select * from `sku` where `spu_id` = #{spuId}
+        <if test="status != null">
+            and `status` = #{status}
+        </if>
+    </select>
+
+    <insert id="save" parameterType="SkuEntity">
+        insert into `sku` (`spu_id`, `name`, `price`, `img_url`, `stock`, `status`)
+        value (#{sku.spuId}, #{sku.name}, #{sku.price}, #{sku.imgUrl}, #{sku.stock}, #{sku.status})
+    </insert>
+
+    <insert id="saveBatch">
+        insert into `sku` (`spu_id`, `name`, `price`, `img_url`, `stock`, `status`) values
+        <foreach collection="skuList" item="sku" separator=",">
+            (#{sku.spuId}, #{sku.name}, #{sku.price}, #{sku.imgUrl}, #{sku.stock}, #{sku.status})
+        </foreach>
+    </insert>
+
+    <sql id="updateSql">
+        update `sku`
+        <set>
+            <if test="sku.name != null">`name` = #{sku.name}</if>
+            <if test="sku.price != null">`price` = #{sku.price}</if>
+            <if test="sku.imgUrl != null">`img_url` = #{sku.imgUrl}</if>
+            <if test="sku.stock != null">`stock` = #{sku.stock}</if>
+            <if test="sku.status != null">`status` = #{sku.status}</if>
+        </set>
+        where `id` = #{sku.id}
+    </sql>
+
+    <update id="update" parameterType="SkuEntity">
+        <include refid="updateSql"/>
+    </update>
+    
+    <update id="updateBatch">
+        <foreach collection="skuList" item="sku">
+            <include refid="updateSql"/>
+        </foreach>
+    </update>
+
+    <delete id="deleteBySkuId" parameterType="Long">
+        delete from `sku` where `id` = #{skuId}
+    </delete>
+
+    <delete id="deleteBySpuId" parameterType="Long">
+        delete from `sku` where `spu_id` = #{spuId}
+    </delete>
+
+
+</mapper>

@@ -1,7 +1,10 @@
 package com.fp.common.core.model;
 
+import lombok.Data;
+
 import java.util.List;
 
+@Data
 public class PageVO<T> {
 
     /**
@@ -28,55 +31,4 @@ public class PageVO<T> {
      * 数据列表
      */
     private List<T> content;
-
-    public int getPageNum() {
-        return PageNum;
-    }
-
-    public void setPageNum(int pageNum) {
-        PageNum = pageNum;
-    }
-
-    public int getPageSize() {
-        return pageSize;
-    }
-
-    public void setPageSize(int pageSize) {
-        this.pageSize = pageSize;
-    }
-
-    public long getTotalCount() {
-        return totalCount;
-    }
-
-    public void setTotalCount(long totalCount) {
-        this.totalCount = totalCount;
-    }
-
-    public int getTotalPages() {
-        return totalPages;
-    }
-
-    public void setTotalPages(int totalPages) {
-        this.totalPages = totalPages;
-    }
-
-    public List<T> getContent() {
-        return content;
-    }
-
-    public void setContent(List<T> content) {
-        this.content = content;
-    }
-
-    @Override
-    public String toString() {
-        return "PageVO{" +
-                "PageNum=" + PageNum +
-                ", pageSize=" + pageSize +
-                ", totalCount=" + totalCount +
-                ", totalPages=" + totalPages +
-                ", content=" + content +
-                '}';
-    }
 }

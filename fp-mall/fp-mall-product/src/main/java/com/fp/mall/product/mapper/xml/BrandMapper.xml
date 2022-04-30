@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.fp.mall.product.mapper.BrandMapper">
+
+    <resultMap id="brandVO" type="BrandVO">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="desc" property="desc"/>
+        <result column="logo_url" property="logoUrl"/>
+        <result column="seq" property="seq"/>
+        <result column="status" property="status"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+        <collection column="id" property="categories" javaType="List" ofType="CategoryVO" select="getCategory"/>
+    </resultMap>
+
+    <select id="getCategory" parameterType="Long" resultType="CategoryVO">
+        select * from `category` where `id` in
+        (select `category_id` from `brand_category` where `brand_id` = #{id})
+    </select>
+
+    <!-- =================================================================================== -->
+
+    <select id="list" parameterType="BrandDTO" resultMap="brandVO">
+        select * from `brand`
+        <where>
+            <if test="brandDTO.id != null">`id` = #{brandDTO.id}</if>
+            <if test="brandDTO.name != null">`name` = #{brandDTO.name}</if>
+            <if test="brandDTO.status != null">`status` = #{brandDTO.status}</if>
+        </where>
+    </select>
+
+    <select id="getByBrandId" parameterType="Long" resultMap="brandVO">
+        select * from `brand` where `id` = #{brandId}
+    </select>
+
+    <select id="listByCategoryId" parameterType="Long" resultMap="brandVO">
+        select * from `brand` where `id` in
+        (select `brand_id` from `brand_category` where `category_id` = #{categoryId})
+    </select>
+
+    <select id="countUseInSpu" parameterType="Long" resultType="Long">
+        select count(`id`) from `spu` where `brand_id` = #{brandId}
+    </select>
+
+    <insert id="save" parameterType="BrandEntity">
+        insert into `brand` (`name`, `desc`, `logo_url`, `seq`, `status`)
+        value (#{brand.name}, #{brand.desc}, #{brand.logoUrl}, #{brand.seq}, #{brand.status})
+    </insert>
+
+    <update id="update" parameterType="BrandEntity">
+        update `brand`
+        <set>
+            <if test="brand.name != null">`name` = #{brand.name}</if>
+            <if test="brand.desc != null">`desc` = #{brand.desc}</if>
+            <if test="brand.logoUrl != null">`logo_url` = #{brand.logoUrl}</if>
+            <if test="brand.seq != null">`seq` = #{brand.seq}</if>
+            <if test="brand.status != null">`status` = #{brand.status}</if>
+        </set>
+        where `id` = #{brand.id}
+    </update>
+
+    <delete id="deleteById" parameterType="Long">
+        delete from `brand` where `id` = #{brandId}
+    </delete>
+
+</mapper>

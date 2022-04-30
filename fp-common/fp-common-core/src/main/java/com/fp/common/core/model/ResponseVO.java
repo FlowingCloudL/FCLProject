@@ -1,6 +1,6 @@
 package com.fp.common.core.model;
 
-public class ResponseEntity<T> {
+public class ResponseVO<T> {
 
     private Integer code;
     private String msg;
@@ -10,7 +10,7 @@ public class ResponseEntity<T> {
         return code;
     }
 
-    public ResponseEntity<T> setCode(Integer code) {
+    public ResponseVO<T> setCode(Integer code) {
         this.code = code;
         return this;
     }
@@ -19,7 +19,7 @@ public class ResponseEntity<T> {
         return msg;
     }
 
-    public ResponseEntity<T> setMsg(String msg) {
+    public ResponseVO<T> setMsg(String msg) {
         this.msg = msg;
         return this;
     }
@@ -28,38 +28,38 @@ public class ResponseEntity<T> {
         return data;
     }
 
-    public ResponseEntity<T> setData(T data) {
+    public ResponseVO<T> setData(T data) {
         this.data = data;
         return this;
     }
 
-    public static <T> ResponseEntity<T> success() {
-        return new ResponseEntity<T>()
+    public static <T> ResponseVO<T> success() {
+        return new ResponseVO<T>()
                 .setCode(ResponseEnum.OK.code())
                 .setMsg(ResponseEnum.OK.msg());
     }
 
-    public static <T> ResponseEntity<T> success(T data) {
-        return new ResponseEntity<T>()
+    public static <T> ResponseVO<T> success(T data) {
+        return new ResponseVO<T>()
                 .setCode(ResponseEnum.OK.code())
                 .setMsg(ResponseEnum.OK.msg())
                 .setData(data);
     }
 
-    public static <T> ResponseEntity<T> failForShow(String msg) {
-        return new ResponseEntity<T>()
+    public static <T> ResponseVO<T> failForShow(String msg) {
+        return new ResponseVO<T>()
                 .setCode(ResponseEnum.SHOW_FAIL.code())
                 .setMsg(msg);
     }
 
-    public static <T> ResponseEntity<T> fail(ResponseEnum responseEnum) {
-        return new ResponseEntity<T>()
+    public static <T> ResponseVO<T> fail(ResponseEnum responseEnum) {
+        return new ResponseVO<T>()
                 .setCode(responseEnum.code())
                 .setMsg(responseEnum.msg());
     }
 
-    public static <T> ResponseEntity<T> fail(ResponseEnum responseEnum, T data) {
-        return new ResponseEntity<T>()
+    public static <T> ResponseVO<T> fail(ResponseEnum responseEnum, T data) {
+        return new ResponseVO<T>()
                 .setCode(responseEnum.code())
                 .setMsg(responseEnum.msg())
                 .setData(data);

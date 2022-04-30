@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.fp.mall.product.mapper.ShopCartMapper">
+
+    <!-- ============================================================================ -->
+
+    <select id="list" resultType="ShopCartItemVO">
+        select * from `shop_cart` where `user_id` = #{uid}
+    </select>
+
+    <insert id="save" parameterType="ShopCartItemEntity">
+        insert into `shop_cart` (`user_id`, `spu_id`, `sku_id`, `count`, `price_before`)
+        value (#{shopCartItem.userId}, #{shopCartItem.spuId}, #{shopCartItem.skuId},
+               #{shopCartItem.count}, #{shopCartItem.priceBefore})
+    </insert>
+
+    <update id="update" parameterType="ShopCartItemEntity">
+        update `shop_cart`
+        <set>
+            <if test="shopCartItem.skuId != null">`sku_id` = #{shopCartItem.skuId}</if>
+            <if test="shopCartItem.count != null">`count` = #{shopCartItem.count}</if>
+        </set>
+        where `id` = #{shopCartItem.id}
+    </update>
+
+    <delete id="deleteBatch">
+        delete from `shop_cart` where `user_id` = #{uid} and `id` in
+        <foreach collection="shopCartItemIds" item="shopCartItemId" open="(" separator="," close=")">
+            #{shopCartItemId}
+        </foreach>
+    </delete>
+
+    <delete id="clearUserShopCart" parameterType="Long">
+        delete from `shop_cart` where `user_id` = #{uid}
+    </delete>
+
+</mapper>

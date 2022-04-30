@@ -18,14 +18,7 @@ public interface SkuMapper {
      * @param skuId 库存id
      * @return sku信息
      */
-    SkuVO getSkuBySkuId(@Param("skuId") Long skuId);
-
-    /**
-     * 根据spuId, 获取sku列表
-     * @param spuId 商品id
-     * @return sku列表
-     */
-    List<SkuVO> listBySpuId(@Param("spuId") Long spuId);
+    SkuVO getBySkuId(@Param("skuId") Long skuId);
 
     /**
      * 根据spuId, 获取sku列表（可指定状态, status为null时表示所有状态都可以）

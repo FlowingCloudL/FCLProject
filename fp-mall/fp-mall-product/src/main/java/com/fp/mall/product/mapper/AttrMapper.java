@@ -3,21 +3,23 @@ package com.fp.mall.product.mapper;
 import com.fp.mall.product.model.dto.AttrDTO;
 import com.fp.mall.product.model.entity.AttrEntity;
 import com.fp.mall.product.model.vo.AttrVO;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
+@Mapper
 public interface AttrMapper {
 
     /**
-     * 获取属性列表
+     * 获取属性VO列表
      * @param attrDTO 属性参数
      * @return 属性VO列表
      */
-    List<AttrVO> list(@Param("attr") AttrDTO attrDTO);
+    List<AttrVO> list(@Param("attrDTO") AttrDTO attrDTO);
 
     /**
-     * 根据分类id，获取属性列表
+     * 根据分类id，获取属性VO列表
      * @param categoryId 分类id
      * @return 属性VO列表
      */
@@ -35,7 +37,7 @@ public interface AttrMapper {
      * @param attrDTO 属性参数
      * @return 属性总数
      */
-    Long count(@Param("attr") AttrDTO attrDTO);
+    Long countByAttrDTO(@Param("attrDTO") AttrDTO attrDTO);
 
     /**
      * 保存属性信息

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.fp.mall.product.mapper.SpuMapper">
+
+    <resultMap id="spuVO" type="SpuVO">
+
+    </resultMap>
+
+    <sql id="searchParam">
+        <where>
+            <if test="spuDTO.spuId != null">`id` = #{spuDTO.spuId}</if>
+            <if test="spuDTO.brandId != null">`brand_id` = #{spuDTO.brandId}</if>
+            <if test="spuDTO.categoryId != null">`category_id` = #{spuDTO.categoryId}</if>
+            <if test="spuDTO.status != null">`status` = #{spuDTO.status}</if>
+            <if test="spuDTO.minPrice != null">`price` &lt;= #{spuDTO.minPrice} </if>
+            <if test="spuDTO.maxPrice != null">`price` &gt;= #{spuDTO.maxPrice} </if>
+        </where>
+    </sql>
+    
+    <select id="list" parameterType="SpuSearchDTO" resultMap="spuVO">
+        select * from `spu` <include refid="searchParam"/>
+    </select>
+
+    <select id="listIds" parameterType="SpuSearchDTO" resultType="Long">
+        select `id` from `spu` <include refid="searchParam"/>
+    </select>
+
+    <select id="getBySpuId" parameterType="Long" resultMap="spuVO">
+        select * from `spu` where `id` = #{spuId}
+    </select>
+
+    <insert id="save" parameterType="SpuEntity">
+        insert into `spu` (brand_id, category_id, name, `desc`, desc_pic, product_pics, price, status)
+        value (#{spu.brandId}, #{spu.categoryId}, #{spu.name}, #{spu.desc},
+               #{spu.descPic}, #{spu.productPics}, #{spu.price}, #{spu.status})
+    </insert>
+
+    <update id="update" parameterType="SpuEntity">
+        update `spu`
+        <set>
+            <if test="spu.brandId != null">`brand_id` = #{spu.brandId}</if>
+            <if test="spu.categoryId != null">`category_id` = #{spu.categoryId}</if>
+            <if test="spu.name != null">`name` = #{spu.name}</if>
+            <if test="spu.desc != null">`desc` = #{spu.desc}</if>
+            <if test="spu.descPic != null">`desc_pic` = #{spu.descPic}</if>
+            <if test="spu.productPics != null">`product_pics` = #{spu.productPics}</if>
+            <if test="spu.price != null">`price` = #{spu.price} </if>
+            <if test="spu.status != null">`status` = #{spu.status}</if>
+        </set>
+        where `id` = #{spu.id}
+    </update>
+
+    <update id="changeStatus">
+        update `spu` set `status` = #{status} where `id` = #{spuId}
+    </update>
+
+    <update id="ChangeStatusBatch">
+        update `spu` set `status` = #{status} where `id` in
+        <foreach collection="spuIdList" item="spuId" open="(" separator="," close=")">
+            #{spuId}
+        </foreach>
+    </update>
+
+    <delete id="deleteBySpuId" parameterType="Long">
+        delete from `spu` where `id` = #{spuId}
+    </delete>
+
+</mapper>
