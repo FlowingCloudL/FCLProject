@@ -32,7 +32,7 @@ public class CategoryVO extends BaseVO {
 
     //=================================== 附加 ===================================
 
-    @ApiModelProperty("上级分类名称")
+    @ApiModelProperty("分类路径")
     private List<String> pathNames;
 
     @ApiModelProperty("子分类列表")

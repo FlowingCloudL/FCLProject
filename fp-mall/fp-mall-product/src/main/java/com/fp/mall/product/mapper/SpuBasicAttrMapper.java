@@ -2,10 +2,12 @@ package com.fp.mall.product.mapper;
 
 import com.fp.mall.product.model.entity.SpuBasicAttrEntity;
 import com.fp.mall.product.model.vo.SpuBasicAttrVO;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
+@Mapper
 public interface SpuBasicAttrMapper {
 
     /**
@@ -13,7 +15,7 @@ public interface SpuBasicAttrMapper {
      * @param spuId 商品id
      * @return 基本属性列表
      */
-    List<SpuBasicAttrVO> listSpuBasicAttrsBySpuId(@Param("spuId") Long spuId);
+    List<SpuBasicAttrEntity> listBySpuId(@Param("spuId") Long spuId);
 
     /**
      * 根据基本属性值id列表, 获取商品Id列表

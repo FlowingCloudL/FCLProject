@@ -1,13 +1,14 @@
 package com.fp.mall.product.mapper;
 
-import com.fp.common.core.model.PageDTO;
 import com.fp.mall.product.model.dto.SpuSearchDTO;
 import com.fp.mall.product.model.entity.SpuEntity;
 import com.fp.mall.product.model.vo.SpuVO;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
+@Mapper
 public interface SpuMapper {
 
     /**
@@ -15,7 +16,7 @@ public interface SpuMapper {
      * @param spuSearchDTO spu搜索信息
      * @return spu列表
      */
-    List<SpuVO> list(@Param("spuDTO") SpuSearchDTO spuSearchDTO);
+    List<SpuEntity> list(@Param("spuDTO") SpuSearchDTO spuSearchDTO);
 
     /**
      * 获取spuId列表 (动态sql)
@@ -36,7 +37,7 @@ public interface SpuMapper {
      * @param spuId spu信息id
      * @return spu信息
      */
-    SpuVO getBySpuId(@Param("spuId") Long spuId);
+    SpuEntity getBySpuId(@Param("spuId") Long spuId);
 
     /**
      * 保存spu信息

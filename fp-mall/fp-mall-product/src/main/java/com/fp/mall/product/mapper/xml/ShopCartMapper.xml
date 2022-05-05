@@ -3,25 +3,22 @@
 
 <mapper namespace="com.fp.mall.product.mapper.ShopCartMapper">
 
-    <!-- ============================================================================ -->
-
-    <select id="list" resultType="ShopCartItemVO">
+    <select id="listByUid" resultType="ShopCartItemVO">
         select * from `shop_cart` where `user_id` = #{uid}
     </select>
 
     <insert id="save" parameterType="ShopCartItemEntity">
         insert into `shop_cart` (`user_id`, `spu_id`, `sku_id`, `count`, `price_before`)
-        value (#{shopCartItem.userId}, #{shopCartItem.spuId}, #{shopCartItem.skuId},
-               #{shopCartItem.count}, #{shopCartItem.priceBefore})
+        value (#{item.userId}, #{item.spuId}, #{item.skuId}, #{item.count}, #{item.priceBefore})
     </insert>
 
     <update id="update" parameterType="ShopCartItemEntity">
         update `shop_cart`
         <set>
-            <if test="shopCartItem.skuId != null">`sku_id` = #{shopCartItem.skuId}</if>
-            <if test="shopCartItem.count != null">`count` = #{shopCartItem.count}</if>
+            <if test="item.skuId != null">`sku_id` = #{item.skuId}</if>
+            <if test="item.count != null">`count` = #{item.count}</if>
         </set>
-        where `id` = #{shopCartItem.id}
+        where `id` = #{item.id}
     </update>
 
     <delete id="deleteBatch">

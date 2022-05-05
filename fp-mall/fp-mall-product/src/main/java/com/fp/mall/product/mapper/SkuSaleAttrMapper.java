@@ -1,10 +1,12 @@
 package com.fp.mall.product.mapper;
 
 import com.fp.mall.product.model.entity.SkuSaleAttrEntity;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
+@Mapper
 public interface SkuSaleAttrMapper {
 
     /**
@@ -14,7 +16,7 @@ public interface SkuSaleAttrMapper {
     void save(@Param("skuSaleAttr") SkuSaleAttrEntity skuSaleAttrEntity);
 
     /**
-     * 批量 sku与销售属性的关联信息
+     * 批量保存 sku与销售属性的关联信息
      * @param skuSaleAttrEntityList sku与销售属性的关联信息 列表
      */
     void saveBatch(@Param("skuSaleAttrList") List<SkuSaleAttrEntity> skuSaleAttrEntityList);

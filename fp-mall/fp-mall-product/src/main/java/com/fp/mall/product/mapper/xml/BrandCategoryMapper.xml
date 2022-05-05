@@ -7,10 +7,14 @@
         select `category_id` from `brand_category` where `brand_id` = #{brandId}
     </select>
 
+    <select id="listBrandIdsByCategoryId" parameterType="Long" resultType="Long">
+        select `brand_id` from `brand_category` where `category_id` = #{categoryId}
+    </select>
+
     <insert id="saveBatch">
-        insert into `brand_category` (`category_id`, `brand_id`) values
+        insert into `brand_category` (`brand_id`, `category_id`) values
         <foreach collection="brandCategoryEntityList" item="entity" separator=",">
-            (#{entity.categoryId}, #{entity.brandId})
+            (#{entity.brandId}, #{entity.categoryId})
         </foreach>
     </insert>
 
@@ -18,10 +22,21 @@
         delete from `brand_category` where `brand_id` = #{brandId}
     </delete>
 
+    <delete id="deleteByCategoryId" parameterType="Long">
+        delete from `brand_category` where `category_id` = #{categoryId}
+    </delete>
+
     <delete id="deleteByBrandIdAndCategoryIds">
         delete from `brand_category` where `brand_id` = #{brandId} and `category_id` in
         <foreach collection="categoryIds" item="categoryId" open="(" separator="," close=")">
             #{categoryId}
+        </foreach>
+    </delete>
+
+    <delete id="deleteByCategoryIdAndBrandIds">
+        delete from `brand_category` where `category_id` = #{categoryId} and `brand_id` in
+        <foreach collection="brandIds" item="brandId" open="(" separator="," close=")">
+            #{brandId}
         </foreach>
     </delete>
 

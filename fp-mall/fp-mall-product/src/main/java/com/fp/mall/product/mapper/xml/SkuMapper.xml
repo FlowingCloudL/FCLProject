@@ -3,21 +3,11 @@
 
 <mapper namespace="com.fp.mall.product.mapper.SkuMapper">
 
-    <resultMap id="skuVO" type="SkuVO">
-        <collection column="id" property="skuSaleAttrs" javaType="List" ofType="SkuSaleAttrVO" select="getSkuSaleAttr"/>
-    </resultMap>
-
-    <select id="getSkuSaleAttr" parameterType="Long" resultType="SkuSaleAttrVO">
-        select * from `sku_sale_attr` where `sku_id` = #{id}
-    </select>
-
-    <!-- ============================================================================ -->
-
-    <select id="getBySkuId" parameterType="Long" resultMap="skuVO">
+    <select id="getBySkuId" parameterType="Long" resultType="SkuEntity">
         select * from `sku` where `id` = #{skuId}
     </select>
 
-    <select id="listBySpuId" parameterType="Long" resultMap="skuVO">
+    <select id="listBySpuId" parameterType="Long" resultType="SkuEntity">
         select * from `sku` where `spu_id` = #{spuId}
         <if test="status != null">
             and `status` = #{status}
@@ -53,9 +43,17 @@
     </update>
     
     <update id="updateBatch">
-        <foreach collection="skuList" item="sku">
+        <foreach collection="skuList" item="sku" separator=";">
             <include refid="updateSql"/>
         </foreach>
+    </update>
+
+    <update id="addSales">
+        update `sku` set `sales` = `sales` + #{num} where `id` = #{id}
+    </update>
+
+    <update id="changeStock">
+        update `sku` set `stock` = `stock` + #{num} where `id` = #{id}
     </update>
 
     <delete id="deleteBySkuId" parameterType="Long">

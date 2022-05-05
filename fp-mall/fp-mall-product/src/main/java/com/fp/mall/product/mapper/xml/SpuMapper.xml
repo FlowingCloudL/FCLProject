@@ -3,10 +3,6 @@
 
 <mapper namespace="com.fp.mall.product.mapper.SpuMapper">
 
-    <resultMap id="spuVO" type="SpuVO">
-
-    </resultMap>
-
     <sql id="searchParam">
         <where>
             <if test="spuDTO.spuId != null">`id` = #{spuDTO.spuId}</if>
@@ -18,7 +14,7 @@
         </where>
     </sql>
     
-    <select id="list" parameterType="SpuSearchDTO" resultMap="spuVO">
+    <select id="list" parameterType="SpuSearchDTO" resultType="SpuEntity">
         select * from `spu` <include refid="searchParam"/>
     </select>
 
@@ -26,7 +22,7 @@
         select `id` from `spu` <include refid="searchParam"/>
     </select>
 
-    <select id="getBySpuId" parameterType="Long" resultMap="spuVO">
+    <select id="getBySpuId" parameterType="Long" resultType="SpuEntity">
         select * from `spu` where `id` = #{spuId}
     </select>
 

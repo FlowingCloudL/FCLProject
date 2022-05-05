@@ -1,54 +1,42 @@
 package com.fp.mall.product.mapper;
 
 import com.fp.mall.product.model.entity.CategoryEntity;
-import com.fp.mall.product.model.vo.CategoryVO;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
+@Mapper
 public interface CategoryMapper {
 
     /**
-     * 根据分类id, 获取分类VO (不嵌套子分类)
-     * @param categoryId 分类id
-     * @return 分类VO
+     * 根据分类id, 获取分类信息
+     * @param id 分类id
+     * @return 分类信息
      */
-    CategoryVO getCategoryVOByCategoryId(@Param("categoryId") Long categoryId);
+    CategoryEntity getById(@Param("id") Long id);
 
     /**
-     * 获取分类VO列表 (不嵌套子分类)
+     * 根据分类id列表，获取分类信息列表
+     * @param ids 分类id列表
+     * @return 分类信息列表
+     */
+    List<CategoryEntity> listByIds(@Param("ids") List<Long> ids);
+
+    /**
+     * 根据父分类id 获取分类信息列表
+     * @param parentId 父分类id
+     * @return 分类信息列表
+     */
+    List<CategoryEntity> listByParentId(@Param("parentId") Long parentId);
+
+    /**
+     * 通过父id和status, 获取分类信息列表
      * @param parentId 父分类id
      * @param status 状态
-     * @return 分类VO列表
+     * @return 分类信息列表
      */
-    List<CategoryVO> listCategoryVOByParentIdAndStatus(@Param("parentId") Long parentId, @Param("status") Byte status);
-
-    /**
-     * 获取分类VO列表 (嵌套子分类)
-     * @return 分类VO列表
-     */
-    List<CategoryVO> listCategoryVOAndChild();
-
-    /**
-     * 根据父分类id 获取子分类实体
-     * @param parentId 父分类id
-     * @return 分类实体
-     */
-    List<CategoryEntity> listCategoryEntityByParentId(@Param("parentId") Long parentId);
-
-    /**
-     * 根据分类id列表，获取分类实体列表
-     * @param categoryIds 分类id列表
-     * @return 分类实体列表
-     */
-    List<CategoryEntity> listCategoryEntityByCategoryIds(@Param("categoryIds") List<Long> categoryIds);
-
-    /**
-     * 获取子分类id列表
-     * @param parentId 父分类id
-     * @return 子分类id列表
-     */
-    List<Long> listCategoryIdByParentId(@Param("parentId") Long parentId);
+    List<CategoryEntity> listByParentIdAndStatus(@Param("parentId") Long parentId, @Param("status") Byte status);
 
     /**
      * 保存分类信息
@@ -65,16 +53,16 @@ public interface CategoryMapper {
 
     /**
      * 批量更新分类状态（启用、禁用）
-     * @param categoryIds 分类id列表
+     * @param ids 分类id列表
      * @param status 目标状态
      */
-    void changeBatchOfStatus(@Param("categoryIds") List<Long> categoryIds, @Param("status") Integer status);
+    void changeBatchOfStatus(@Param("ids") List<Long> ids, @Param("status") Integer status);
 
     /**
      * 删除分类信息
-     * @param categoryId 分类id
+     * @param id 分类id
      */
-    void deleteById(@Param("categoryId") Long categoryId);
+    void deleteById(@Param("id") Long id);
 
 
 

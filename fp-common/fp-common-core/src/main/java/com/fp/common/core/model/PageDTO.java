@@ -9,7 +9,7 @@ public class PageDTO {
     /**
      * 最大分页大小，如果分页大小大于500，则用500作为分页的大小。防止有人直接传入一个较大的数，导致服务器内存溢出宕机
      */
-    public static final Integer MAX_PAGE_SIZE = 500;
+    private static final Integer MAX_PAGE_SIZE = 500;
 
     @NotNull(message = "pageNum 不能为空")
     @ApiModelProperty(value = "当前页码", required = true)

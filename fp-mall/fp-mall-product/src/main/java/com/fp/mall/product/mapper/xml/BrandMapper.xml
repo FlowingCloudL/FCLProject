@@ -22,7 +22,7 @@
 
     <!-- =================================================================================== -->
 
-    <select id="list" parameterType="BrandDTO" resultMap="brandVO">
+    <select id="list" parameterType="BrandDTO" resultType="BrandEntity">
         select * from `brand`
         <where>
             <if test="brandDTO.id != null">`id` = #{brandDTO.id}</if>
@@ -31,20 +31,22 @@
         </where>
     </select>
 
-    <select id="getByBrandId" parameterType="Long" resultMap="brandVO">
-        select * from `brand` where `id` = #{brandId}
+    <select id="listByIds" parameterType="Long" resultType="BrandEntity">
+        select * from `brand` where `id` in
+        <foreach collection="ids" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
     </select>
 
-    <select id="listByCategoryId" parameterType="Long" resultMap="brandVO">
-        select * from `brand` where `id` in
-        (select `brand_id` from `brand_category` where `category_id` = #{categoryId})
+    <select id="getById" parameterType="Long" resultType="BrandEntity">
+        select * from `brand` where `id` = #{id}
     </select>
 
     <select id="countUseInSpu" parameterType="Long" resultType="Long">
         select count(`id`) from `spu` where `brand_id` = #{brandId}
     </select>
 
-    <insert id="save" parameterType="BrandEntity">
+    <insert id="save" parameterType="BrandEntity" useGeneratedKeys="true" keyProperty="id">
         insert into `brand` (`name`, `desc`, `logo_url`, `seq`, `status`)
         value (#{brand.name}, #{brand.desc}, #{brand.logoUrl}, #{brand.seq}, #{brand.status})
     </insert>
@@ -61,8 +63,12 @@
         where `id` = #{brand.id}
     </update>
 
+    <update id="changeStatus">
+        update `brand` set `status` = #{status} where `id` = #{brandId}
+    </update>
+
     <delete id="deleteById" parameterType="Long">
-        delete from `brand` where `id` = #{brandId}
+        delete from `brand` where `id` = #{id}
     </delete>
 
 </mapper>

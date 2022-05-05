@@ -9,32 +9,46 @@ public interface BrandCategoryService {
      * @param brandId 品牌id
      * @return 分类id列表
      */
-    List<Long> getCategoryIdsByBrandId(Long brandId);
+    List<Long> listCategoryIdsByBrandId(Long brandId);
 
     /**
      * 通过分类id, 获取关联的品牌id列表
      * @param categoryId 分类id
      * @return 品牌id列表
      */
-    List<Long> getBrandIdsByCategoryId(Long categoryId);
+    List<Long> listBrandIdsByCategoryId(Long categoryId);
 
     /**
-     * 关联: 品牌id -> 分类id列表
+     * 保存关联: 品牌id -> 分类id列表
      * @param brandId 品牌id
      * @param categoryIds 分类id列表
      */
     void saveBrandToCategory(Long brandId, List<Long> categoryIds);
 
     /**
-     * 更新: 品牌id -> 分类id列表
+     * 更新关联: 品牌id -> 分类id列表
      * @param brandId 品牌id
      * @param categoryIds 分类id列表
      */
     void updateBrandToCategory(Long brandId, List<Long> categoryIds);
 
     /**
-     * 删除: 品牌id -> 分类id
+     * 删除该品牌的关联
      * @param brandId 品牌id
      */
-    void deleteBrandToCategory(Long brandId);
+    void deleteByBrandId(Long brandId);
+
+    /**
+     * 删除关联: 品牌id -> 分类ids
+     * @param brandId 品牌id
+     * @param categoryIds 分类id列表
+     */
+    void deleteBrandToCategory(Long brandId, List<Long> categoryIds);
+
+    /**
+     * 删除关联: 分类id -> 品牌ids
+     * @param categoryId 分类id
+     * @param brandIds 品牌id列表
+     */
+    void deleteCategoryToBrand(Long categoryId, List<Long> brandIds);
 }

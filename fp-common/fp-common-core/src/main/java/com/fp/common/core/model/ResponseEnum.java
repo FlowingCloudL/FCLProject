@@ -13,9 +13,9 @@ public enum ResponseEnum {
 	SHOW_FAIL(1, ""),
 
 	/**
-	 * 方法参数没有校验，内容由输入内容决定
+	 * 参数校验不通过，内容由输入内容决定
 	 */
-	METHOD_ARGUMENT_NOT_VALID(2, ""),
+	ARGUMENT_NOT_VALID(2, ""),
 
 	/**
 	 * 无法读取获取请求参数

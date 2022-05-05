@@ -1,5 +1,6 @@
 package com.fp.mall.product.service;
 
+import com.fp.mall.product.model.dto.CategoryDTO;
 import com.fp.mall.product.model.entity.CategoryEntity;
 import com.fp.mall.product.model.vo.CategoryVO;
 
@@ -11,27 +12,34 @@ import java.util.List;
 public interface CategoryService {
 
     /**
-     * 获取0级分类VO列表
-     * @return 分类VO列表
+     * 获取全部分类VO, 嵌套为菜单
+     * @return 0级分类VO列表, 内部嵌套子分类
      */
     List<CategoryVO> listCategories();
 
     /**
-     * 根据父分类id获取分类VO列表
+     * 根据父分类id, 获取分类VO列表
      * @param parentId 父分类id
      * @return 分类VO列表
      */
     List<CategoryVO> listCategoriesByParentId(Long parentId);
 
     /**
-     * 根据父分类id获取分类id列表
+     * 根据父分类id, 获取分类id列表
      * @param parentId 父分类id
      * @return 分类id列表
      */
     List<Long> listCategoryIdsByParentId(Long parentId);
 
     /**
-     * 根据分类id获取分类列表
+     * 根据分类id列表, 获取分类VO列表
+     * @param categoryIds 分类id列表
+     * @return 分类VO列表
+     */
+    List<CategoryVO> listCategoriesByCategoryIds(List<Long> categoryIds);
+
+    /**
+     * 根据分类id获取分类VO
      * @param id 分类id
      * @return 分类VO
      */
@@ -39,15 +47,15 @@ public interface CategoryService {
 
     /**
      * 保存分类信息
-     * @param category 分类实体
+     * @param categoryDTO 分类DTO
      */
-    void save(CategoryEntity category);
+    void save(CategoryDTO categoryDTO);
 
     /**
      * 更新分类信息
-     * @param category 分类实体
+     * @param categoryDTO 分类DTO
      */
-    void update(CategoryEntity category);
+    void update(CategoryDTO categoryDTO);
 
     /**
      * 根据分类id删除分类信息

@@ -2,7 +2,7 @@ package com.fp.mall.product.service;
 
 import com.fp.common.core.model.PageDTO;
 import com.fp.common.core.model.PageVO;
-import com.fp.mall.product.model.dto.SpuModifyDTO;
+import com.fp.mall.product.model.dto.SpuDTO;
 import com.fp.mall.product.model.dto.SpuSearchDTO;
 import com.fp.mall.product.model.vo.SpuVO;
 
@@ -35,15 +35,15 @@ public interface SpuService {
 
     /**
      * 保存商品信息
-     * @param spuModifyDTO 商品信息
+     * @param spuDTO 商品信息
      */
-    void saveSpu(SpuModifyDTO spuModifyDTO);
+    void saveSpu(SpuDTO spuDTO);
 
     /**
      * 更新商品信息
-     * @param spuModifyDTO 商品信息
+     * @param spuDTO 商品信息
      */
-    void updateSpu(SpuModifyDTO spuModifyDTO);
+    void updateSpu(SpuDTO spuDTO);
 
     /**
      * 删除商品信息

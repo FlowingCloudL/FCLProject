@@ -30,7 +30,7 @@ public class BrandDTO {
     @ApiModelProperty("状态 1:enable, 0:disable, -1:deleted")
     private Byte status;
 
-    //============================== 额外需求 ==============================
+    //============================== 附加 ==============================
 
     @NotNull(message = "分类不能为空")
     @ApiModelProperty("分类")

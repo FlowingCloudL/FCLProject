@@ -3,7 +3,7 @@
 
 <mapper namespace="com.fp.mall.product.mapper.SpuBasicAttrMapper">
 
-    <select id="listSpuBasicAttrsBySpuId" parameterType="Long" resultType="SpuBasicAttrVO">
+    <select id="listBySpuId" parameterType="Long" resultType="SpuBasicAttrEntity">
         select * from `spu_basic_attr` where `spu_id` = #{spuId}
     </select>
 

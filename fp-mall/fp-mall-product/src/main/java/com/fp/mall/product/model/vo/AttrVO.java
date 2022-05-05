@@ -12,6 +12,9 @@ public class AttrVO extends BaseVO {
     @ApiModelProperty("属性id")
     private Long id;
 
+    @ApiModelProperty("分类id")
+    private Long categoryId;
+
     @ApiModelProperty("属性名称")
     private String name;
 
@@ -21,13 +24,12 @@ public class AttrVO extends BaseVO {
     @ApiModelProperty("属性类型 | 0:基本属性, 1:销售属性")
     private Byte type;
 
-    @ApiModelProperty("属性值列表")
-    private List<AttrValueVO> attrValues;
-
-    @ApiModelProperty("分类列表")
-    private List<CategoryVO> categories;
-
     @ApiModelProperty("是否可以搜索 | 0:不可以, 1:可以")
     private Byte searchable;
+
+    //============================================= 附加 =============================================
+
+    @ApiModelProperty("属性值列表")
+    private List<AttrValueVO> attrValues;
 
 }

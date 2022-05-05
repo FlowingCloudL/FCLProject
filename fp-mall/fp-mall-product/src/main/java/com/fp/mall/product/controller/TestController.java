@@ -5,12 +5,9 @@ import com.fp.common.core.model.PageVO;
 import com.fp.common.core.util.PageUtil;
 import com.fp.mall.product.mapper.AttrMapper;
 import com.fp.mall.product.model.dto.AttrDTO;
-import com.fp.mall.product.model.vo.AttrVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
 
 @RestController
 public class TestController {

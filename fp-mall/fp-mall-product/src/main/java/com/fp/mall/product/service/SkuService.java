@@ -1,7 +1,6 @@
 package com.fp.mall.product.service;
 
 import com.fp.mall.product.model.dto.SkuDTO;
-import com.fp.mall.product.model.dto.SpuModifyDTO;
 import com.fp.mall.product.model.vo.SkuVO;
 
 import java.util.List;

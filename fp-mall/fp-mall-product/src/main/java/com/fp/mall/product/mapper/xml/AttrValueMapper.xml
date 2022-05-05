@@ -3,8 +3,8 @@
 
 <mapper namespace="com.fp.mall.product.mapper.AttrValueMapper">
 
-    <select id="listAttrValueIdsByAttrId" parameterType="Long" resultType="Long">
-        select `id` from `attr_value` where `attr_id` = #{attrId};
+    <select id="listByAttrId" parameterType="Long" resultType="AttrValueEntity">
+        select * from `attr_value` where `attr_id` = #{attrId};
     </select>
 
     <insert id="saveBatch" parameterType="List">
@@ -16,11 +16,8 @@
 
     <update id="updateBatch" parameterType="List">
         <foreach collection="attrValueEntityList" item="attrValue">
-            /* 更新属性值表 */
             update `attr_value` set `value` = #{attrValue.value}
             where `id` = #{attrValue.id};
-            /* 更新spu与基本属性关联表中的属性值 */
-            /* 更新sku与销售属性关联表中的属性值 */
         </foreach>
     </update>
 
@@ -29,6 +26,10 @@
         <foreach collection="attrValueIdList" item="attrValueId" open="(" separator="," close=")">
             #{attrValueId}
         </foreach>
+    </delete>
+
+    <delete id="deleteByAttrId" parameterType="Long">
+        delete from `attr_value` where `attr_id` = #{attrId}
     </delete>
 
 </mapper>

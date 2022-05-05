@@ -3,7 +3,6 @@ package com.fp.mall.product.service;
 import com.fp.common.core.model.PageDTO;
 import com.fp.common.core.model.PageVO;
 import com.fp.mall.product.model.dto.BrandDTO;
-import com.fp.mall.product.model.entity.BrandEntity;
 import com.fp.mall.product.model.vo.BrandVO;
 
 import java.util.List;
@@ -34,28 +33,26 @@ public interface BrandService {
 
     /**
      * 保存品牌信息
-     * @param brandEntity 品牌信息
-     * @param categoryIds 分类id列表
+     * @param brandDTO 品牌信息
      */
-    void save(BrandEntity brandEntity, List<Long> categoryIds);
+    void save(BrandDTO brandDTO);
 
     /**
      * 更新品牌信息
-     * @param brandEntity 品牌信息
-     * @param categoryIds 分类id列表
+     * @param brandDTO 品牌信息
      */
-    void update(BrandEntity brandEntity, List<Long> categoryIds);
-
-    /**
-     * 删除品牌信息
-     * @param brandId 品牌id
-     */
-    void deleteByBrandId(Long brandId);
+    void update(BrandDTO brandDTO);
 
     /**
      * 改变品牌状态（启用或禁用）
      * @param brandDTO 品牌参数
      */
     void changeBrandStatus(BrandDTO brandDTO);
+
+    /**
+     * 删除品牌信息
+     * @param brandId 品牌id
+     */
+    void deleteByBrandId(Long brandId);
 
 }

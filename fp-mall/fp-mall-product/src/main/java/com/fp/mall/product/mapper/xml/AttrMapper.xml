@@ -3,33 +3,7 @@
 
 <mapper namespace="com.fp.mall.product.mapper.AttrMapper">
 
-    <resultMap id="attrVO" type="AttrVO">
-        <id column="id" property="id"/>
-        <result column="name" property="name"/>
-        <result column="desc" property="desc"/>
-        <result column="type" property="type"/>
-        <result column="searchable" property="searchable"/>
-        <result column="create_time" property="createTime"/>
-        <result column="update_time" property="updateTime"/>
-        <collection column="id" property="attrValues" javaType="List" ofType="attrValueVO" select="getAttrValueVO"/>
-    </resultMap>
-
-    <resultMap id="attrValueVO" type="AttrValueVO">
-        <id column="id" property="id"/>
-        <result column="attr_id" property="attrId"/>
-        <result column="value" property="value"/>
-        <result column="create_time" property="createTime"/>
-        <result column="update_time" property="updateTime"/>
-    </resultMap>
-    
-    <select id="getAttrValueVO" parameterType="Long" resultMap="attrValueVO">
-        select * from `attr_value` where `attr_id` = #{id}
-    </select>
-
-    <!--==========================================================================================-->
-
-    <select id="list" resultMap="attrVO">
-        select * from `attr`
+    <sql id="attrQueryCondition">
         <where>
             <if test="attrDTO.id != null">
                 and `id` = #{attrDTO.id}
@@ -44,43 +18,29 @@
                 and `searchable` = #{attrDTO.searchable}
             </if>
         </where>
+    </sql>
+
+    <select id="list" resultType="AttrEntity">
+        select * from `attr` <include refid="attrQueryCondition"/>
     </select>
 
-    <select id="listByCategoryId" resultMap="attrVO">
-        select * from `attr`
-        where `id` = (select `attr_id` from `attr_category` where `category_id` = #{categoryId})
+    <select id="listByCategoryId" resultType="AttrEntity">
+        select * from `attr` where `category_id` = #{categoryId} or `category_id` = 0;
     </select>
 
-    <select id="getByAttrId" resultMap="attrVO">
-        select * from `attr` where `id` = #{attrId}
-    </select>
-
-    <select id="countByAttrDTO" resultType="Long">
-        select count(`id`) from `attr`
-        <where>
-            <if test="attrDTO.id != null">
-                and `id` = #{attrDTO.id}
-            </if>
-            <if test="attrDTO.name != null">
-                and `name` = #{attrDTO.name}
-            </if>
-            <if test="attrDTO.type != null">
-                and `type` = #{attrDTO.type}
-            </if>
-            <if test="attrDTO.searchable != null">
-                and `searchable` = #{attrDTO.searchable}
-            </if>
-        </where>
+    <select id="getById" resultType="AttrEntity">
+        select * from `attr` where `id` = #{id}
     </select>
 
     <insert id="save" parameterType="AttrEntity">
-        insert into `attr` (`name`, `desc`, `type`, `searchable`)
-        values (#{name}, #{desc}, #{type}, #{searchable})
+        insert into `attr` (`category_id`, `name`, `desc`, `type`, `searchable`)
+        values (#{categoryId}, #{name}, #{desc}, #{type}, #{searchable})
     </insert>
 
     <update id="update" parameterType="AttrEntity">
         update `attr`
         <set>
+            <if test="attr.categoryId != null">`category_id` = #{categoryId}</if>
             <if test="attr.name != null">`name` = #{attr.name}</if>
             <if test="attr.desc != null">`desc` = #{attr.desc}</if>
             <if test="attr.type != null">`type` = #{attr.type}</if>
@@ -89,8 +49,8 @@
         where `id` = #{attr.id}
     </update>
 
-    <delete id="deleteByAttrId" parameterType="Long">
-        delete from `attr` where `id` = #{attrId}
+    <delete id="deleteById" parameterType="Long">
+        delete from `attr` where `id` = #{id}
     </delete>
 
 </mapper>

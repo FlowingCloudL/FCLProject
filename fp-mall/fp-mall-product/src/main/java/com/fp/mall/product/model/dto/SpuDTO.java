@@ -8,7 +8,7 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Data
-public class SpuModifyDTO {
+public class SpuDTO {
 
     @ApiModelProperty("spuId")
     private Long spuId;

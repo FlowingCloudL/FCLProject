@@ -42,6 +42,11 @@ public class SkuEntity extends BaseEntity {
     private Long stock;
 
     /**
+     * 销量
+     */
+    private Long sales;
+
+    /**
      * 状态 1:enable, 0:disable, -1:deleted
      */
     private Byte status;
