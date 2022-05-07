@@ -9,9 +9,9 @@ import com.fp.mall.product.model.vo.BrandVO;
 import com.fp.mall.product.service.BrandService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -27,7 +27,7 @@ import java.util.List;
 @RequestMapping("/platform/brand")
 public class BrandController {
 
-    @Autowired
+    @Resource
     private BrandService brandService;
 
     //================================================= GET =================================================
@@ -73,7 +73,7 @@ public class BrandController {
     @PutMapping(value = "/status")
     @ApiOperation(value = "更新品牌状态（启用或禁用）", notes = "更新品牌状态（启用或禁用）")
     public ResponseVO<Void> updateBrandStatus(@RequestBody BrandDTO brandDTO) {
-        ValidUtil.checkNotNull(brandDTO.getId(), brandDTO.getStatus());
+        ValidUtil.checkNotNull(brandDTO.getBrandId(), brandDTO.getStatus());
         brandService.changeBrandStatus(brandDTO);
         return ResponseVO.success();
     }

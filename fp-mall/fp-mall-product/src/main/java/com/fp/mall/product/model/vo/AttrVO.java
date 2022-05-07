@@ -10,26 +10,26 @@ import java.util.List;
 public class AttrVO extends BaseVO {
 
     @ApiModelProperty("属性id")
-    private Long id;
+    private Long attrId;
+
+    @ApiModelProperty("属性名称")
+    private String attrName;
+
+    @ApiModelProperty("属性类型 [0:销售属性，1:基本属性]")
+    private Byte attrType;
 
     @ApiModelProperty("分类id")
     private Long categoryId;
 
-    @ApiModelProperty("属性名称")
-    private String name;
-
-    @ApiModelProperty("属性描述")
-    private String desc;
-
-    @ApiModelProperty("属性类型 | 0:基本属性, 1:销售属性")
-    private Byte type;
-
-    @ApiModelProperty("是否可以搜索 | 0:不可以, 1:可以")
+    @ApiModelProperty("是否可以搜索 [0:不可以, 1:可以]")
     private Byte searchable;
 
-    //============================================= 附加 =============================================
+    @ApiModelProperty("状态 [0:禁用, 1:启用]")
+    private Byte status;
 
-    @ApiModelProperty("属性值列表")
-    private List<AttrValueVO> attrValues;
+    //========================================== 附加 ==========================================
+
+    @ApiModelProperty("基本属性值列表")
+    private List<SpuBasicAttrVO> spuBasicAttrVOList;
 
 }

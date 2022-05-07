@@ -35,7 +35,7 @@ public class SpuAppVO {
     @ApiModelProperty("总库存")
     private Integer totalStock;
 
-    @ApiModelProperty("规格属性")
+    @ApiModelProperty("规格属性列表")
     private List<SpuBasicAttrVO> spuAttrValues;
 
     @ApiModelProperty("sku列表")

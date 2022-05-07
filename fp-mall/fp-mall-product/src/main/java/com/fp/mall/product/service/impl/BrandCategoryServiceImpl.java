@@ -3,17 +3,17 @@ package com.fp.mall.product.service.impl;
 import com.fp.mall.product.mapper.BrandCategoryMapper;
 import com.fp.mall.product.model.entity.BrandCategoryEntity;
 import com.fp.mall.product.service.BrandCategoryService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class BrandCategoryServiceImpl implements BrandCategoryService {
 
-    @Autowired
+    @Resource
     private BrandCategoryMapper brandCategoryMapper;
 
     public List<Long> listCategoryIdsByBrandId(Long brandId) {
@@ -53,11 +53,11 @@ public class BrandCategoryServiceImpl implements BrandCategoryService {
 
     @Override
     public void deleteBrandToCategory(Long brandId, List<Long> categoryIds) {
-        brandCategoryMapper.deleteByBrandIdAndCategoryIds(brandId, categoryIds);
+        brandCategoryMapper.deleteBrandIdToCategoryIds(brandId, categoryIds);
     }
 
     @Override
     public void deleteCategoryToBrand(Long categoryId, List<Long> brandIds) {
-        brandCategoryMapper.deleteByCategoryIdAndBrandIds(categoryId, brandIds);
+        brandCategoryMapper.deleteCategoryIdToBrandIds(categoryId, brandIds);
     }
 }

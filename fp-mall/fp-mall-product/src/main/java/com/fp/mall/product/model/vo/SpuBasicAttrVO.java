@@ -19,9 +19,6 @@ public class SpuBasicAttrVO extends BaseVO {
     @ApiModelProperty("规格属性名称")
     private String attrName;
 
-    @ApiModelProperty("规格属性值id")
-    private Long attrValueId;
-
     @ApiModelProperty("规格属性值")
     private String attrValue;
 }

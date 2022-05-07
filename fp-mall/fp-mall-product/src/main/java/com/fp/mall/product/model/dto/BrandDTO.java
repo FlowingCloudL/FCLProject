@@ -10,24 +10,28 @@ import java.util.List;
 public class BrandDTO {
 
     @ApiModelProperty("品牌id")
-    private Long id;
+    private Long brandId;
 
     @NotNull(message = "品牌名称不能为空")
     @ApiModelProperty("品牌名称")
-    private String name;
+    private String brandName;
 
     @ApiModelProperty("品牌描述")
-    private String desc;
+    private String brandDesc;
 
     @NotNull(message = "logo图片不能为空")
     @ApiModelProperty("品牌logo图片")
     private String logoUrl;
 
+    @NotNull(message = "检索首字母不能为空")
+    @ApiModelProperty("检索首字母")
+    private Character firstLetter;
+
     @NotNull(message = "序号不能为空")
     @ApiModelProperty("排序")
     private Integer seq;
 
-    @ApiModelProperty("状态 1:enable, 0:disable, -1:deleted")
+    @ApiModelProperty("状态 [0:禁用, 1:启用]")
     private Byte status;
 
     //============================== 附加 ==============================

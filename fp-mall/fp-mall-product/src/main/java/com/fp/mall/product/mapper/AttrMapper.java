@@ -17,11 +17,11 @@ public interface AttrMapper {
     List<AttrEntity> listByCategoryId(@Param("categoryId") Long categoryId);
 
     /**
-     * 根据属性id, 获取属性
-     * @param id 属性id
+     * 根据属性id, 获取属性id信息
+     * @param attrId 属性id
      * @return 属性信息
      */
-    AttrEntity getById(@Param("id") Long id);
+    AttrEntity getByAttrId(@Param("attrId") Long attrId);
 
     /**
      * 保存属性信息
@@ -37,8 +37,8 @@ public interface AttrMapper {
 
     /**
      * 根据属性id, 删除属性信息
-     * @param id 属性id
+     * @param attrId 属性id
      */
-    void deleteById(@Param("id") Long id);
+    void deleteByAttrId(@Param("attrId") Long attrId);
 
 }

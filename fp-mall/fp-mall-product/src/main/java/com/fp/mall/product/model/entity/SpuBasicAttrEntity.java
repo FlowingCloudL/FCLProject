@@ -27,11 +27,6 @@ public class SpuBasicAttrEntity extends BaseEntity {
     private String attrName;
 
     /**
-     * 规格属性值id
-     */
-    private Long attrValueId;
-
-    /**
      * 规格属性值
      */
     private String attrValue;

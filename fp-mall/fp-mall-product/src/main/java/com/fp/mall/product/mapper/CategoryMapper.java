@@ -11,17 +11,17 @@ public interface CategoryMapper {
 
     /**
      * 根据分类id, 获取分类信息
-     * @param id 分类id
+     * @param categoryId 分类id
      * @return 分类信息
      */
-    CategoryEntity getById(@Param("id") Long id);
+    CategoryEntity getByCategoryId(@Param("categoryId") Long categoryId);
 
     /**
      * 根据分类id列表，获取分类信息列表
-     * @param ids 分类id列表
+     * @param categoryIds 分类id列表
      * @return 分类信息列表
      */
-    List<CategoryEntity> listByIds(@Param("ids") List<Long> ids);
+    List<CategoryEntity> listByCategoryIds(@Param("categoryIds") List<Long> categoryIds);
 
     /**
      * 根据父分类id 获取分类信息列表
@@ -53,16 +53,16 @@ public interface CategoryMapper {
 
     /**
      * 批量更新分类状态（启用、禁用）
-     * @param ids 分类id列表
+     * @param categoryIds 分类id列表
      * @param status 目标状态
      */
-    void changeBatchOfStatus(@Param("ids") List<Long> ids, @Param("status") Integer status);
+    void changeBatchOfStatus(@Param("categoryIds") List<Long> categoryIds, @Param("status") Integer status);
 
     /**
      * 删除分类信息
-     * @param id 分类id
+     * @param categoryId 分类id
      */
-    void deleteById(@Param("id") Long id);
+    void deleteByCategoryId(@Param("categoryId") Long categoryId);
 
 
 

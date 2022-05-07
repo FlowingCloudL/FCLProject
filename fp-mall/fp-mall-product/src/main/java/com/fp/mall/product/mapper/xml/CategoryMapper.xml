@@ -3,29 +3,14 @@
 
 <mapper namespace="com.fp.mall.product.mapper.CategoryMapper">
 
-    <resultMap id="categoryVO" type="CategoryVO">
-        <id column="id" property="id"/>
-        <result column="level" property="level"/>
-        <result column="parent_id" property="parentId"/>
-        <result column="name" property="name"/>
-        <result column="desc" property="desc"/>
-        <result column="icon_url" property="iconUrl"/>
-        <result column="status" property="status"/>
-        <result column="create_time" property="createTime"/>
-        <result column="update_time" property="updateTime"/>
-        <collection notNullColumn="id" property="categories" javaType="List" select="listCategoryVOByParentIdAndStatus"/>
-    </resultMap>
-
-    <!-- ========================================================================================= -->
-
-    <select id="getById" parameterType="Long" resultType="CategoryEntity">
-        select * from `category` where `id` = #{id}
+    <select id="getByCategoryId" parameterType="Long" resultType="CategoryEntity">
+        select * from `category` where `category_id` = #{categoryId}
     </select>
 
-    <select id="listByIds" resultType="CategoryEntity">
-        select * from `category` where `id` in
-        <foreach collection="ids" item="id" open="(" separator="," close=")">
-            #{id}
+    <select id="listByCategoryIds" resultType="CategoryEntity">
+        select * from `category` where `category_id` in
+        <foreach collection="categoryIds" item="categoryId" open="(" separator="," close=")">
+            #{categoryId}
         </foreach>
     </select>
 
@@ -43,32 +28,32 @@
 
 
     <insert id="save" parameterType="CategoryEntity">
-        insert into `category` (`level`, `parent_id`, `name`, `desc`, `icon_url`, `status`)
-        value (#{category.level}, #{category.parentId}, #{category.name}, #{category.desc}, #{category.iconUrl}, #{category.status})
+        insert into `category` (category_name, category_level, parent_id, icon_url, status)
+        value (#{category.categoryName}, #{category.categoryLevel}, #{category.parentId},
+               #{category.iconUrl}, #{category.status})
     </insert>
 
     <update id="update" parameterType="CategoryEntity">
         update `category`
         <set>
-            <if test="category.level != null">`level` = #{category.level}</if>
+            <if test="category.categoryName != null">`category_name` = #{category.level}</if>
+            <if test="category.categoryLevel != null">`category_level` = #{category.categoryLevel}</if>
             <if test="category.parentId != null">`parent_id` = #{category.parentId}</if>
-            <if test="category.name != null">`name` = #{category.name}</if>
-            <if test="category.desc != null">`desc` = #{category.desc}</if>
             <if test="category.iconUrl != null">`icon_url` = #{category.iconUrl}</if>
             <if test="category.status != null">`status` = #{category.status}</if>
         </set>
-        where `id` = #{category.id}
+        where `category_id` = #{category.categoryId}
     </update>
 
     <update id="changeBatchOfStatus">
-        update `category` set `status` = #{status} where `id` in
-        <foreach collection="ids" item="id" open="(" separator="," close=")">
+        update `category` set `status` = #{status} where `category_id` in
+        <foreach collection="categoryIds" item="id" open="(" separator="," close=")">
             #{id}
         </foreach>
     </update>
 
-    <delete id="deleteById" parameterType="Long">
-        delete from `category` where `id` = #{id}
+    <delete id="deleteByCategoryId" parameterType="Long">
+        delete from `category` where `category_id` = #{categoryId}
     </delete>
 
 </mapper>

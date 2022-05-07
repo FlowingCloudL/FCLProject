@@ -23,14 +23,7 @@ public interface SpuMapper {
      * @param spuSearchDTO spu搜索信息
      * @return spuId列表
      */
-    List<Long> listIds(@Param("spuDTO") SpuSearchDTO spuSearchDTO);
-
-    /**
-     * 根据分类id列表批量获取商品id列表
-     * @param categoryIdList 分类id列表
-     * @return spuId列表
-     */
-//    List<Long> listSpuIdsByCategoryIdList(@Param("categoryIdList") List<Long> categoryIdList);
+    List<Long> listSpuIds(@Param("spuDTO") SpuSearchDTO spuSearchDTO);
 
     /**
      * 根据spu信息id获取spu信息
@@ -63,21 +56,12 @@ public interface SpuMapper {
      * @param spuIdList 商品id列表
      * @param status 目标状态
      */
-    void ChangeStatusBatch(@Param("spuIdList") List<Long> spuIdList, @Param("status") Byte status);
+    void changeStatusBatch(@Param("spuIdList") List<Long> spuIdList, @Param("status") Byte status);
 
     /**
      * 删除spu信息
      * @param spuId 商品id
      */
     void deleteBySpuId(@Param("spuId") Long spuId);
-
-    /**
-     * 根据spuId获取商品信息（搜索）
-     *
-     * @param spuId
-     * @return 商品信息
-     */
-//    EsProductBO loadEsProductBO(@Param("spuId") Long spuId);
-
 
 }

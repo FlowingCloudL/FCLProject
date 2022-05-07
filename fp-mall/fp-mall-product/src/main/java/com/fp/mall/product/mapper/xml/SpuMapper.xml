@@ -15,51 +15,49 @@
     </sql>
     
     <select id="list" parameterType="SpuSearchDTO" resultType="SpuEntity">
-        select * from `spu` <include refid="searchParam"/>
+        select * from `spu_info` <include refid="searchParam"/>
     </select>
 
-    <select id="listIds" parameterType="SpuSearchDTO" resultType="Long">
-        select `id` from `spu` <include refid="searchParam"/>
+    <select id="listSpuIds" parameterType="SpuSearchDTO" resultType="Long">
+        select `spu_id` from `spu_info` <include refid="searchParam"/>
     </select>
 
     <select id="getBySpuId" parameterType="Long" resultType="SpuEntity">
-        select * from `spu` where `id` = #{spuId}
+        select * from `spu_info` where `spu_id` = #{spuId}
     </select>
 
     <insert id="save" parameterType="SpuEntity">
-        insert into `spu` (brand_id, category_id, name, `desc`, desc_pic, product_pics, price, status)
-        value (#{spu.brandId}, #{spu.categoryId}, #{spu.name}, #{spu.desc},
-               #{spu.descPic}, #{spu.productPics}, #{spu.price}, #{spu.status})
+        insert into `spu_info` (`spu_name`, `spu_desc`, `desc_img_url`, `brand_id`, `category_id`, `status`)
+        value (#{spu.spuName}, #{spu.descImgUrl}, #{spu.spuDesc},
+               #{spu.brandId}, #{spu.categoryId}, #{spu.status})
     </insert>
 
     <update id="update" parameterType="SpuEntity">
-        update `spu`
+        update `spu_info`
         <set>
+            <if test="spu.spuName != null">`spu_name` = #{spu.spuName}</if>
+            <if test="spu.spuDesc != null">`spu_desc` = #{spu.spuDesc}</if>
+            <if test="spu.descImgUrl != null">`desc_img_url` = #{spu.descImgUrl}</if>
             <if test="spu.brandId != null">`brand_id` = #{spu.brandId}</if>
             <if test="spu.categoryId != null">`category_id` = #{spu.categoryId}</if>
-            <if test="spu.name != null">`name` = #{spu.name}</if>
-            <if test="spu.desc != null">`desc` = #{spu.desc}</if>
-            <if test="spu.descPic != null">`desc_pic` = #{spu.descPic}</if>
-            <if test="spu.productPics != null">`product_pics` = #{spu.productPics}</if>
-            <if test="spu.price != null">`price` = #{spu.price} </if>
             <if test="spu.status != null">`status` = #{spu.status}</if>
         </set>
-        where `id` = #{spu.id}
+        where `spu_id` = #{spu.spuId}
     </update>
 
     <update id="changeStatus">
-        update `spu` set `status` = #{status} where `id` = #{spuId}
+        update `spu_info` set `status` = #{status} where `spu_id` = #{spuId}
     </update>
 
-    <update id="ChangeStatusBatch">
-        update `spu` set `status` = #{status} where `id` in
+    <update id="changeStatusBatch">
+        update `spu_info` set `status` = #{status} where `spu_id` in
         <foreach collection="spuIdList" item="spuId" open="(" separator="," close=")">
             #{spuId}
         </foreach>
     </update>
 
     <delete id="deleteBySpuId" parameterType="Long">
-        delete from `spu` where `id` = #{spuId}
+        delete from `spu_info` where `spu_id` = #{spuId}
     </delete>
 
 </mapper>

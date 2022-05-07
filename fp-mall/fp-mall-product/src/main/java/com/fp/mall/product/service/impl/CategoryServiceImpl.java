@@ -5,16 +5,16 @@ import com.fp.mall.product.model.dto.CategoryDTO;
 import com.fp.mall.product.model.entity.CategoryEntity;
 import com.fp.mall.product.model.vo.CategoryVO;
 import com.fp.mall.product.service.CategoryService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class CategoryServiceImpl implements CategoryService {
 
-    @Autowired
+    @Resource
     private CategoryMapper categoryMapper;
 
     @Override
@@ -35,13 +35,13 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public List<CategoryVO> listCategoriesByCategoryIds(List<Long> categoryIds) {
-        List<CategoryEntity> categoryEntityList = categoryMapper.listByIds(categoryIds);
+        List<CategoryEntity> categoryEntityList = categoryMapper.listByCategoryIds(categoryIds);
         return convertToCategoryVOList(categoryEntityList);
     }
 
     @Override
     public CategoryVO getCategoryByCategoryId(Long id) {
-        CategoryEntity categoryEntity = categoryMapper.getById(id);
+        CategoryEntity categoryEntity = categoryMapper.getByCategoryId(id);
         return convertToCategoryVO(categoryEntity);
     }
 
@@ -57,7 +57,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public void deleteByCategoryId(Long id) {
-        categoryMapper.deleteById(id);
+        categoryMapper.deleteByCategoryId(id);
     }
 
     //======================================================= 辅助方法 =======================================================
@@ -65,11 +65,10 @@ public class CategoryServiceImpl implements CategoryService {
     private CategoryVO convertToCategoryVO(CategoryEntity categoryEntity) {
         CategoryVO categoryVO = new CategoryVO();
         // 设置基本属性
-        categoryVO.setId(categoryEntity.getId());
-        categoryVO.setName(categoryEntity.getName());
-        categoryVO.setDesc(categoryEntity.getDesc());
+        categoryVO.setCategoryId(categoryEntity.getCategoryId());
+        categoryVO.setCategoryName(categoryEntity.getCategoryName());
+        categoryVO.setCategoryLevel(categoryEntity.getCategoryLevel());
         categoryVO.setParentId(categoryEntity.getParentId());
-        categoryVO.setLevel(categoryEntity.getLevel());
         categoryVO.setIconUrl(categoryEntity.getIconUrl());
         categoryVO.setStatus(categoryEntity.getStatus());
         categoryVO.setCreateTime(categoryEntity.getCreateTime());
@@ -88,7 +87,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     private void setChildCategories(CategoryVO categoryVO) {
-        List<CategoryVO> categoryVOs = listCategoriesByParentId(categoryVO.getId());
+        List<CategoryVO> categoryVOs = listCategoriesByParentId(categoryVO.getCategoryId());
         for (CategoryVO vo : categoryVOs) {
             setChildCategories(vo);
         }
@@ -97,11 +96,11 @@ public class CategoryServiceImpl implements CategoryService {
 
     private CategoryEntity convertToCategoryEntity(CategoryDTO categoryDTO) {
         CategoryEntity categoryEntity = new CategoryEntity();
-        categoryEntity.setId(categoryDTO.getId());
-        categoryEntity.setName(categoryDTO.getName());
-        categoryEntity.setDesc(categoryDTO.getDesc());
+        categoryEntity.setCategoryId(categoryDTO.getCategoryId());
+        categoryEntity.setCategoryName(categoryDTO.getCategoryName());
+        categoryEntity.setCategoryLevel(categoryDTO.getCategoryLevel());
         categoryEntity.setParentId(categoryDTO.getParentId());
-        categoryEntity.setLevel(categoryDTO.getLevel());
+        categoryEntity.setIconUrl(categoryDTO.getIconUrl());
         categoryEntity.setStatus(categoryDTO.getStatus());
         return categoryEntity;
     }

@@ -11,25 +11,18 @@ import java.util.List;
 public interface BrandMapper {
 
     /**
-     * 获取品牌信息列表
-     * @param brandDTO 品牌参数
-     * @return 品牌信息列表
+     * 根据品牌id, 获取品牌信息
+     * @param brandId 品牌id
+     * @return 品牌信息
      */
-    List<BrandEntity> list(@Param("brandDTO") BrandDTO brandDTO);
+    BrandEntity getByBrandId(@Param("brandId") Long brandId);
 
     /**
      * 根据品牌id列表, 获取品牌列表
-     * @param ids 品牌id列表
+     * @param brandIds 品牌id列表
      * @return 品牌信息列表
      */
-    List<BrandEntity> listByIds(@Param("ids") List<Long> ids);
-
-    /**
-     * 根据品牌id, 获取品牌信息
-     * @param id 品牌id
-     * @return 品牌信息
-     */
-    BrandEntity getById(@Param("id") Long id);
+    List<BrandEntity> listByBrandIds(@Param("brandIds") List<Long> brandIds);
 
     /**
      * 获取品牌在商品中使用的数量
@@ -54,14 +47,14 @@ public interface BrandMapper {
     /**
      * 更新品牌状态 (禁用/启用)
      * @param brandId 品牌id
-     * @param status 状态
+     * @param status 目标状态
      */
     void changeStatus(@Param("brandId") Long brandId, @Param("status") Byte status);
 
     /**
      * 根据品牌id, 删除品牌信息
-     * @param id 品牌id
+     * @param brandId 品牌id
      */
-    void deleteById(@Param("id") Long id);
+    void deleteByBrandId(@Param("brandId") Long brandId);
 
 }

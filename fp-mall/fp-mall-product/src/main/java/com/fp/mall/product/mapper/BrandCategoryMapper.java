@@ -46,13 +46,13 @@ public interface BrandCategoryMapper {
      * @param brandId 品牌id
      * @param categoryIds 分类id列表
      */
-    void deleteByBrandIdAndCategoryIds(@Param("brandId") Long brandId, @Param("categoryIds") List<Long> categoryIds);
+    void deleteBrandIdToCategoryIds(@Param("brandId") Long brandId, @Param("categoryIds") List<Long> categoryIds);
 
     /**
      * 根据分类id和品牌id列表, 删除该分类与指定品牌的关联信息
      * @param categoryId 分类id
      * @param brandIds 品牌id列表
      */
-    void deleteByCategoryIdAndBrandIds(@Param("categoryId") Long categoryId, @Param("brandIds") List<Long> brandIds);
+    void deleteCategoryIdToBrandIds(@Param("categoryId") Long categoryId, @Param("brandIds") List<Long> brandIds);
 
 }

@@ -9,30 +9,32 @@ import java.util.List;
 public class SkuDTO {
 
     @ApiModelProperty("SKU id")
-    private Long id;
+    private Long skuId;
 
     @ApiModelProperty("SPU id")
     private Long spuId;
 
     @ApiModelProperty("sku名称")
-    private String name;
+    private String skuName;
 
-    @ApiModelProperty("多个销售属性值id逗号分隔")
-    private String attrs;
-
-    @ApiModelProperty("销售属性列表")
-    private List<SkuSaleAttrDTO> skuSaleAttrs;
+    @ApiModelProperty("sku介绍")
+    private String skuDesc;
 
     @ApiModelProperty("售价，整数方式保存")
     private Long price;
 
-    @ApiModelProperty("库存图url")
-    private String imgUrl;
-
     @ApiModelProperty("库存")
-    private Integer stock;
+    private Long stock;
+
+    @ApiModelProperty("销量")
+    private Long sales;
 
     @ApiModelProperty("状态 1:enable, 0:disable, -1:deleted")
     private Byte status;
+
+    //==================================== 附加 ====================================
+
+    @ApiModelProperty("销售属性列表")
+    private List<SkuSaleAttrDTO> skuSaleAttrs;
 
 }

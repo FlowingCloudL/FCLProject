@@ -10,32 +10,32 @@ import java.util.List;
 public class SkuVO extends BaseVO {
 
     @ApiModelProperty("SKU id")
-    private Long id;
+    private Long skuId;
 
     @ApiModelProperty("SPU id")
     private Long spuId;
 
     @ApiModelProperty("SKU名称")
-    private String name;
+    private String skuName;
 
-    @ApiModelProperty("多个销售属性值id逗号分隔")
-    private String attrs;
-
-    @ApiModelProperty("图片url")
-    private String imgUrl;
+    @ApiModelProperty("SKU介绍")
+    private String skuDesc;
 
     @ApiModelProperty("售价，整数方式保存")
     private Long price;
 
     @ApiModelProperty("库存")
-    private Integer stock;
+    private Long stock;
+
+    @ApiModelProperty("销量")
+    private Long sales;
 
     @ApiModelProperty("状态 1:enable, 0:disable, -1:deleted")
-    private Integer status;
+    private Byte status;
 
     //=================================== 额外需求 ===================================
 
     @ApiModelProperty("SKU销售属性列表")
-    private List<SkuSaleAttrVO> skuSaleAttrs;
+    private List<SkuSaleAttrVO> skuSaleAttrLst;
 
 }

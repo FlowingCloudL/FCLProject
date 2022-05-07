@@ -3,54 +3,33 @@
 
 <mapper namespace="com.fp.mall.product.mapper.AttrMapper">
 
-    <sql id="attrQueryCondition">
-        <where>
-            <if test="attrDTO.id != null">
-                and `id` = #{attrDTO.id}
-            </if>
-            <if test="attrDTO.name != null">
-                and `name` = #{attrDTO.name}
-            </if>
-            <if test="attrDTO.type != null">
-                and `type` = #{attrDTO.type}
-            </if>
-            <if test="attrDTO.searchable != null">
-                and `searchable` = #{attrDTO.searchable}
-            </if>
-        </where>
-    </sql>
-
-    <select id="list" resultType="AttrEntity">
-        select * from `attr` <include refid="attrQueryCondition"/>
-    </select>
-
     <select id="listByCategoryId" resultType="AttrEntity">
         select * from `attr` where `category_id` = #{categoryId} or `category_id` = 0;
     </select>
 
-    <select id="getById" resultType="AttrEntity">
-        select * from `attr` where `id` = #{id}
+    <select id="getByAttrId" resultType="AttrEntity">
+        select * from `attr` where `attr_id` = #{attrId}
     </select>
 
     <insert id="save" parameterType="AttrEntity">
-        insert into `attr` (`category_id`, `name`, `desc`, `type`, `searchable`)
-        values (#{categoryId}, #{name}, #{desc}, #{type}, #{searchable})
+        insert into `attr` (`attr_name`, `attr_type`, `category_id`, `searchable`, `status`)
+        value (#{attr.attrName}, #{attr.attrType}, #{attr.categoryId}, #{attr.searchable}, #{attr.status})
     </insert>
 
     <update id="update" parameterType="AttrEntity">
         update `attr`
         <set>
-            <if test="attr.categoryId != null">`category_id` = #{categoryId}</if>
-            <if test="attr.name != null">`name` = #{attr.name}</if>
-            <if test="attr.desc != null">`desc` = #{attr.desc}</if>
-            <if test="attr.type != null">`type` = #{attr.type}</if>
+            <if test="attr.attrName != null">`attr_name` = #{attr.attrName}</if>
+            <if test="attr.attrType != null">`attr_type` = #{attr.attrType}</if>
+            <if test="attr.categoryId != null">`category_id` = #{attr.categoryId}</if>
             <if test="attr.searchable != null">`searchable` = #{attr.searchable}</if>
+            <if test="attr.status != null">`enable` = #{attr.status}</if>
         </set>
-        where `id` = #{attr.id}
+        where `attr_id` = #{attr.attrId}
     </update>
 
-    <delete id="deleteById" parameterType="Long">
-        delete from `attr` where `id` = #{id}
+    <delete id="deleteByAttrId" parameterType="Long">
+        delete from `attr` where `attr_id` = #{attrId}
     </delete>
 
 </mapper>

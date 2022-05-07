@@ -4,38 +4,38 @@
 <mapper namespace="com.fp.mall.product.mapper.SkuMapper">
 
     <select id="getBySkuId" parameterType="Long" resultType="SkuEntity">
-        select * from `sku` where `id` = #{skuId}
+        select * from `sku_info` where `sku_id` = #{skuId}
     </select>
 
     <select id="listBySpuId" parameterType="Long" resultType="SkuEntity">
-        select * from `sku` where `spu_id` = #{spuId}
+        select * from `sku_info` where `spu_id` = #{spuId}
         <if test="status != null">
             and `status` = #{status}
         </if>
     </select>
 
     <insert id="save" parameterType="SkuEntity">
-        insert into `sku` (`spu_id`, `name`, `price`, `img_url`, `stock`, `status`)
-        value (#{sku.spuId}, #{sku.name}, #{sku.price}, #{sku.imgUrl}, #{sku.stock}, #{sku.status})
+        insert into `sku_info` (`spu_id`, `sku_name`, `sku_desc`, `price`, `stock`, `status`)
+        value (#{sku.spuId}, #{sku.skuName}, #{sku.skuDesc}, #{sku.price}, #{sku.stock}, #{sku.status})
     </insert>
 
     <insert id="saveBatch">
-        insert into `sku` (`spu_id`, `name`, `price`, `img_url`, `stock`, `status`) values
+        insert into `sku_info` (`spu_id`, `sku_name`, `sku_desc`, `price`, `stock`, `status`) values
         <foreach collection="skuList" item="sku" separator=",">
-            (#{sku.spuId}, #{sku.name}, #{sku.price}, #{sku.imgUrl}, #{sku.stock}, #{sku.status})
+            (#{sku.spuId}, #{sku.skuName}, #{sku.skuDesc}, #{sku.price}, #{sku.stock}, #{sku.status})
         </foreach>
     </insert>
 
     <sql id="updateSql">
-        update `sku`
+        update `sku_info`
         <set>
-            <if test="sku.name != null">`name` = #{sku.name}</if>
+            <if test="sku.skuName != null">`sku_name` = #{sku.skuName}</if>
+            <if test="sku.skuDesc != null">`sku_desc` = #{sku.skuDesc}</if>
             <if test="sku.price != null">`price` = #{sku.price}</if>
-            <if test="sku.imgUrl != null">`img_url` = #{sku.imgUrl}</if>
             <if test="sku.stock != null">`stock` = #{sku.stock}</if>
             <if test="sku.status != null">`status` = #{sku.status}</if>
         </set>
-        where `id` = #{sku.id}
+        where `sku_id` = #{sku.skuId}
     </sql>
 
     <update id="update" parameterType="SkuEntity">
@@ -48,20 +48,27 @@
         </foreach>
     </update>
 
-    <update id="addSales">
-        update `sku` set `sales` = `sales` + #{num} where `id` = #{id}
+    <update id="changeStatus">
+        update `sku_info` set `status` = #{status} where `sku_id`
+        <foreach collection="skuIds" item="skuId" open="(" separator="," close=")">
+            #{skuId}
+        </foreach>
+    </update>
+
+    <update id="changeSales">
+        update `sku_info` set `sales` = `sales` + #{num} where `sku_id` = #{skuId}
     </update>
 
     <update id="changeStock">
-        update `sku` set `stock` = `stock` + #{num} where `id` = #{id}
+        update `sku_info` set `stock` = `stock` + #{num} where `sku_id` = #{skuId}
     </update>
 
     <delete id="deleteBySkuId" parameterType="Long">
-        delete from `sku` where `id` = #{skuId}
+        delete from `sku_info` where `sku_id` = #{skuId}
     </delete>
 
     <delete id="deleteBySpuId" parameterType="Long">
-        delete from `sku` where `spu_id` = #{spuId}
+        delete from `sku_info` where `spu_id` = #{spuId}
     </delete>
 
 

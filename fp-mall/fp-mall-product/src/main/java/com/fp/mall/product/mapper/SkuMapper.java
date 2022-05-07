@@ -16,7 +16,7 @@ import java.util.List;
 public interface SkuMapper {
 
     /**
-     * 根据skuId获取sku信息
+     * 根据skuId, 获取sku信息
      * @param skuId 库存id
      * @return sku信息
      */
@@ -54,18 +54,25 @@ public interface SkuMapper {
     void updateBatch(@Param("skuList") List<SkuEntity> skuList);
 
     /**
-     * 增加销量
-     * @param id 库存id
+     * 批量改变库存状态
+     * @param skuIds 库存id列表
+     * @param status 目标状态
+     */
+    void changeStatus(@Param("skuIds") List<Long> skuIds, @Param("status") Byte status);
+
+    /**
+     * 修改销量 (正数为增加, 负数为减少)
+     * @param skuId 库存id
      * @param num 增加值
      */
-    void addSales(@Param("id") Long id, @Param("num") Integer num);
+    void changeSales(@Param("skuId") Long skuId, @Param("num") Integer num);
 
     /**
      * 修改库存量 (正数为增加, 负数为减少)
-     * @param id 库存id
+     * @param skuId 库存id
      * @param num 修改值
      */
-    void changeStock(@Param("id") Long id, @Param("num") Integer num);
+    void changeStock(@Param("skuId") Long skuId, @Param("num") Integer num);
 
     /**
      * 删除sku信息

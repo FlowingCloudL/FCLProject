@@ -10,25 +10,28 @@ import java.util.List;
 public class BrandVO extends BaseVO {
 
     @ApiModelProperty("品牌id")
-    private Long id;
+    private Long brandId;
 
     @ApiModelProperty("品牌名称")
-    private String name;
+    private String brandName;
 
     @ApiModelProperty("品牌描述")
-    private String desc;
+    private String brandDesc;
 
     @ApiModelProperty("品牌logo图片")
     private String logoUrl;
 
+    @ApiModelProperty("检索首字母")
+    private Character firstLetter;
+
     @ApiModelProperty("排序")
     private Integer seq;
 
-    @ApiModelProperty("状态 1:enable, 0:disable, -1:deleted")
+    @ApiModelProperty("状态 [0:禁用, 1:启用]")
     private Byte status;
 
-    //======================================== 附加 ========================================
+    //============================== 附加 ==============================
 
     @ApiModelProperty("分类")
-    private List<CategoryVO> categories;
+    private List<CategoryVO> categoryVOs;
 }

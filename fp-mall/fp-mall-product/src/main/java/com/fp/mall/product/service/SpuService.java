@@ -34,19 +34,31 @@ public interface SpuService {
     List<Long> getSpuIdsByCategoryAndBrand(List<Long> categoryIds, Long brandId);
 
     /**
-     * 保存商品信息
+     * 保存商品信息, 包括spu和与之关联的基本属性
      * @param spuDTO 商品信息
      */
     void saveSpu(SpuDTO spuDTO);
 
     /**
-     * 更新商品信息
+     * 更新商品信息, 包括spu和与之关联的基本属性
      * @param spuDTO 商品信息
      */
     void updateSpu(SpuDTO spuDTO);
 
     /**
-     * 删除商品信息
+     * 批量上架
+     * @param spuIds 商品id列表
+     */
+    void onTheShelf(List<Long> spuIds);
+
+    /**
+     * 批量下架
+     * @param spuIds 商品id列表
+     */
+    void offTheShelf(List<Long> spuIds);
+
+    /**
+     * 删除商品信息, 包括spu、基本属性、sku、销售属性
      * @param spuId 商品id
      */
     void deleteSpuBySpuId(Long spuId);
@@ -62,34 +74,5 @@ public interface SpuService {
      * @param spuIds 商品id列表
      */
     void batchClearSpuCacheBySpuIds(List<Long> spuIds);
-
-    /**
-     * 改变商品状态（上下架）
-     * @param spuId 商品id
-     * @param status 商品状态
-     */
-    void changeSpuStatus(Long spuId, Short status);
-
-    /**
-     * 更新商品的信息
-     * @param spuModifyDTO
-     */
-//    void updateSpuOrSku(SpuModifyDTO spuModifyDTO);
-
-    /**
-     * 更新spu表（canal监听后，会发送更新的消息，更新es中的数据）
-     * @param spuIds
-     * @param categoryIds
-     */
-//    void updateSpuUpdateTime(List<Long> spuIds, List<Long> categoryIds);
-
-    /**
-     * 根据分组id和是否为当前分组，返回商品列表
-     * @param pageDTO 分页信息
-     * @param spuDTO 分组信息
-     * @param isContain 是否当前分组商品 1.参与 0.不参与
-     * @return 商品列表
-     */
-//    PageVO<SpuVO> pageByLangAndTagId(PageDTO pageDTO, SpuDTO spuDTO, Integer isContain);
 
 }

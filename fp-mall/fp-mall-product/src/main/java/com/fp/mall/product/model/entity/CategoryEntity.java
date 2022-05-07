@@ -6,15 +6,13 @@ import lombok.Data;
 @Data
 public class CategoryEntity extends BaseEntity {
 
-    private Long id;
+    private Long categoryId;
 
-    private Short level;
+    private String categoryName;
+
+    private Short categoryLevel;
 
     private Long parentId;
-
-    private String name;
-
-    private String desc;
 
     private String iconUrl;
 

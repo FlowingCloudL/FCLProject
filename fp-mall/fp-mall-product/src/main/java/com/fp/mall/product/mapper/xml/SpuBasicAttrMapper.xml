@@ -7,53 +7,38 @@
         select * from `spu_basic_attr` where `spu_id` = #{spuId}
     </select>
 
-    <select id="listSpuIdsByAttrValueIds">
-        select `spu_id` from `spu_basic_attr` where `attr_value_id` in
-        <foreach collection="attrValueIds" item="attrValueId" open="(" separator="," close=")">
-            #{attrValueId}
-        </foreach>
+    <select id="listByAttrId" parameterType="Long" resultType="SpuBasicAttrEntity">
+        select * from `spu_basic_attr` where `attr_id` = #{attrId}
     </select>
 
-    <insert id="save" parameterType="SpuBasicAttrEntity">
-        insert into `spu_basic_attr` (spu_id, attr_id, attr_name, attr_value_id, attr_value)
-        value (#{entity.spuId}, #{entity.attrId}, #{entity.attrName},
-               #{entity.attrValueId}, #{entity.attrValue})
-    </insert>
-
     <insert id="saveBatch">
-        insert into `spu_basic_attr` (spu_id, attr_id, attr_name, attr_value_id, attr_value) values
+        insert into `spu_basic_attr` (`spu_id`, `attr_id`, `attr_name`, `attr_value`) values
         <foreach collection="entityList" item="entity" separator=",">
-            (#{entity.spuId}, #{entity.attrId}, #{entity.attrName},#{entity.attrValueId}, #{entity.attrValue})
+            (#{spuId}, #{entity.attrId}, #{entity.attrName}, #{entity.attrValue})
         </foreach>
     </insert>
 
-    <update id="updateAttr">
-        update `spu_basic_attr` set `attr_name` = #{attrName} where `attr_id` = #{attrId}
+    <update id="updateBatch">
+        <foreach collection="entityList" item="entity" separator=";">
+            update `spu_basic_attr`
+            <set>
+                <if test="entity.attrName != null">`attr_name` = #{entity.attrName}</if>
+                <if test="entity.attrValue != null">`attr_value` = #{entity.attrValue}</if>
+            </set>
+            where `id` = #{entity.id} and `spu_id` = #{spuId}
+        </foreach>
     </update>
 
-    <update id="updateAttrValue">
-        update `spu_basic_attr` set `attr_value` = #{attrValue} where `attr_value_id` = #{attrValueId}
-    </update>
+    <delete id="deleteById" parameterType="Long">
+        delete from `spu_basic_attr` where `id` = #{id}
+    </delete>
 
     <delete id="deleteBySpuId" parameterType="Long">
         delete from `spu_basic_attr` where `spu_id` = #{spuId}
     </delete>
 
-    <delete id="deleteBatchById">
-        delete from `spu_basic_attr` where `id` in
-        <foreach collection="idList" item="id" open="(" separator="," close=")">
-            #{id}
-        </foreach>
-    </delete>
-
-    <delete id="deleteByAttIdAndAttrValueIds">
+    <delete id="deleteByAttrId" parameterType="Long">
         delete from `spu_basic_attr` where `attr_id` = #{attrId}
-        <if test="attrValueIds != null">
-            and `attr_value_id` in
-            <foreach collection="attrValueIds" item="attrValueId" open="(" separator="," close=")">
-                #{attrValueId}
-            </foreach>
-        </if>
     </delete>
 
 

@@ -8,11 +8,16 @@ import java.util.List;
 @Data
 public class AttrEntity extends BaseEntity {
 
-    private Long id;
+    private Long attrId;
+
+    private String attrName;
+
+    private Byte attrType;
+
     private Long categoryId;
-    private String name;
-    private String desc;
-    private Byte type;
+
     private Byte searchable;
+
+    private Byte status;
 
 }

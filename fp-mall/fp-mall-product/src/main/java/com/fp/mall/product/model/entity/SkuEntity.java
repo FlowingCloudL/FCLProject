@@ -9,7 +9,7 @@ public class SkuEntity extends BaseEntity {
     /**
      * 主键 - 库存id
      */
-    private Long id;
+    private Long skuId;
 
     /**
      * 商品id
@@ -17,19 +17,14 @@ public class SkuEntity extends BaseEntity {
     private Long spuId;
 
     /**
-     * 多个销售属性值id, 逗号分隔
-     */
-    private String attrs;
-
-    /**
      * 库存名称
      */
-    private String name;
+    private String skuName;
 
     /**
-     * 库存图片
+     * 库存介绍
      */
-    private String imgUrl;
+    private String skuDesc;
 
     /**
      * 售价，整数方式保存

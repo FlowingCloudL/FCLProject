@@ -9,17 +9,17 @@ public class BrandEntity extends BaseEntity {
     /**
      * 主键 - 品牌id
      */
-    private Long id;
+    private Long brandId;
 
     /**
      * 品牌名称
      */
-    private String name;
+    private String brandName;
 
     /**
      * 品牌描述
      */
-    private String desc;
+    private String brandDesc;
 
     /**
      * 品牌logo图片
@@ -27,12 +27,17 @@ public class BrandEntity extends BaseEntity {
     private String logoUrl;
 
     /**
+     * 检索首字母
+     */
+    private Character firstLetter;
+
+    /**
      * 排序
      */
     private Integer seq;
 
     /**
-     * 状态 1:enable, 0:disable, -1:deleted
+     * 状态 [0:禁用, 1:启用]
      */
     private Byte status;
 

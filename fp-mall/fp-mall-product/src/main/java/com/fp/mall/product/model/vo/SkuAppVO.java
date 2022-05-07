@@ -2,6 +2,8 @@ package com.fp.mall.product.model.vo;
 
 import io.swagger.annotations.ApiModelProperty;
 
+import java.util.List;
+
 public class SkuAppVO {
 
     @ApiModelProperty("库存id")
@@ -13,8 +15,8 @@ public class SkuAppVO {
     @ApiModelProperty("库存名称")
     private String skuName;
 
-    @ApiModelProperty("库存图片")
-    private String imgUrl;
+    @ApiModelProperty("SKU介绍")
+    private String skuDesc;
 
     @ApiModelProperty("售价，整数方式保存")
     private Long price;
@@ -25,7 +27,7 @@ public class SkuAppVO {
     @ApiModelProperty("销量")
     private Integer sales;
 
-    @ApiModelProperty("属性")
-    private String properties;
+    @ApiModelProperty("销售属性列表")
+    private List<SkuSaleAttrVO> skuSaleAttrList;
 
 }

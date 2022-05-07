@@ -10,6 +10,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -24,7 +25,7 @@ import java.util.List;
 @RequestMapping("/platform/category")
 public class CategoryController {
 
-    @Autowired
+    @Resource
     private CategoryService categoryService;
 
     //================================================= GET =================================================
@@ -74,7 +75,7 @@ public class CategoryController {
     public ResponseVO<Void> enableOrDisable(@RequestParam("categoryId") Long categoryId, @RequestParam("status") Byte status) {
         ValidUtil.checkNotNull(categoryId, status);
         CategoryDTO categoryDTO = new CategoryDTO();
-        categoryDTO.setId(categoryId);
+        categoryDTO.setCategoryId(categoryId);
         categoryDTO.setStatus(status);
         categoryService.update(categoryDTO);
         return ResponseVO.success();

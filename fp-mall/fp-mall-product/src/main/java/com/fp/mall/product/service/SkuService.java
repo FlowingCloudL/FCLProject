@@ -12,60 +12,51 @@ public interface SkuService {
      * @param skuId skuId
      * @return sku信息
      */
-    SkuVO getSkuBySkuId(Long skuId);
+    SkuVO getBySkuId(Long skuId);
 
     /**
      * 获取 sku列表（会被缓存）
      * @param spuId 商品id
      * @return sku列表
      */
-    List<SkuVO> listSkuBySpuId(Long spuId);
+    List<SkuVO> listBySpuId(Long spuId);
 
     /**
-     * 保存 sku信息
-     * @param spu 商品id
-     * @param skuList SKU列表
+     * 保存 sku信息, 包括sku和销售属性
+     * @param skuDTO SKU信息
      */
-    void saveSku(Long spu, List<SkuDTO> skuList);
+    void save(SkuDTO skuDTO);
 
     /**
-     * 更新 sku信息 (通过spuId去数据库同样查出skuList, 筛选出分别要更新/插入/删除)
-     * @param spuId 商品id
-     * @param skuList SKU列表
+     * 更新 sku信息, 包括sku和销售属性
+     * @param skuDTO SKU信息
      */
-    void updateSku(Long spuId, List<SkuDTO> skuList);
+    void update(SkuDTO skuDTO);
 
     /**
-     * 更新sku金额或者库存信息
-     * @param skuList SKU列表
+     * 批量改变库存状态
+     * @param skuIds 库存id列表
+     * @param status 目标状态
      */
-    void updateSkuPriceAndStock(List<SkuDTO> skuList);
+    void changeStatus(List<Long> skuIds, Byte status);
 
     /**
-     * 删除 sku信息
+     * 删除 sku信息, 包括sku和销售属性
      * @param skuId SKU id
      */
-    void deleteSkuBySkuId(Long skuId);
+    void deleteBySkuId(Long skuId);
 
     /**
-     * 删除 sku信息
+     * 删除 sku信息, 包括sku和销售属性
      * @param spuId 商品id
      */
-    void deleteSkuBySpuId(Long spuId);
+    void deleteBySpuId(Long spuId);
 
     /**
-     * 清除 sku缓存
+     * 清除 sku缓存, 包括sku和销售属性
      * @param spuId 商品id
      * @param skuIds skuId列表
      */
     void clearSkuCacheBySpuIdOrSkuIds(Long spuId, List<Long> skuIds);
-
-
-    /**
-     * 获取商品的sku列表（仅获取启用状态）
-     * @param spuId
-     * @return
-     */
-//    List<SkuAppVO> getSkuBySpuId(Long spuId);
 
 }

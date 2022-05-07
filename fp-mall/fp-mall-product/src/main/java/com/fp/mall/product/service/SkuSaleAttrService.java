@@ -1,51 +1,56 @@
 package com.fp.mall.product.service;
 
-import com.fp.mall.product.model.entity.SkuSaleAttrEntity;
+import com.fp.mall.product.model.dto.SkuSaleAttrDTO;
+import com.fp.mall.product.model.vo.SkuSaleAttrVO;
 
 import java.util.List;
 
 public interface SkuSaleAttrService {
 
     /**
-     * 保存销售属性与sku的关联信息
-     * @param skuSaleAttrEntity 关联信息
+     * 根据spuId, 获取销售属性列表
+     * @param skuId SKU ID
+     * @return 商品基本属性列表
      */
-    void save(SkuSaleAttrEntity skuSaleAttrEntity);
+    List<SkuSaleAttrVO> listBySkuId(Long skuId);
 
     /**
-     * 批量保存关联信息
-     * @param skuSaleAttrEntities 关联信息列表
+     * 根据属性id, 获取销售属性列表
+     * @param attrId 属性id
+     * @return 商品基本属性列表
      */
-    void saveBatch(List<SkuSaleAttrEntity> skuSaleAttrEntities);
+    List<SkuSaleAttrVO> listByAttrId(Long attrId);
 
     /**
-     * 根据skuId列表, 改变销售属性的状态
-     * @param skuIds skuId列表
-     * @param status 状态
+     * 批量保存 销售属性
+     * @param skuId 库存id
+     * @param skuSaleAttrDTOList 销售属性列表
      */
-    void changeStatusBySkuIds(List<Long> skuIds, Byte status);
+    void saveBatch(Long skuId, List<SkuSaleAttrDTO> skuSaleAttrDTOList);
 
     /**
-     * 根据spuId, 改变销售属性的状态
-     * @param spuId spuId
-     * @param status 状态
+     * 批量更新 销售属性
+     * @param skuId 库存id
+     * @param skuSaleAttrDTOList 销售属性列表
      */
-    void changeStatusBySpuId(Long spuId, Byte status);
+    void updateBatch(Long skuId, List<SkuSaleAttrDTO> skuSaleAttrDTOList);
 
     /**
-     * 批量更新商品sku销售属性关联信息
-     * @param spuSkuAttrValues sku与销售属性的关联信息
-     */
-    void updateBatch(List<SkuSaleAttrEntity> spuSkuAttrValues);
-
-    /**
-     * 根据关联id, 删除关联信息
-     * @param id 关联id
+     * 根据销售属性id, 删除销售属性
+     * @param id 销售属性id
      */
     void deleteById(Long id);
 
+    /**
+     * 根据skuId, 删除销售属性
+     * @param skuId 库存id
+     */
+    void deleteBySkuId(Long skuId);
 
-
-
+    /**
+     * 根据skuId, 删除销售属性
+     * @param spuId 商品id
+     */
+    void deleteBySpuId(Long spuId);
 
 }
