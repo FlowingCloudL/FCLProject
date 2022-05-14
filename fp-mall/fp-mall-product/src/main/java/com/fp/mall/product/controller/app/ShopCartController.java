@@ -20,7 +20,7 @@ import java.util.List;
  * @date 2022/5/2 20:36
  */
 @Api("用户端-购物车-前端控制器")
-@RestController
+@RestController("用户端-购物车-前端控制器")
 @RequestMapping("/app/shopCart")
 public class ShopCartController {
 

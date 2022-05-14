@@ -1,23 +1,31 @@
 package com.fp.mall.order.config;
 
-import com.baomidou.mybatisplus.extension.spring.MybatisSqlSessionFactoryBean;
 import io.seata.rm.datasource.DataSourceProxy;
-import org.apache.ibatis.session.SqlSessionFactory;
+import lombok.extern.slf4j.Slf4j;
+import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import javax.sql.DataSource;
 
+/**
+ * Seata - 代理数据源配置
+ *
+ * @author FlowingCloudL
+ * @date 2022/5/14 19:47
+ */
+@Slf4j
 @Configuration
 public class DataSourceProxyConfig {
 
+    // 配置代理数据源，使Seata生效！
     @Bean
-    public SqlSessionFactory sqlSessionFactoryBean(DataSource dataSource) throws Exception {
-        // 订单服务中引入了mybatis-plus，所以要使用特殊的SqlSessionFactoryBean
-        MybatisSqlSessionFactoryBean sqlSessionFactoryBean = new MybatisSqlSessionFactoryBean();
-        // 代理数据源
-        sqlSessionFactoryBean.setDataSource(new DataSourceProxy(dataSource));
-        // 生成SqlSessionFactory
-        return sqlSessionFactoryBean.getObject();
+    DataSource dataSource(DataSourceProperties properties) {
+        DataSource dataSource = properties.initializeDataSourceBuilder().build();
+        DataSourceProxy dataSourceProxy = new DataSourceProxy(dataSource);
+        log.info("代理数据源已经生效!");
+        return dataSourceProxy;
     }
+
 }

@@ -1,56 +1,80 @@
 package com.fp.mall.order.service.impl;
 
-import com.fp.mall.order.dto.ResponseDTO;
-import com.fp.mall.order.entity.OrderEntity;
-import com.fp.mall.order.exception.OrderException;
-import com.fp.mall.order.exception.PayException;
-import com.fp.mall.order.exception.StockException;
-import com.fp.mall.order.feign.PayService;
-import com.fp.mall.order.feign.StockService;
-import com.fp.mall.order.mapper.OrderMapper;
+import com.fp.api.mall.product.model.OrderSpuBO;
+import com.fp.api.mall.product.model.StockModifyBO;
+import com.fp.api.mall.product.service.RemoteSpuService;
+import com.fp.api.mall.product.service.RemoteStockService;
+import com.fp.mall.order.mapper.OrderInfoMapper;
+import com.fp.mall.order.mapper.OrderItemMapper;
+import com.fp.mall.order.model.dto.OrderItemDTO;
+import com.fp.mall.order.model.dto.OrderSubmitDTO;
+import com.fp.mall.order.model.dto.OrderSubmitSkuDTO;
+import com.fp.mall.order.model.entity.OrderInfoEntity;
+import com.fp.mall.order.model.entity.OrderItemEntity;
 import com.fp.mall.order.service.OrderService;
 import io.seata.spring.annotation.GlobalTransactional;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.apache.dubbo.config.annotation.DubboReference;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import javax.annotation.Resource;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class OrderServiceImpl implements OrderService {
 
-    @Autowired
-    private OrderMapper orderMapper;
+    @DubboReference
+    private RemoteStockService remoteStockService;
 
-    @Autowired
-    private PayService payService;
+    @DubboReference
+    private RemoteSpuService remoteSpuService;
 
-    @Autowired
-    private StockService stockService;
+    @Resource
+    private OrderInfoMapper orderInfoMapper;
 
+    @Resource
+    private OrderItemMapper orderItemMapper;
 
-    @GlobalTransactional()
+    @GlobalTransactional
     @Override
-    public Integer createOrder(OrderEntity order) {
-
-        order.setOrderId(null);
+    public Long submitOrder(Long uid, OrderSubmitDTO orderSubmitDTO) {
 
         // 扣减库存
-        ResponseDTO stockDTO = stockService.reduce(order.getItemId(), order.getItemNum());
-        if (stockDTO.getCode() == 500) throw new StockException();
+        List<StockModifyBO> bos = orderSubmitDTO.getSkus().stream().map(dto -> {
+            StockModifyBO bo = new StockModifyBO();
+            BeanUtils.copyProperties(dto, bo);
+            return bo;
+        }).collect(Collectors.toList());
+        remoteStockService.decrStock(bos);
 
-        // 计算金额
+        // 创建订单基本信息
+        OrderInfoEntity orderInfoEntity = new OrderInfoEntity();
+        BeanUtils.copyProperties(orderSubmitDTO, orderInfoEntity);
+        orderInfoEntity.setUserId(uid);
+        orderInfoEntity.setCreateTime(LocalDateTime.now());
+        orderInfoEntity.setUpdateTime(LocalDateTime.now());
+        orderInfoMapper.insert(orderInfoEntity);
 
-
-        // 扣减余额
-        ResponseDTO payDTO = payService.pay(order.getUid(), order.getOrderAmount());
-        System.out.println(payDTO);
-        if (payDTO.getCode() == 500) throw new PayException();
-
-        // 持久化订单信息
-        int i = orderMapper.insert(order);
-
-        if (i > 0) {
-            return order.getOrderId();
+        // 创建订单项
+        for (OrderSubmitSkuDTO submitSkuDTO : orderSubmitDTO.getSkus()) {
+            // 远程调用获得订单项所需的SKU和SPU信息
+            OrderSpuBO orderSpuBO = remoteSpuService.getSpuBySkuId(submitSkuDTO.getSkuId());
+            // 生成订单项Entity
+            OrderItemEntity orderItemEntity = new OrderItemEntity();
+            orderItemEntity.setOrderId(orderInfoEntity.getOrderId());  //设置订单id
+            BeanUtils.copyProperties(orderSpuBO, orderItemEntity);  //设置spu部分
+            BeanUtils.copyProperties(orderSpuBO.getSkuBO(), orderItemEntity);  //设置sku部分
+            orderItemEntity.setSkuPrice(orderSpuBO.getSkuBO().getPrice());  //设置单价
+            orderItemEntity.setSkuQuantity(submitSkuDTO.getCount());  //设置数量
+            // 计算订单项价格
+            orderItemEntity.setRealAmount(orderItemEntity.getSkuPrice().multiply(new BigDecimal(orderItemEntity.getSkuQuantity())));
+            orderItemMapper.insert(orderItemEntity);
         }
-        else throw new OrderException();
 
+        return null;
     }
 }

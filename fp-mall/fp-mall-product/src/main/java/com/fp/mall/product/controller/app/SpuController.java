@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @date 2022/5/2 21:13
  */
 @Api("用户端-SPU-前端控制器")
-@RestController
+@RestController("用户端-SPU-前端控制器")
 @RequestMapping("/app/spu")
 public class SpuController {
 

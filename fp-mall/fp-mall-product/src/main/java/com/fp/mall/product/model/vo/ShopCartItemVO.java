@@ -46,6 +46,4 @@ public class ShopCartItemVO extends BaseVO {
     @ApiModelProperty("当前总价格(商品价格 * 数量)")
     private Long totalPrice;
 
-
-
 }

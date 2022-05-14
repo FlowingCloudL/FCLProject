@@ -1,10 +1,14 @@
 package com.fp.mall.product.service.impl;
 
+import com.fp.mall.product.consts.ProductCacheNameConst;
 import com.fp.mall.product.mapper.CategoryMapper;
 import com.fp.mall.product.model.dto.CategoryDTO;
 import com.fp.mall.product.model.entity.CategoryEntity;
 import com.fp.mall.product.model.vo.CategoryVO;
 import com.fp.mall.product.service.CategoryService;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -17,15 +21,17 @@ public class CategoryServiceImpl implements CategoryService {
     @Resource
     private CategoryMapper categoryMapper;
 
+    @Cacheable(cacheNames = ProductCacheNameConst.CATEGORY_ALL)
     @Override
     public List<CategoryVO> listCategories() {
         return listCategoriesByParentId(0L);
     }
 
+    @Cacheable(cacheNames = ProductCacheNameConst.CATEGORY_PARENT_ID, key = "#parentId")
     @Override
     public List<CategoryVO> listCategoriesByParentId(Long parentId) {
         List<CategoryEntity> categoryEntityList = categoryMapper.listByParentId(parentId);
-        return convertToCategoryVOList(categoryEntityList);
+        return convertToCategoryVO(categoryEntityList);
     }
 
     @Override
@@ -36,12 +42,13 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public List<CategoryVO> listCategoriesByCategoryIds(List<Long> categoryIds) {
         List<CategoryEntity> categoryEntityList = categoryMapper.listByCategoryIds(categoryIds);
-        return convertToCategoryVOList(categoryEntityList);
+        return convertToCategoryVO(categoryEntityList);
     }
 
+    @Cacheable(cacheNames = ProductCacheNameConst.CATEGORY_ID, key = "#categoryId")
     @Override
-    public CategoryVO getCategoryByCategoryId(Long id) {
-        CategoryEntity categoryEntity = categoryMapper.getByCategoryId(id);
+    public CategoryVO getCategoryByCategoryId(Long categoryId) {
+        CategoryEntity categoryEntity = categoryMapper.getByCategoryId(categoryId);
         return convertToCategoryVO(categoryEntity);
     }
 
@@ -50,14 +57,24 @@ public class CategoryServiceImpl implements CategoryService {
         categoryMapper.save(convertToCategoryEntity(categoryDTO));
     }
 
+    @Caching(evict = {
+            @CacheEvict(value = ProductCacheNameConst.CATEGORY_ALL),
+            @CacheEvict(value = ProductCacheNameConst.CATEGORY_PARENT_ID, allEntries = true),
+            @CacheEvict(value = ProductCacheNameConst.CATEGORY_ID, key = "#categoryDTO.categoryId")
+    })
     @Override
     public void update(CategoryDTO categoryDTO) {
         categoryMapper.update(convertToCategoryEntity(categoryDTO));
     }
 
+    @Caching(evict = {
+            @CacheEvict(value = ProductCacheNameConst.CATEGORY_ALL),
+            @CacheEvict(value = ProductCacheNameConst.CATEGORY_PARENT_ID, allEntries = true),
+            @CacheEvict(value = ProductCacheNameConst.CATEGORY_ID, key = "#categoryId")
+    })
     @Override
-    public void deleteByCategoryId(Long id) {
-        categoryMapper.deleteByCategoryId(id);
+    public void deleteByCategoryId(Long categoryId) {
+        categoryMapper.deleteByCategoryId(categoryId);
     }
 
     //======================================================= 辅助方法 =======================================================
@@ -78,7 +95,7 @@ public class CategoryServiceImpl implements CategoryService {
         return categoryVO;
     }
 
-    private List<CategoryVO> convertToCategoryVOList(List<CategoryEntity> categoryEntityList) {
+    private List<CategoryVO> convertToCategoryVO(List<CategoryEntity> categoryEntityList) {
         List<CategoryVO> voList = new ArrayList<>(categoryEntityList.size());
         for (CategoryEntity categoryEntity : categoryEntityList) {
             voList.add(convertToCategoryVO(categoryEntity));

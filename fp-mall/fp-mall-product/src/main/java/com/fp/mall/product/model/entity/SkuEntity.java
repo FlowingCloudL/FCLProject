@@ -3,6 +3,8 @@ package com.fp.mall.product.model.entity;
 import com.fp.common.core.model.BaseEntity;
 import lombok.Data;
 
+import java.math.BigDecimal;
+
 @Data
 public class SkuEntity extends BaseEntity {
 
@@ -27,9 +29,9 @@ public class SkuEntity extends BaseEntity {
     private String skuDesc;
 
     /**
-     * 售价，整数方式保存
+     * 售价
      */
-    private Long price;
+    private BigDecimal price;
 
     /**
      * 库存数量

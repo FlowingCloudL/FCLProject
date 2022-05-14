@@ -1,6 +1,7 @@
 package com.fp.mall.order.handler;
 
-import com.fp.mall.order.dto.ResponseDTO;
+
+import com.fp.common.core.model.ResponseVO;
 import com.fp.mall.order.exception.OrderException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -18,7 +19,7 @@ public class GlobalExceptionHandler {
 	// 全局异常拦截（拦截项目中的所有异常）
 	@ResponseBody
 	@ExceptionHandler
-	public ResponseDTO handlerException(Exception e, HttpServletRequest request, HttpServletResponse response)
+	public ResponseVO handlerException(Exception e, HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
 
 		// 打印堆栈，以供调试
@@ -26,11 +27,11 @@ public class GlobalExceptionHandler {
 		e.printStackTrace();
 
 		if (e instanceof OrderException) {
-			return ResponseDTO.getError(e.getMessage());
+			return ResponseVO.failForShow(e.getMessage());
 		}
 		// 未知异常
 		else {
-			return ResponseDTO.getError("未知错误，请联系管理员");
+			return ResponseVO.failForShow("未知错误，请联系管理员");
 		}
 	}
 	

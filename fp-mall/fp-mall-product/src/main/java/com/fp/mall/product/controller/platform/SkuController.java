@@ -23,7 +23,7 @@ import java.util.List;
  * @date 2022/5/7 17:22
  */
 @Api("平台端-SKU-前端控制器")
-@RestController
+@RestController("平台端-SKU-前端控制器")
 @RequestMapping("/platform/sku")
 public class SkuController {
 

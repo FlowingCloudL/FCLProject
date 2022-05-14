@@ -4,6 +4,7 @@ import com.fp.common.core.model.BaseVO;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Data
@@ -21,8 +22,8 @@ public class SkuVO extends BaseVO {
     @ApiModelProperty("SKU介绍")
     private String skuDesc;
 
-    @ApiModelProperty("售价，整数方式保存")
-    private Long price;
+    @ApiModelProperty("售价")
+    private BigDecimal price;
 
     @ApiModelProperty("库存")
     private Long stock;

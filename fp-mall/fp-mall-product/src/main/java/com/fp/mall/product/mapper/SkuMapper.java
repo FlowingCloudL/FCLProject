@@ -1,5 +1,6 @@
 package com.fp.mall.product.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.fp.mall.product.model.dto.SkuDTO;
 import com.fp.mall.product.model.entity.SkuEntity;
 import com.fp.mall.product.model.vo.SkuVO;

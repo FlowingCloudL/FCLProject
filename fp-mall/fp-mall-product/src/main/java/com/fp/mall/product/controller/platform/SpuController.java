@@ -24,7 +24,7 @@ import java.util.List;
  * @date 2022/5/2 17:17
  */
 @Api("平台端-SPU-前端控制器")
-@RestController
+@RestController("平台端-SPU-前端控制器")
 @RequestMapping("/platform/spu")
 public class SpuController {
 

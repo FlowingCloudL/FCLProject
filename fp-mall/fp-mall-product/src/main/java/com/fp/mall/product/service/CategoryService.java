@@ -1,7 +1,6 @@
 package com.fp.mall.product.service;
 
 import com.fp.mall.product.model.dto.CategoryDTO;
-import com.fp.mall.product.model.entity.CategoryEntity;
 import com.fp.mall.product.model.vo.CategoryVO;
 
 import java.util.List;
@@ -40,10 +39,10 @@ public interface CategoryService {
 
     /**
      * 根据分类id获取分类VO
-     * @param id 分类id
+     * @param categoryId 分类id
      * @return 分类VO
      */
-    CategoryVO getCategoryByCategoryId(Long id);
+    CategoryVO getCategoryByCategoryId(Long categoryId);
 
     /**
      * 保存分类信息

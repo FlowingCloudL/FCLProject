@@ -3,6 +3,7 @@ package com.fp.mall.product.model.dto;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Data
@@ -20,8 +21,8 @@ public class SkuDTO {
     @ApiModelProperty("sku介绍")
     private String skuDesc;
 
-    @ApiModelProperty("售价，整数方式保存")
-    private Long price;
+    @ApiModelProperty("售价")
+    private BigDecimal price;
 
     @ApiModelProperty("库存")
     private Long stock;

@@ -1,5 +1,6 @@
 package com.fp.mall.product.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.fp.mall.product.model.dto.BrandDTO;
 import com.fp.mall.product.model.entity.BrandEntity;
 import org.apache.ibatis.annotations.Mapper;

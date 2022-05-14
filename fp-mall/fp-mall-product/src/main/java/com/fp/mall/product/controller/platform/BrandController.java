@@ -23,7 +23,7 @@ import java.util.List;
  * @date 2022/5/2 15:40
  */
 @Api("平台端-品牌-前端控制器")
-@RestController
+@RestController("平台端-品牌-前端控制器")
 @RequestMapping("/platform/brand")
 public class BrandController {
 

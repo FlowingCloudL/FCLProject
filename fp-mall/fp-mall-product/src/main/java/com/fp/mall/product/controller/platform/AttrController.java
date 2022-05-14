@@ -20,7 +20,7 @@ import java.util.List;
  * @date 2022/5/2 14:19
  */
 @Api("平台端-属性-前端控制器")
-@RestController
+@RestController("平台端-属性-前端控制器")
 @RequestMapping("/platform/attr")
 public class AttrController {
 

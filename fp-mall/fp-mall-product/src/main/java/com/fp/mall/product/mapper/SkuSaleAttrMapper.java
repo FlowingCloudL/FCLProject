@@ -1,5 +1,6 @@
 package com.fp.mall.product.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.fp.mall.product.model.entity.SkuSaleAttrEntity;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;

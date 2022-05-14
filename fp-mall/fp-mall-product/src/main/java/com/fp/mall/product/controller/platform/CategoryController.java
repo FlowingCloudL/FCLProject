@@ -2,12 +2,14 @@ package com.fp.mall.product.controller.platform;
 
 import com.fp.common.core.model.ResponseVO;
 import com.fp.common.core.util.ValidUtil;
+import com.fp.mall.product.consts.ProductCacheNameConst;
 import com.fp.mall.product.model.dto.CategoryDTO;
 import com.fp.mall.product.model.vo.CategoryVO;
 import com.fp.mall.product.service.CategoryService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -21,7 +23,7 @@ import java.util.List;
  * @date 2022/5/2 16:28
  */
 @Api("平台端-分类-前端控制器")
-@RestController
+@RestController("平台端-分类-前端控制器")
 @RequestMapping("/platform/category")
 public class CategoryController {
 
@@ -30,6 +32,7 @@ public class CategoryController {
 
     //================================================= GET =================================================
 
+    @Cacheable(cacheNames = "fp:product:category", key = "#categoryId")
     @GetMapping
     @ApiOperation(value = "获取分类信息", notes = "通过分类id")
     public ResponseVO<CategoryVO> getByCategoryId(@RequestParam("categoryId") Long categoryId) {
@@ -39,6 +42,7 @@ public class CategoryController {
 
     @GetMapping("/all")
     @ApiOperation(value = "获取平台所有的分类信息", notes = "获取所有的分类列表信息")
+    @ResponseBody
     public ResponseVO<List<CategoryVO>> listAll() {
         List<CategoryVO> voList = categoryService.listCategories();
         return ResponseVO.success(voList);

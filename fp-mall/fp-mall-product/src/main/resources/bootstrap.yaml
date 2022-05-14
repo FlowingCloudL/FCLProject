@@ -10,24 +10,24 @@ spring:
   profiles:
     active: dev
   ######################################### 数据源 #########################################
-#  datasource:
-#    url: jdbc:mysql://localhost:3306/fp_product?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=UTC
-#    username: root
-#    password: 123456
-#
-#    ######################################### druid #########################################
-#    type: com.alibaba.druid.pool.DruidDataSource
-#    initialSize: 5
-#    minIdle: 5
-#    maxActive: 20
-#    maxWait: 60000
-#    timeBetweenEvictionRunsMillis: 60000
-#    minEvictableIdleTimeMillis: 300000
-#    testWhileIdle: true
-#    testOnBorrow: false
-#    testOnReturn: false
-#    poolPreparedStatements: true
-#    # 是否打开sql监控台  (生产环境请务必关闭此选项)
+  datasource:
+    url: jdbc:mysql://localhost:3306/fp_mall_pms?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=UTC
+    username: root
+    password: 123456
+
+    ######################################### druid #########################################
+    type: com.alibaba.druid.pool.DruidDataSource
+    initialSize: 5
+    minIdle: 5
+    maxActive: 20
+    maxWait: 60000
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    poolPreparedStatements: true
+    # 是否打开sql监控台  (生产环境请务必关闭此选项)
 #    druid:
 #      stat-view-servlet:
 #        enabled: true
@@ -37,12 +37,26 @@ spring:
 #        config:
 #          enabled: true
 
-######################### mybatis #########################
-mybatis:
-  # 扫描包, 自动配置别名
-  type-aliases-package: com.fp.mall.*.model.*
+######################################### mybatis-plus #########################################
+mybatis-plus:
   # 配置mapper.xml路径
   mapper-locations: classpath*:com/fp/mall/*/mapper/xml/*.xml
+  # 配置别名
+  type-aliases-package: com.fp.mall.*.model.*
+  # 一些配置
+  configuration:
+    # 控制打印sql
+    # log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    # 是否开启下划线转驼峰
+    map-underscore-to-camel-case: true
+    # 即使属性为null, 也要映射
+    call-setters-on-nulls: true
+
+######################################### 服务降级 #########################################
+feign:
+  sentinel:
+    enabled: true
+
 ######################### pageHelper #########################
 pagehelper:
   helperDialect: mysql
@@ -52,33 +66,41 @@ pagehelper:
   supportMethodsArguments: true
   params: count=countSql
 
-#seata:
-#  enabled: true
-#  application-id: ${spring.application.name}
-#  enable-auto-data-source-proxy: false
-#  tx-service-group: fp-mall-order-group
-#
-#  registry:
-#    type: nacos
-#    nacos:
-#      application: seata-server
-#      server-addr: 49.234.36.26:8848
-#      group: SEATA_GROUP
-#      namespace: f3b480fc-6ed4-41ea-b243-c0d8c104dc36
-#      username: nacos
-#      password: 43997k7k
-#
-#  config:
-#    type: nacos
-#    nacos:
-#      server-addr: 49.234.36.26:8848
-#      group: SEATA_GROUP
-#      namespace: f3b480fc-6ed4-41ea-b243-c0d8c104dc36
-#      username: nacos
-#      password: 43997k7k
-#
-#  service:
-#    vgroup-mapping:
-#      fp-mall-order-group: default
-#    disable-global-transaction: false
+######################### dubbo #########################
+dubbo:
+  registry:
+    address: nacos://49.234.36.26:8848
+  scan:
+    base-packages: com.fp.mall.product.remote
+
+######################### seata #########################
+seata:
+  enabled: true
+  application-id: ${spring.application.name}
+  enable-auto-data-source-proxy: false
+  tx-service-group: fp-mall-product-group
+
+  registry:
+    type: nacos
+    nacos:
+      application: seata-server
+      server-addr: 49.234.36.26:8848
+      group: SEATA_GROUP
+      namespace: f3b480fc-6ed4-41ea-b243-c0d8c104dc36
+      username: nacos
+      password: 43997k7k
+
+  config:
+    type: nacos
+    nacos:
+      server-addr: 49.234.36.26:8848
+      group: SEATA_GROUP
+      namespace: f3b480fc-6ed4-41ea-b243-c0d8c104dc36
+      username: nacos
+      password: 43997k7k
+
+  service:
+    vgroup-mapping:
+      fp-mall-product-group: default
+    disable-global-transaction: false
 
