@@ -18,4 +18,12 @@ public interface OrderService {
      */
     Long submitOrder(Long uid, OrderSubmitDTO orderSubmitDTO);
 
+    /**
+     * 超时关闭订单, 只有订单未支付时才能成功
+     * @param uid 用户id
+     * @param orderId 订单id
+     */
+    void closeOrder(Long uid, Long orderId);
+
+
 }

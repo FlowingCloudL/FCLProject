@@ -5,7 +5,7 @@
 
     <update id="reduceStock">
         update `sku_stock` set `stock` = `stock` - #{count}
-        where `sku_id` = #{skuId} and `stock` - #{count} > 0
+        where `sku_id` = #{skuId} and `stock` - #{count} >= 0
     </update>
 
 </mapper>

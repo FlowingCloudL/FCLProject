@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.fp.mall.order.mapper.OrderInfoMapper">
+
+    <select id="getOrderStatusForUpdate" parameterType="Long" resultType="Byte">
+        select `order_status` from `order_info` where `order_id` = #{orderId} for update;
+    </select>
+
+    <update id="updateOrderStatus">
+        update `order_info` set `order_status` = #{status} where `order_id` = #{orderId} and `user_id` = #{uid};
+    </update>
+
+</mapper>
