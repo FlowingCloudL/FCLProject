@@ -30,8 +30,9 @@ public class OrderCloseListener implements RocketMQListener<String> {
     public void onMessage(String message) {
         log.info("[消息队列] 收到消息："+message);
         OrderCloseBO orderCloseBO = JSONObject.parseObject(message, OrderCloseBO.class);
-        orderService.closeOrder(orderCloseBO.getUserId(), orderCloseBO.getOrderId()); // 天然具有幂等性
-        log.info("[消息队列] 超时关闭订单成功!  订单号:"+orderCloseBO.getOrderId());
+        // 调用订单关闭服务 (天然具有幂等性)
+        orderService.closeOrder(orderCloseBO.getUserId(), orderCloseBO.getOrderId());
+        log.info("[消息队列] 超时订单关闭成功!  订单号:"+orderCloseBO.getOrderId());
     }
 
 }

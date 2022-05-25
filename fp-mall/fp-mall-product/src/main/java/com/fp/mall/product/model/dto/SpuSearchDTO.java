@@ -1,15 +1,14 @@
 package com.fp.mall.product.model.dto;
 
+import com.fp.common.core.model.PageDTO;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-
-import java.util.List;
 
 @Data
 public class SpuSearchDTO {
 
-	@ApiModelProperty("spuId")
-	private Long spuId;
+	@ApiModelProperty("分页参数")
+	private PageDTO pageDTO;
 
 	@ApiModelProperty("品牌ID")
 	private Long brandId;
@@ -17,8 +16,8 @@ public class SpuSearchDTO {
 	@ApiModelProperty("分类ID")
 	private Long categoryId;
 
-	@ApiModelProperty("spu名称")
-	private String name;
+	@ApiModelProperty("spu关键词")
+	private String spuKeyword;
 
 	@ApiModelProperty("商品状态 [0.全部  1.销售中  2.已售罄  3.已下架]")
 	private Byte status;
@@ -35,19 +34,10 @@ public class SpuSearchDTO {
 	@ApiModelProperty("最高销量")
 	private Long maxSales;
 
-	@ApiModelProperty("当前价排序 [0：倒序 1：顺序]")
-	private Integer priceSort;
+	@ApiModelProperty("排序规则 [0:销量, 1:价格]")
+	private Byte sortRule;
 
-	@ApiModelProperty("销量排序 [0：倒序 1：顺序]")
-	private Integer salesSort;
-
-	@ApiModelProperty("库存排序 [0：倒序 1：顺序]")
-	private Integer stockSort;
-
-	@ApiModelProperty("序号排序 [0：倒序 1：顺序]")
-	private Integer seqSort;
-
-	@ApiModelProperty("创建时间排序 [0：倒序 1：顺序]")
-	private Integer createTimeSort;
+	@ApiModelProperty("排序方式 [0:升序, 1:降序]")
+	private Byte sortType;
 
 }

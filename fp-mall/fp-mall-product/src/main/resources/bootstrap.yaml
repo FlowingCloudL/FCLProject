@@ -36,6 +36,15 @@ spring:
 #      filter:
 #        config:
 #          enabled: true
+  ######################################### Elastic Search #########################################
+  elasticsearch:
+    rest:
+      uris:
+        - http://49.234.36.26:9200
+      username: elastic
+      password: liudong43997k7k
+
+
 
 ######################################### mybatis-plus #########################################
 mybatis-plus:
@@ -103,4 +112,5 @@ seata:
     vgroup-mapping:
       fp-mall-product-group: default
     disable-global-transaction: false
+
 

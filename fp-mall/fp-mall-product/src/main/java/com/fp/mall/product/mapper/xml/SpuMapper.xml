@@ -14,12 +14,15 @@
         </where>
     </sql>
     
-    <select id="list" parameterType="SpuSearchDTO" resultType="SpuEntity">
-        select * from `spu_info` <include refid="searchParam"/>
+    <select id="list" resultType="SpuEntity">
+        select * from `spu_info`
     </select>
 
-    <select id="listSpuIds" parameterType="SpuSearchDTO" resultType="Long">
-        select `spu_id` from `spu_info` <include refid="searchParam"/>
+    <select id="listBySpuIds" parameterType="List" resultType="SpuEntity">
+        select `spu_id` from `spu_info` where `spu_id` in
+        <foreach collection="ids" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
     </select>
 
     <select id="getBySpuId" parameterType="Long" resultType="SpuEntity">

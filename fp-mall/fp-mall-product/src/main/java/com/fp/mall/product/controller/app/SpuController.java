@@ -1,7 +1,7 @@
 package com.fp.mall.product.controller.app;
 
 import com.fp.common.core.model.ResponseVO;
-import com.fp.mall.product.model.vo.SpuAppVO;
+import com.fp.mall.product.model.vo.SpuAppSearchVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,7 +22,7 @@ public class SpuController {
 
     @GetMapping("/bySpuId")
     @ApiOperation(value = "商品详情信息", notes = "通过商品ID")
-    public ResponseVO<SpuAppVO> prodInfo(@RequestParam("spuId") Long spuId) {
+    public ResponseVO<SpuAppSearchVO> prodInfo(@RequestParam("spuId") Long spuId) {
         return null;
     }
 

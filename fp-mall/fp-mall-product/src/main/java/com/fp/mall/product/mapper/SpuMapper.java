@@ -1,9 +1,7 @@
 package com.fp.mall.product.mapper;
 
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.fp.mall.product.model.dto.SpuSearchDTO;
 import com.fp.mall.product.model.entity.SpuEntity;
-import com.fp.mall.product.model.vo.SpuVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -13,18 +11,17 @@ import java.util.List;
 public interface SpuMapper {
 
     /**
-     * 获取spu列表 (动态sql)
-     * @param spuSearchDTO spu搜索信息
+     * 获取spu列表
      * @return spu列表
      */
-    List<SpuEntity> list(@Param("spuDTO") SpuSearchDTO spuSearchDTO);
+    List<SpuEntity> list();
 
     /**
-     * 获取spuId列表 (动态sql)
-     * @param spuSearchDTO spu搜索信息
-     * @return spuId列表
+     * 通过商品id列表, 获得商品信息列表
+     * @param ids 商品id列表
+     * @return 商品信息列表
      */
-    List<Long> listSpuIds(@Param("spuDTO") SpuSearchDTO spuSearchDTO);
+    List<SpuEntity> listBySpuIds(@Param("ids") List<Long> ids);
 
     /**
      * 根据spu信息id获取spu信息

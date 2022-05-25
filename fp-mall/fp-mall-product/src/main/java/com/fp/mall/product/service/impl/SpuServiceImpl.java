@@ -1,21 +1,21 @@
 package com.fp.mall.product.service.impl;
 
-import com.fp.common.core.model.PageDTO;
-import com.fp.common.core.model.PageVO;
 import com.fp.mall.product.consts.ProductStatusConst;
 import com.fp.mall.product.mapper.SpuMapper;
 import com.fp.mall.product.model.dto.SpuDTO;
-import com.fp.mall.product.model.dto.SpuSearchDTO;
 import com.fp.mall.product.model.entity.SpuEntity;
 import com.fp.mall.product.model.vo.SkuVO;
+import com.fp.mall.product.model.vo.SpuAppSearchVO;
 import com.fp.mall.product.model.vo.SpuVO;
 import com.fp.mall.product.service.SkuService;
 import com.fp.mall.product.service.SpuBasicAttrService;
 import com.fp.mall.product.service.SpuService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -31,8 +31,15 @@ public class SpuServiceImpl implements SpuService {
     private SkuService skuService;
 
     @Override
-    public PageVO<SpuVO> searchSpuByPage(SpuSearchDTO spuSearchDTO, PageDTO pageDTO) {
-        throw new RuntimeException("方法未定义");
+    public List<SpuVO> listSpuBySpuIds(List<Long> spuIds) {
+        List<SpuEntity> entityList = spuMapper.listBySpuIds(spuIds);
+        List<SpuVO> voList = new ArrayList<>(entityList.size());
+        for (SpuEntity entity : entityList) {
+            SpuVO spuVO = new SpuVO();
+            BeanUtils.copyProperties(entity, spuVO);
+            voList.add(spuVO);
+        }
+        return voList;
     }
 
     @Override

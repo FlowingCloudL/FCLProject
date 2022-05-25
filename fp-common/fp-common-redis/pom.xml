@@ -3,17 +3,19 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>FCLProject</artifactId>
+        <artifactId>fp-common</artifactId>
         <groupId>com.fp</groupId>
         <version>1.0.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>fp-common</artifactId>
-    <packaging>pom</packaging>
-    <modules>
-        <module>fp-common-nacos</module>
-        <module>fp-common-core</module>
-        <module>fp-common-redis</module>
-    </modules>
+
+    <artifactId>fp-common-redis</artifactId>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+        </dependency>
+    </dependencies>
 
 </project>

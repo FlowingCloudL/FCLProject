@@ -1,9 +1,6 @@
 package com.fp.mall.product.service;
 
-import com.fp.common.core.model.PageDTO;
-import com.fp.common.core.model.PageVO;
 import com.fp.mall.product.model.dto.SpuDTO;
-import com.fp.mall.product.model.dto.SpuSearchDTO;
 import com.fp.mall.product.model.vo.SpuVO;
 
 import java.util.List;
@@ -11,12 +8,11 @@ import java.util.List;
 public interface SpuService {
 
     /**
-     * 分页获取商品信息列表
-     * @param spuSearchDTO 商品搜索参数
-     * @param pageDTO 分页参数
-     * @return spuVO列表(分页数据)
+     * app端 - 通过商品id列表, 获得商品信息列表
+     * @param spuIds 商品id列表
+     * @return 商品信息列表
      */
-    PageVO<SpuVO> searchSpuByPage(SpuSearchDTO spuSearchDTO, PageDTO pageDTO);
+    List<SpuVO> listSpuBySpuIds(List<Long> spuIds);
 
     /**
      * 获取商品信息

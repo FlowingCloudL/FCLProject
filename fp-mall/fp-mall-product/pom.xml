@@ -14,17 +14,19 @@
     <packaging>jar</packaging>
 
     <dependencies>
-        <!-- springboot 整合 mybatis -->
-<!--        <dependency>-->
-<!--            <groupId>org.mybatis.spring.boot</groupId>-->
-<!--            <artifactId>mybatis-spring-boot-starter</artifactId>-->
-<!--            <version>2.2.2</version>-->
-<!--        </dependency>-->
 
+        <!--======================================= API =======================================-->
         <dependency>
             <groupId>com.fp</groupId>
             <artifactId>fp-api-mall-product</artifactId>
             <version>1.0.0-SNAPSHOT</version>
+        </dependency>
+        <!--======================================= API =======================================-->
+
+        <!-- elasticsearch 客户端 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-elasticsearch</artifactId>
         </dependency>
     </dependencies>
 
