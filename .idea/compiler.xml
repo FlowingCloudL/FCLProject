@@ -17,7 +17,7 @@
         <module name="fp-mall-pay" />
         <module name="fp-blog-user" />
         <module name="fp-mall-product" />
-        <module name="fp-common-redis" />
+        <module name="fp-mall-sale" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>

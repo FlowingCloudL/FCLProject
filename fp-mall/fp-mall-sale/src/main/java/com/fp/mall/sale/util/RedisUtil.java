@@ -1,4 +1,4 @@
-package com.fp.common.redis.util;
+package com.fp.mall.sale.util;
 
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;

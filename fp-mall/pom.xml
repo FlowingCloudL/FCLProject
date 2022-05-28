@@ -16,6 +16,7 @@
         <module>fp-mall-order</module>
         <module>fp-mall-product</module>
         <module>fp-mall-pay</module>
+        <module>fp-mall-sale</module>
     </modules>
 
 
